@@ -14,7 +14,7 @@ It relies directly on the NordVPN CLI and provides the most commonly used featur
 **What Kompass is not!** Kompass was never meant to implement all available NordVPN features. It's intention is to provide a quick and easy way to connect to a VPN, disconnect a VPN and show the current VPN status. All of this in a graphical user interface for the KDE Plasma desktop environment.
 
 ## Installation
-**Kompass is easy to install.** It comes with its own installation script that will guide you through the installation process. Grab the latest release, unpack it, and run the installer.
+**Kompass is easy to install.** It comes with its own installation script that will guide you through the installation process. Grab the **[latest release](https://github.com/amoekesch/Kompass/releases)**, unpack it, and run the installer.
 
 ```bash
 $ tar -xvf Kompass-*.tar.gz
@@ -25,7 +25,7 @@ $ sudo ./installer.sh
 
 ## Usage
 **Kompass is easy to use.** Select either a VPN server type or a country to connect to, then hit the *Connect* button:
-![Kompass Diconnected](https://github.com/amoekesch/Kompass/raw/main/doc/kompass_disconnected.png)
+![Kompass Disconnected](https://github.com/amoekesch/Kompass/raw/main/doc/kompass_disconnected.png)
 As soon as Kompass could establish a connection with the selected VPN server type or country, the user interface will show the connection status and additional connection details:
 ![Kompass Connected](https://github.com/amoekesch/Kompass/raw/main/doc/kompass_connected.png)
 Use the *Disconnect* button to disconnect from the current VPN server and use the *Minimize to Tray* button to hide the application in your system tray:
