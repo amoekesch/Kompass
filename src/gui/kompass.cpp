@@ -142,9 +142,9 @@ void Kompass::setupUi()
     pbConnectType->setIcon(QIcon::fromTheme("network-vpn-symbolic"));
     QObject::connect(pbConnectType, &QPushButton::clicked, [this]()
     {
-        QString server = this->lstServersByType->currentIndex().data().toString();
-        server = server.replace(" ", "_");
-        connectVpn(server);
+        QString type = this->lstServersByType->currentIndex().data().toString();
+        type = type.replace(" ", "_");
+        connectVpn(QStringList() << "connect" << type);
     });
 
     QGridLayout *layoutTypes = new QGridLayout();
@@ -169,6 +169,16 @@ void Kompass::setupUi()
     lstServersByCountry->setStyleSheet("font-weight: normal;");
     QObject::connect(lstServersByCountry, &QListView::clicked, [this] {
         QModelIndexList indexes = this->lstServersByCountry->selectionModel()->selectedIndexes();
+        QString country = this->lstServersByCountry->currentIndex().data().toString();
+
+        // load list if needed
+        setupDataCities(country);
+
+        //serverListByCountry->remove();
+
+        // TODO
+        qDebug() << serverListCities->value(country);
+
         pbConnectCountry->setEnabled(indexes.count() > 0);
     });
 
@@ -202,9 +212,9 @@ void Kompass::setupUi()
     pbConnectCountry->setIcon(QIcon::fromTheme("network-vpn-symbolic"));
     QObject::connect(pbConnectCountry, &QPushButton::clicked, [this]()
     {
-        QString server = this->lstServersByCountry->currentIndex().data().toString();
-        server = server.replace(" ", "_");
-        connectVpn(server);
+        QString country = this->lstServersByCountry->currentIndex().data().toString();
+        country = country.replace(" ", "_");
+        connectVpn(QStringList() << "connect" << country);
     });
 
     QGridLayout *layoutCountries = new QGridLayout();
@@ -321,7 +331,7 @@ void Kompass::setupTray()
     // create connect menu item
     actionConnect = new QAction(tr("trayActionConnect"), trayIcon);
     QObject::connect(actionConnect, &QAction::triggered, [this]() {
-        connectVpn(nullptr);
+        connectVpn(QStringList());
     });
 
     // create connect menu item
@@ -385,7 +395,22 @@ void Kompass::setupTray()
     trayIcon->show();
 }
 
+/**
+ * Load server lists to display
+ * @brief Kompass::setupData
+ */
 void Kompass::setupData()
+{
+    serverListCities = new QMap<QString, QStringList>();
+    setupDataTypes();
+    setupDataCountries();
+}
+
+/**
+ * Load list of VPN server types
+ * @brief Kompass::setupDataTypes
+ */
+void Kompass::setupDataTypes()
 {
     QProcess *commandTypes = new QProcess();
     commandTypes->start("nordvpn", QStringList() << "groups");
@@ -409,7 +434,14 @@ void Kompass::setupData()
         txtFilterType->setText(QString());
         pbConnectType->setEnabled(false);
     }
+}
 
+/**
+ * Load list of countries VPN servers are in
+ * @brief Kompass::setupDataCountries
+ */
+void Kompass::setupDataCountries()
+{
     QProcess *commandCountries = new QProcess();
     commandCountries->start("nordvpn", QStringList() << "countries");
     commandCountries->waitForFinished();
@@ -421,8 +453,11 @@ void Kompass::setupData()
         outputCountries = outputCountries.replace(QRegularExpression("[\\]|[\|]|[/]|[-]"), QString());
         outputCountries = outputCountries.replace("_", " ");
 
+        QList<QString> countries = outputCountries.split(",");
+        serverListCities->keys(countries);
+
         serverListByCountry = new QVector<QString>();
-        serverListByCountry->append(outputCountries.split(","));
+        serverListByCountry->append(countries);
         serverListByCountryModel = new QStringListModel(this);
         serverListByCountryModel->setStringList(*serverListByCountry);
 
@@ -431,6 +466,40 @@ void Kompass::setupData()
         lstServersByCountry->selectionModel()->clearSelection();
         txtFilterCountry->setText(QString());
         pbConnectCountry->setEnabled(false);
+    }
+}
+
+/**
+ * Load the list of cities hosting VPN servers
+ * located within the given country
+ * @brief Kompass::setupDataCities
+ * @param country
+ */
+void Kompass::setupDataCities(QString country)
+{
+    if (serverListCities->value(country).length() > 0)
+    {
+        // skip query
+        return;
+    }
+
+    QProcess *commandCities = new QProcess();
+    commandCities->start("nordvpn", QStringList() << "cities" << country);
+    commandCities->waitForFinished();
+
+    QString outputCities = commandCities->readAllStandardOutput();
+    if (outputCities != nullptr && outputCities.length())
+    {
+        outputCities = outputCities.replace(QRegularExpression("\\s+"), QString());
+        outputCities = outputCities.replace(QRegularExpression("[\\]|[\|]|[/]|[-]"), QString());
+        outputCities = outputCities.replace("_", " ");
+
+        QStringList cities = outputCities.split(",");
+        if (cities.length() == 1 && cities.at(0).toLower().contains("notavailable"))
+        {
+            cities.clear();
+        }
+        serverListCities->insert(country, cities);
     }
 }
 
@@ -468,25 +537,26 @@ void Kompass::setupStatusMonitor()
 }
 
 /**
- * Calls NordVPN binary to connect to a given server
- * or the server NordVPN considers "best" if no specific
- * server provided
- * @brief Kompass::connectVpnServer
+ * Calls NordVPN binary to connect using the given list
+ * if commands. If no commands are given, Kompass will
+ * connect to (what NordVPN considers) the fastest server.
+ * @brief Kompass::connectVpn
+ * @param commands
  */
-void Kompass::connectVpn(QString server)
+void Kompass::connectVpn(QStringList commands)
 {
     // Update UI
     updateUi(STATUS_CONNECTING, nullptr);
 
     // execute command
     QProcess *command = new QProcess();
-    if (server == nullptr)
+    if (commands.length() == 0)
     {
         command->start("nordvpn", QStringList() << "connect");
     }
     else
     {
-        command->start("nordvpn", QStringList() << "connect" << server);
+        command->start("nordvpn", commands);
     }
     command->waitForFinished();
 

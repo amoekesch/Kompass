@@ -1,4 +1,4 @@
-#include "kompass.h"
+#include "gui/kompass.h"
 
 #include <QApplication>
 #include <QLocale>

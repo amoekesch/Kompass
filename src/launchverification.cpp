@@ -1,4 +1,3 @@
-#include "kompass.h"
 #include "launchverification.h"
 
 LaunchVerification::LaunchVerification() {}
