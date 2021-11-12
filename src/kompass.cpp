@@ -560,17 +560,6 @@ void Kompass::updateUi(int status, QString vpnDetails)
 {
     updatingStatus = true;
 
-    // diable all first
-    actionConnect->setEnabled(false);
-    actionDisconnect->setEnabled(false);
-    pbDisconnect->setEnabled(false);
-    pbConnectType->setEnabled(false);
-    pbConnectCountry->setEnabled(false);
-    lstServersByType->setEnabled(false);
-    lstServersByCountry->setEnabled(false);
-    txtFilterType->setEnabled(false);
-    txtFilterCountry->setEnabled(false);
-
     // get list selection
     QModelIndexList selectedTypesIndex = lstServersByType->selectionModel()->selectedIndexes();
     QModelIndexList selectedCountriesIndex = lstServersByCountry->selectionModel()->selectedIndexes();
@@ -684,6 +673,15 @@ void Kompass::updateUi(int status, QString vpnDetails)
             lblStatusUploaded->setText("--");
             lblStatusDownloaded->setText("--");
             lblStatusUptime->setText("--");
+            actionConnect->setEnabled(false);
+            actionDisconnect->setEnabled(false);
+            pbDisconnect->setEnabled(false);
+            pbConnectType->setEnabled(false);
+            pbConnectCountry->setEnabled(false);
+            lstServersByType->setEnabled(false);
+            lstServersByCountry->setEnabled(false);
+            txtFilterType->setEnabled(false);
+            txtFilterCountry->setEnabled(false);
             break;
         case STATUS_DISCONNECTED:
             mnStatusUploaded->setVisible(false);
@@ -710,6 +708,8 @@ void Kompass::updateUi(int status, QString vpnDetails)
             pbConnectType->setEnabled(selectedTypesIndex.length() > 0);
             pbConnectCountry->setEnabled(selectedCountriesIndex.length() > 0);
             actionConnect->setEnabled(true);
+            actionDisconnect->setEnabled(false);
+            pbDisconnect->setEnabled(false);
             break;
         case STATUS_CONNECTED:
             mnStatusConnection->setIcon(QIcon::fromTheme("network-vpn-symbolic"));
@@ -747,6 +747,24 @@ void Kompass::updateUi(int status, QString vpnDetails)
             }
             actionDisconnect->setEnabled(true);
             pbDisconnect->setEnabled(true);
+            actionConnect->setEnabled(false);
+            pbConnectType->setEnabled(false);
+            pbConnectCountry->setEnabled(false);
+            lstServersByType->setEnabled(false);
+            lstServersByCountry->setEnabled(false);
+            txtFilterType->setEnabled(false);
+            txtFilterCountry->setEnabled(false);
+            break;
+        case STATUS_DISABLED:
+            actionConnect->setEnabled(false);
+            actionDisconnect->setEnabled(false);
+            pbDisconnect->setEnabled(false);
+            pbConnectType->setEnabled(false);
+            pbConnectCountry->setEnabled(false);
+            lstServersByType->setEnabled(false);
+            lstServersByCountry->setEnabled(false);
+            txtFilterType->setEnabled(false);
+            txtFilterCountry->setEnabled(false);
             break;
     }
 

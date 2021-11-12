@@ -9,7 +9,7 @@
         </message>
         <message>
             <source>appVersion</source>
-            <translation>v1.0</translation>
+            <translation>v1.0.1</translation>
         </message>
         <message>
             <source>lblServer</source>
