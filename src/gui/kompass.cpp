@@ -699,10 +699,23 @@ void Kompass::updateUi(int status, QString vpnDetails)
                     sec += s.toInt();
                 }
 
-                uptime = ((hrs >  0) ? QString::number(hrs) + ":" : QString()) +
-                         ((min < 10) ? "0" + QString::number(min) :  QString::number(min)) + ":" +
-                         ((sec < 10) ? "0" + QString::number(sec) :  QString::number(sec)) +
-                         ((hrs >  0) ? " hrs" : " min");
+                if (hrs > 0)
+                {
+                    uptime = QString::number(hrs) + ":" +
+                             ((min < 10) ? "0" + QString::number(min) :  QString::number(min)) + ":" +
+                             ((sec < 10) ? "0" + QString::number(sec) :  QString::number(sec)) +
+                             " hrs";
+                }
+                else if (min > 0)
+                {
+                    uptime = QString::number(min) + ":" +
+                             ((sec < 10) ? "0" + QString::number(sec) :  QString::number(sec)) +
+                             " min";
+                }
+                else
+                {
+                    uptime = QString::number(sec) + " sec";
+                }
                 vpnStatus->insert("uptime", uptime);
             }
         }
