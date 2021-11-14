@@ -53,3 +53,6 @@ compile_commands.json
 
 # VSCode Settings
 .vscode
+
+# Local TODO file
+TODO.md
