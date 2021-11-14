@@ -19,6 +19,7 @@
 #include <QSystemTrayIcon>
 #include <QTimer>
 #include <QWidgetAction>
+#include "settings.h"
 
 QT_BEGIN_NAMESPACE
     namespace Ui { class Kompass;}
@@ -62,6 +63,9 @@ class Kompass : public QObject
         QPushButton *pbDisconnect;
         QPushButton *pbConnectType;
         QPushButton *pbConnectCountry;
+        QPushButton *pbQuit;
+        QPushButton *pbMinimize;
+        QPushButton *pbSettings;
 
         // tray menu
         QSystemTrayIcon *trayIcon;
@@ -74,7 +78,6 @@ class Kompass : public QObject
         QAction *mnStatusUptime;
 
         // data models
-        QMap<QString, QStringList> *serverListCities;
         QVector<QString> *serverListByType;
         QStringListModel *serverListByTypeModel;
         QVector<QString> *serverListByCountry;
@@ -86,7 +89,6 @@ class Kompass : public QObject
         void setupData();
         void setupDataTypes();
         void setupDataCountries();
-        void setupDataCities(QString country);
         void setupStatusMonitor();
         void connectVpn(QStringList commands);
         void disconnectVpn();

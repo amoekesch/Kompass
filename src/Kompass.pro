@@ -9,12 +9,18 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    gui/clickablelabel.cpp \
     gui/kompass.cpp \
+    gui/settings.cpp \
+    gui/togglebutton.cpp \
     launchverification.cpp \
     main.cpp
 
 HEADERS += \
+    gui/clickablelabel.h \
     gui/kompass.h \
+    gui/settings.h \
+    gui/togglebutton.h \
     launchverification.h
 
 FORMS +=

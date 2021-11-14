@@ -60,6 +60,10 @@
             <translation>  Minimize to Tray</translation>
         </message>
         <message>
+            <source>pbSettings</source>
+            <translation>  Settings</translation>
+        </message>
+        <message>
             <source>pbConnectType</source>
             <translation>  Connect</translation>
         </message>
@@ -137,6 +141,153 @@
         <message>
             <source>msgErrorInvalidAccount</source>
             <translation>Kompass is closing. Your account could not be verified!</translation>
+        </message>
+    </context>
+    <context>
+        <name>Settings</name>
+        <message>
+            <source>dialogTitle</source>
+            <translation>Settings</translation>
+        </message>
+        <message>
+            <source>pbClose</source>
+            <translation>  Close</translation>
+        </message>
+        <message>
+            <source>mnConnection</source>
+            <translation>Connection</translation>
+        </message>
+        <message>
+            <source>lblTechnology</source>
+            <translation>Technology:</translation>
+        </message>
+        <message>
+            <source>lblProtocol</source>
+            <translation>Protocol:</translation>
+        </message>
+        <message>
+            <source>lblIPv6Toggle</source>
+            <translation>IPv6</translation>
+        </message>
+        <message>
+            <source>lblIPv6Details</source>
+            <translation>Enable support for IPv6.</translation>
+        </message>
+        <message>
+            <source>lblObfuscateToggle</source>
+            <translation>Obfuscate</translation>
+        </message>
+        <message>
+            <source>lblObfuscateDetails</source>
+            <translation>Obfuscation allows bypassing network traffic sensors which aim to detect usage of the VPN and log, throttle or block it.</translation>
+        </message>
+        <message>
+            <source>lblAutoconnectToggle</source>
+            <translation>Auto-Connect</translation>
+        </message>
+        <message>
+            <source>lblAutoconnectDetails</source>
+            <translation>Automatically connect to NordVPN when using an untrusted network.</translation>
+        </message>
+        <message>
+            <source>mnKillswitch</source>
+            <translation>Kill Switch</translation>
+        </message>
+        <message>
+            <source>lblKillswitchToggle</source>
+            <translation>Kill Switch (Advanced)</translation>
+        </message>
+        <message>
+            <source>lblKillswitchDetails</source>
+            <translation>The built in Kill Switch is always on to give you essential protection against data leaks if the VPN connection drops. &lt;br&gt;The advanced Kill Switch provides an additional security layer for protection against rare and very specific IP leaks. &lt;br&gt;&lt;br&gt;&lt;u&gt;Note&lt;/u&gt;: Enabling the advanced Kill Switch might interfere with other network applications on your machine.</translation>
+        </message>
+        <message>
+            <source>mnCybersec</source>
+            <translation>Cyber Security</translation>
+        </message>
+        <message>
+            <source>lblCybersecToggle</source>
+            <translation>NordVPN CyberSec</translation>
+        </message>
+        <message>
+            <source>lblCybersecDetails</source>
+            <translation>NordVPN CyberSec is an advanced technology solution that takes your security and privacy to the next level. It blocks websites known for hosting malware or phishing scams, making you safer from online threats. &lt;br&gt;Besides, NordVPN CyberSec – ad blocker feature takes care of annoying flashy ads, which speeds up your browsing experience.</translation>
+        </message>
+        <message>
+            <source>mnFirewall</source>
+            <translation>Firewall</translation>
+        </message>
+        <message>
+            <source>lblFirewallToggle</source>
+            <translation>NordVPN Firewall</translation>
+        </message>
+        <message>
+            <source>lblFirewallDetails</source>
+            <translation>En- or disable NordVPN's built-in firewall.</translation>
+        </message>
+        <message>
+            <source>mnNotify</source>
+            <translation>Notifications</translation>
+        </message>
+        <message>
+            <source>lblNotifyToggle</source>
+            <translation>Display Notifications</translation>
+        </message>
+        <message>
+            <source>lblNotifyDetails</source>
+            <translation>Enable desktop notifications to receive popup messages whenever NordVPN connects or disconnects. &lt;br&gt;&lt;br&gt;&lt;u&gt;Note&lt;/u&gt;: Some Linux distributions and/or desktop environments ignore this setting.</translation>
+        </message>
+        <message>
+            <source>dlgSuccessTitle</source>
+            <translation>Settings Updated</translation>
+        </message>
+        <message>
+            <source>dlgSuccessMessage</source>
+            <translation>Your changes have been saved successfully.</translation>
+        </message>
+        <message>
+            <source>dlgErrorTitle</source>
+            <translation>Error</translation>
+        </message>
+        <message>
+            <source>dlgErrorMessage</source>
+            <translation>Your changes could not be applied. Please verify the error below carefully.</translation>
+        </message>
+        <message>
+            <source>errorPrefixTechnology</source>
+            <translation>&lt;u&gt;Technology&lt;/u&gt;: </translation>
+        </message>
+        <message>
+            <source>errorPrefixProtocol</source>
+            <translation>&lt;u&gt;Protocol&lt;/u&gt;: Please note, that the UDP protocol is not supported with the NordLynx VPN technology.&lt;br&gt;</translation>
+        </message>
+        <message>
+            <source>errorPrefixFirewall</source>
+            <translation>&lt;u&gt;Firewall&lt;/u&gt;: </translation>
+        </message>
+        <message>
+            <source>errorPrefixKillswitch</source>
+            <translation>&lt;u&gt;Kill Switch&lt;/u&gt;: </translation>
+        </message>
+        <message>
+            <source>errorPrefixCybersec</source>
+            <translation>&lt;u&gt;Cyber Security&lt;/u&gt;: </translation>
+        </message>
+        <message>
+            <source>errorPrefixObfuscate</source>
+            <translation>&lt;u&gt;Obfuscate&lt;/u&gt;: </translation>
+        </message>
+        <message>
+            <source>errorPrefixNotify</source>
+            <translation>&lt;u&gt;Notifications&lt;/u&gt;: </translation>
+        </message>
+        <message>
+            <source>errorPrefixAutoconnect</source>
+            <translation>&lt;u&gt;Auto-Connect&lt;/u&gt;: </translation>
+        </message>
+        <message>
+            <source>errorPrefixIPv6</source>
+            <translation>&lt;u&gt;IPv6&lt;/u&gt;: </translation>
         </message>
     </context>
 </TS>

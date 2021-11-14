@@ -106,6 +106,7 @@ void Kompass::setupUi()
     serverListByTypeModel = new QStringListModel();
 
     lstServersByType = new QListView();
+    lstServersByType->setEnabled(false);
     lstServersByType->setStyleSheet("font-weight: normal;");
     QObject::connect(lstServersByType, &QListView::clicked, [this] {
         QModelIndexList indexes = this->lstServersByType->selectionModel()->selectedIndexes();
@@ -113,6 +114,7 @@ void Kompass::setupUi()
     });
 
     txtFilterType = new QLineEdit();
+    txtFilterType->setEnabled(false);
     txtFilterType->setPlaceholderText(tr("txtFilter"));
     txtFilterType->setStyleSheet("font-weight: normal;");
     QObject::connect(txtFilterType, &QLineEdit::textChanged, [this] {
@@ -166,23 +168,16 @@ void Kompass::setupUi()
     serverListByCountryModel = new QStringListModel();
 
     lstServersByCountry = new QListView();
+    lstServersByCountry->setEnabled(false);
     lstServersByCountry->setStyleSheet("font-weight: normal;");
     QObject::connect(lstServersByCountry, &QListView::clicked, [this] {
         QModelIndexList indexes = this->lstServersByCountry->selectionModel()->selectedIndexes();
         QString country = this->lstServersByCountry->currentIndex().data().toString();
-
-        // load list if needed
-        setupDataCities(country);
-
-        //serverListByCountry->remove();
-
-        // TODO
-        qDebug() << serverListCities->value(country);
-
         pbConnectCountry->setEnabled(indexes.count() > 0);
     });
 
     txtFilterCountry = new QLineEdit();
+    txtFilterCountry->setEnabled(false);
     txtFilterCountry->setPlaceholderText(tr("txtFilter"));
     txtFilterCountry->setStyleSheet("font-weight: normal;");
     QObject::connect(txtFilterCountry, &QLineEdit::textChanged, [this] {
@@ -243,7 +238,7 @@ void Kompass::setupUi()
      *  create dialog button controls
      */
 
-    QPushButton *pbQuit = new QPushButton();
+    pbQuit = new QPushButton();
     pbQuit->setText(tr("pbQuit"));
     pbQuit->setMinimumWidth(160);
     pbQuit->setIcon(QIcon::fromTheme("application-exit"));
@@ -251,7 +246,7 @@ void Kompass::setupUi()
     {
         this->quit(EXIT_CODE_NORMAL);
     });
-    QPushButton *pbMinimize = new QPushButton();
+    pbMinimize = new QPushButton();
     pbMinimize->setText(tr("pbMinimize"));
     pbMinimize->setMinimumWidth(160);
     pbMinimize->setIcon(QIcon::fromTheme("system-tray-symbolic"));
@@ -259,12 +254,34 @@ void Kompass::setupUi()
     {
         this->hideUi();
     });
+    pbSettings = new QPushButton();
+    pbSettings->setText(tr("pbSettings"));
+    pbSettings->setMinimumWidth(160);
+    pbSettings->setIcon(QIcon::fromTheme("settings"));
+    QObject::connect(pbSettings, &QPushButton::clicked, [this]()
+    {
+        // show dialog
+        while (updatingStatus) {
+            // wait
+        }
+        updatingStatus = true;
+        Settings *dlgSettings = new Settings();
+        dlgSettings->setAttribute( Qt::WA_DeleteOnClose );
+        dlgSettings->activateWindow();
+        dlgSettings->raise();
+        dlgSettings->exec();
+        ui->activateWindow();
+        ui->raise();
+        updatingStatus = false;
+    });
 
-    QGridLayout *layoutDialogControls = new QGridLayout();
+    QHBoxLayout *layoutDialogControls = new QHBoxLayout();
     layoutDialogControls->setContentsMargins(0, 0, 0, 0);
-    layoutDialogControls->addWidget(pbMinimize, 0, 0);
-    layoutDialogControls->addWidget(pbQuit, 0, 3);
-    layoutDialogControls->setColumnStretch(1, 1);
+    layoutDialogControls->addWidget(pbMinimize);
+    layoutDialogControls->addSpacing(10);
+    layoutDialogControls->addWidget(pbSettings);
+    layoutDialogControls->addStretch(1);
+    layoutDialogControls->addWidget(pbQuit);
 
     /**
      * -------------------------------------------
@@ -312,8 +329,9 @@ void Kompass::setupUi()
     ui->setCentralWidget(widget);
     ui->setMinimumSize(1000, 680);
     ui->resize(1000, 680);
-    ui->raise();
     ui->show();
+    ui->activateWindow();
+    ui->raise();
 }
 
 /**
@@ -401,7 +419,6 @@ void Kompass::setupTray()
  */
 void Kompass::setupData()
 {
-    serverListCities = new QMap<QString, QStringList>();
     setupDataTypes();
     setupDataCountries();
 }
@@ -454,7 +471,6 @@ void Kompass::setupDataCountries()
         outputCountries = outputCountries.replace("_", " ");
 
         QList<QString> countries = outputCountries.split(",");
-        serverListCities->keys(countries);
 
         serverListByCountry = new QVector<QString>();
         serverListByCountry->append(countries);
@@ -466,40 +482,6 @@ void Kompass::setupDataCountries()
         lstServersByCountry->selectionModel()->clearSelection();
         txtFilterCountry->setText(QString());
         pbConnectCountry->setEnabled(false);
-    }
-}
-
-/**
- * Load the list of cities hosting VPN servers
- * located within the given country
- * @brief Kompass::setupDataCities
- * @param country
- */
-void Kompass::setupDataCities(QString country)
-{
-    if (serverListCities->value(country).length() > 0)
-    {
-        // skip query
-        return;
-    }
-
-    QProcess *commandCities = new QProcess();
-    commandCities->start("nordvpn", QStringList() << "cities" << country);
-    commandCities->waitForFinished();
-
-    QString outputCities = commandCities->readAllStandardOutput();
-    if (outputCities != nullptr && outputCities.length())
-    {
-        outputCities = outputCities.replace(QRegularExpression("\\s+"), QString());
-        outputCities = outputCities.replace(QRegularExpression("[\\]|[\|]|[/]|[-]"), QString());
-        outputCities = outputCities.replace("_", " ");
-
-        QStringList cities = outputCities.split(",");
-        if (cities.length() == 1 && cities.at(0).toLower().contains("notavailable"))
-        {
-            cities.clear();
-        }
-        serverListCities->insert(country, cities);
     }
 }
 
@@ -630,6 +612,10 @@ void Kompass::updateUi(int status, QString vpnDetails)
 {
     updatingStatus = true;
 
+    // these buttons are always active
+    pbQuit->setEnabled(true);
+    pbMinimize->setEnabled(true);
+
     // get list selection
     QModelIndexList selectedTypesIndex = lstServersByType->selectionModel()->selectedIndexes();
     QModelIndexList selectedCountriesIndex = lstServersByCountry->selectionModel()->selectedIndexes();
@@ -752,6 +738,7 @@ void Kompass::updateUi(int status, QString vpnDetails)
             lstServersByCountry->setEnabled(false);
             txtFilterType->setEnabled(false);
             txtFilterCountry->setEnabled(false);
+            pbSettings->setEnabled(false);
             break;
         case STATUS_DISCONNECTED:
             mnStatusUploaded->setVisible(false);
@@ -780,6 +767,7 @@ void Kompass::updateUi(int status, QString vpnDetails)
             actionConnect->setEnabled(true);
             actionDisconnect->setEnabled(false);
             pbDisconnect->setEnabled(false);
+            pbSettings->setEnabled(true);
             break;
         case STATUS_CONNECTED:
             mnStatusConnection->setIcon(QIcon::fromTheme("network-vpn-symbolic"));
@@ -824,6 +812,7 @@ void Kompass::updateUi(int status, QString vpnDetails)
             lstServersByCountry->setEnabled(false);
             txtFilterType->setEnabled(false);
             txtFilterCountry->setEnabled(false);
+            pbSettings->setEnabled(true);
             break;
         case STATUS_DISABLED:
             actionConnect->setEnabled(false);
@@ -835,6 +824,7 @@ void Kompass::updateUi(int status, QString vpnDetails)
             lstServersByCountry->setEnabled(false);
             txtFilterType->setEnabled(false);
             txtFilterCountry->setEnabled(false);
+            pbSettings->setEnabled(false);
             break;
     }
 
