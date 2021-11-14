@@ -39,6 +39,9 @@ A left-click on the Kompass icon will open/show the application. A right-click o
 
 The *Fastest* server is the server NordVPN considers the best for your current location.
 
+To update your NordVPN settings, use the *Settings* button in the main application window. The opening dialog will present you your current NordVPN configuration and allow you to edit these settings:
+![Kompass Settings](https://github.com/amoekesch/Kompass/raw/main/doc/kompass_settings.png)
+
 ## Dependencies
 Kompass is written in C++/QT for the KDE Plasma desktop environment and relies heavily on the NordVPN CLI. Here is its full list of dependencies:
 * [KDE](https://kde.org/)
