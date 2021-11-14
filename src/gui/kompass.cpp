@@ -272,6 +272,9 @@ void Kompass::setupUi()
         dlgSettings->exec();
         ui->activateWindow();
         ui->raise();
+
+        setupDataTypes();
+        setupDataCountries();
         updatingStatus = false;
     });
 
