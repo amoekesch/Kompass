@@ -54,7 +54,7 @@ int main(int argc, char *argv[])
     // launch the UI
     if (launcher->validBinary && launcher->validVersion && launcher->validAccount)
     {
-        Kompass w;
+        new Kompass();
         return a.exec();
     }
     return -1;

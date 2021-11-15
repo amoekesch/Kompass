@@ -19,6 +19,7 @@
 #include <QSystemTrayIcon>
 #include <QTimer>
 #include <QWidgetAction>
+#include "kompasswindow.h"
 #include "settings.h"
 
 QT_BEGIN_NAMESPACE
@@ -46,7 +47,7 @@ class Kompass : public QObject
         bool updatingStatus = false;
 
         // ui components
-        QMainWindow *ui;
+        KompassWindow *ui;
         QListView *lstServersByType;
         QListView *lstServersByCountry;
         QLabel *lblStatusConnection;

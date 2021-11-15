@@ -11,6 +11,7 @@ CONFIG += c++11
 SOURCES += \
     gui/clickablelabel.cpp \
     gui/kompass.cpp \
+    gui/kompasswindow.cpp \
     gui/settings.cpp \
     gui/togglebutton.cpp \
     launchverification.cpp \
@@ -19,6 +20,7 @@ SOURCES += \
 HEADERS += \
     gui/clickablelabel.h \
     gui/kompass.h \
+    gui/kompasswindow.h \
     gui/settings.h \
     gui/togglebutton.h \
     launchverification.h

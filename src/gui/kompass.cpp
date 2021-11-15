@@ -327,11 +327,8 @@ void Kompass::setupUi()
     QWidget *widget = new QWidget();
     widget->setLayout(layoutApplication);
 
-    ui = new QMainWindow();
-    ui->setWindowIcon(QIcon::fromTheme("compass"));
+    ui = new KompassWindow();
     ui->setCentralWidget(widget);
-    ui->setMinimumSize(1000, 680);
-    ui->resize(1000, 680);
     ui->show();
     ui->activateWindow();
     ui->raise();
