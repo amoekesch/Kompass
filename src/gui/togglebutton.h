@@ -18,11 +18,15 @@ class ToggleButton :public QAbstractButton
     Q_PROPERTY(int mOffset READ offset WRITE setOffset);
 
     public:
-        explicit ToggleButton(int trackRadius, int thumbRadius, QWidget* parent = nullptr);
+        explicit ToggleButton(int trackRadius, int thumbRadius, bool showIcons = false, QWidget* parent = nullptr);
         ~ToggleButton();
 
         QSize sizeHint() const override;
         void setChecked(bool checked);
+        void overrideTrackColor(bool checked, QColor color);
+        void overrideThumbColor(bool checked, QColor color);
+        void overrideTextColor(bool checked, QColor color);
+        void overrideOpacity(int opacity);
 
     protected:
         void paintEvent(QPaintEvent *) override;

@@ -1,12 +1,6 @@
 #include "togglebutton.h"
 
-///<summary>
-/// Toggle button has 2 different design. In the first design, if the ball (thumb) radius is
-/// larger than the slide (track) radius, a flat ball slides and colors from the slide according to
-/// the on / off situation. In the second design, if the ball radius is smaller than the slide radius,
-/// the ball moves according to the on / off status inside the slide and includes the check and uncheck marks.
-///</summary>
-ToggleButton::ToggleButton(int trackRadius, int thumbRadius, QWidget* parent) : QAbstractButton(parent)
+ToggleButton::ToggleButton(int trackRadius, int thumbRadius, bool showIcons, QWidget* parent) : QAbstractButton(parent)
 {
     setCheckable(true);
     setSizePolicy(QSizePolicy(QSizePolicy::Policy::Fixed, QSizePolicy::Policy::Fixed));
@@ -17,7 +11,7 @@ ToggleButton::ToggleButton(int trackRadius, int thumbRadius, QWidget* parent) : 
 
     mMargin = 0 > (mThumbRadius - mTrackRadius) ? 0 : (mThumbRadius - mTrackRadius);
     mBaseOffset = mThumbRadius > mTrackRadius ? mThumbRadius : mTrackRadius;
-    mEndOffset.insert(true, 4 * mTrackRadius + 2 * mMargin - mBaseOffset); // width - offset
+    mEndOffset.insert(true, 4 * mTrackRadius + 2 * mMargin - mBaseOffset);
     mEndOffset.insert(false, mBaseOffset);
     mOffset = mBaseOffset;
     QPalette palette = this->palette();
@@ -30,8 +24,6 @@ ToggleButton::ToggleButton(int trackRadius, int thumbRadius, QWidget* parent) : 
         mThumbColor.insert(false, palette.light());
         mTextColor.insert(true, palette.highlightedText().color());
         mTextColor.insert(false, palette.dark().color());
-        mThumbText.insert(true, "");
-        mThumbText.insert(false, "");
         mOpacity = 0.5;
     }
     else
@@ -42,18 +34,45 @@ ToggleButton::ToggleButton(int trackRadius, int thumbRadius, QWidget* parent) : 
         mThumbColor.insert(false, palette.light());
         mTextColor.insert(true, palette.highlight().color());
         mTextColor.insert(false, palette.dark().color());
-        //mThumbText.insert(true, QChar(0x2713)); // check character
-        //mThumbText.insert(false, QChar(0x2715)); // uncheck character
-        mThumbText.insert(true, "");
-        mThumbText.insert(false, "");
         mOpacity = 1.0;
     }
-}
 
+    // display the icons on the knob
+    if (showIcons)
+    {
+        mThumbText.insert(true, QChar(0x2713));
+        mThumbText.insert(false, QChar(0x2715));
+    }
+    else
+    {
+        mThumbText.insert(true, "");
+        mThumbText.insert(false, "");
+    }
+}
 
 ToggleButton::~ToggleButton()
 {
     delete mAnimation;
+}
+
+void ToggleButton::overrideTrackColor(bool checked, QColor color)
+{
+    mTrackColor.insert(checked, color);
+}
+
+void ToggleButton::overrideThumbColor(bool checked, QColor color)
+{
+    mThumbColor.insert(checked, color);
+}
+
+void ToggleButton::overrideTextColor(bool checked, QColor color)
+{
+    mTextColor.insert(checked, color);
+}
+
+void ToggleButton::overrideOpacity(int opacity)
+{
+    mOpacity = opacity;
 }
 
 QSize ToggleButton::sizeHint() const
@@ -67,8 +86,7 @@ QSize ToggleButton::sizeHint() const
 void ToggleButton::paintEvent(QPaintEvent *)
 {
     QPainter p(this);
-    QPainter::RenderHints m_paintFlags = QPainter::RenderHints(QPainter::Antialiasing |
-        QPainter::TextAntialiasing);
+    QPainter::RenderHints m_paintFlags = QPainter::RenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing);
     p.setRenderHints(m_paintFlags, true);
     p.setPen(Qt::NoPen);
     bool check = isChecked();
@@ -105,25 +123,15 @@ void ToggleButton::paintEvent(QPaintEvent *)
     p.setPen(textColor);
     p.setOpacity(textOpacity);
     QFont font = p.font();
-    font.setPixelSize(1.5*mThumbRadius);
+    font.setPixelSize(.8 * mThumbRadius);
     p.setFont(font);
 
-
-    // Since the antialiasasing provided by the drawText function is incompetent,
-    // DrawPath function preferred. But since the drawPath function is not capable of aligment,
-    // Pixel offsets calculated to provide aligment.
-    QPainterPath textPath;
-    qreal pixelOffset = (qreal)mThumbRadius * (1 - 1 / 1.414);
-    textPath.addText(mOffset - mThumbRadius + pixelOffset, mBaseOffset + mThumbRadius - pixelOffset, font, mThumbText.value(check));
-    p.drawPath(textPath);
-
-
-    /*p.drawText(QRectF(mOffset - mThumbRadius,
+    p.drawText(QRectF(mOffset - mThumbRadius,
         mBaseOffset - mThumbRadius,
         2 * mThumbRadius,
         2 * mThumbRadius),
         Qt::AlignCenter,
-        mThumbText.value(check));*/
+        mThumbText.value(check));
 }
 
 void ToggleButton::resizeEvent(QResizeEvent* e)
