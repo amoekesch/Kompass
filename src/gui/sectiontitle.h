@@ -1,9 +1,9 @@
 #ifndef SECTIONTITLE_H
 #define SECTIONTITLE_H
 
-#import <QHBoxLayout>
-#import <QLabel>
-#import <QWidget>
+#include <QHBoxLayout>
+#include <QLabel>
+#include <QWidget>
 
 class SectionTitle : public QWidget
 {
