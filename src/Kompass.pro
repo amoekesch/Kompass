@@ -12,6 +12,7 @@ SOURCES += \
     gui/clickablelabel.cpp \
     gui/kompass.cpp \
     gui/kompasswindow.cpp \
+    gui/sectiontitle.cpp \
     gui/settings.cpp \
     gui/togglebutton.cpp \
     launchverification.cpp \
@@ -21,6 +22,7 @@ HEADERS += \
     gui/clickablelabel.h \
     gui/kompass.h \
     gui/kompasswindow.h \
+    gui/sectiontitle.h \
     gui/settings.h \
     gui/togglebutton.h \
     launchverification.h

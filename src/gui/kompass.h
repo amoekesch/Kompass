@@ -4,23 +4,25 @@
 #include <QAction>
 #include <QErrorMessage>
 #include <QGridLayout>
-#include <QGroupBox>
 #include <QLabel>
+#include <QLine>
 #include <QLineEdit>
 #include <QListView>
 #include <QListWidget>
-#include <QMainWindow>
 #include <QMenu>
 #include <QMessageBox>
 #include <QProcess>
 #include <QPushButton>
-#include <QStatusBar>
+#include <QStackedWidget>
 #include <QStringListModel>
 #include <QSystemTrayIcon>
 #include <QTimer>
 #include <QWidgetAction>
+#include "clickablelabel.h"
 #include "kompasswindow.h"
+#include "sectiontitle.h"
 #include "settings.h"
+#include "togglebutton.h"
 
 QT_BEGIN_NAMESPACE
     namespace Ui { class Kompass;}
@@ -48,22 +50,26 @@ class Kompass : public QObject
 
         // ui components
         KompassWindow *ui;
+        QStackedWidget *stackMain;
+        ClickableLabel *mnStatus;
+        ClickableLabel *mnTypes;
+        ClickableLabel *mnCountries;
         QListView *lstServersByType;
-        QListView *lstServersByCountry;
-        QLabel *lblStatusConnection;
-        QLabel *lblStatusServer;
-        QLabel *lblStatusCity;
-        QLabel *lblStatusCountry;
-        QLabel *lblStatusProtocol;
-        QLabel *lblStatusUploaded;
-        QLabel *lblStatusDownloaded;
-        QLabel *lblStatusUptime;
-        QLineEdit *txtStatus;
+        QListView *lstServersByCountry;;
+        ToggleButton *tbStatus;
+        ToggleButton *tbConnectType;
+        ToggleButton *tbConnectCountry;
+        QLineEdit *txtStatusServer;
+        QLineEdit *txtStatusCity;
+        QLineEdit *txtStatusCountry;
+        QLineEdit *txtStatusProtocol;
+        QLineEdit *txtStatusUploaded;
+        QLineEdit *txtStatusDownloaded;
+        QLineEdit *txtStatusUptime;
         QLineEdit *txtFilterType;
         QLineEdit *txtFilterCountry;
-        QPushButton *pbDisconnect;
-        QPushButton *pbConnectType;
-        QPushButton *pbConnectCountry;
+        QLineEdit *txtUsername;
+        QLineEdit *txtLicense;
         QPushButton *pbQuit;
         QPushButton *pbMinimize;
         QPushButton *pbSettings;
@@ -88,6 +94,7 @@ class Kompass : public QObject
         void setupUi();
         void setupTray();
         void setupData();
+        void setupDataAccount();
         void setupDataTypes();
         void setupDataCountries();
         void setupStatusMonitor();

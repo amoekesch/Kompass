@@ -24,83 +24,140 @@ void Kompass::setupUi()
 {
     /**
      * -------------------------------------------
-     *  create status panel
+     * create status widget
      */
 
-    txtStatus = new QLineEdit();
-    txtStatus->setText(tr("statusDisconnected"));
-    txtStatus->setEnabled(false);
-
-    pbDisconnect = new QPushButton();
-    pbDisconnect->setEnabled(false);
-    pbDisconnect->setText(tr("pbDisconnect"));
-    pbDisconnect->setStyleSheet("font-weight: normal;");
-    pbDisconnect->setMinimumWidth(140);
-    pbDisconnect->setIcon(QIcon::fromTheme("network-vpn-disconnected-symbolic"));
-    QObject::connect(pbDisconnect, &QPushButton::clicked, [this]()
-    {
-        this->disconnectVpn();
+    QLabel *lblStatus = new QLabel(tr("lblStatus"));
+    lblStatus->setStyleSheet("font-size: 22px; font-weight: bold; color: " + lblStatus->palette().highlight().color().name() + ";");
+    tbStatus = new ToggleButton(16, 20, true);
+    tbStatus->overrideTextColor(true, QColor::fromRgb(180, 239, 180));
+    tbStatus->overrideTrackColor(true, QColor::fromRgb(180, 239, 180));
+    tbStatus->overrideThumbColor(true, QColor::fromRgb(58, 206, 58));
+    tbStatus->overrideTextColor(false, QColor::fromRgb(236, 180, 180));
+    tbStatus->overrideTrackColor(false, QColor::fromRgb(236, 180, 180));
+    tbStatus->overrideThumbColor(false, QColor::fromRgb(206, 58, 58));
+    tbStatus->overrideOpacity(1);
+    tbStatus->setEnabled(false);
+    QObject::connect(tbStatus, &ToggleButton::clicked, [this]() {
+        if (tbStatus->isChecked())
+        {
+            connectVpn(QStringList());
+        }
+        else
+        {
+            disconnectVpn();
+        }
     });
+    QHBoxLayout *layoutConnect = new QHBoxLayout();
+    layoutConnect->setContentsMargins(0, 0, 0, 50);
+    layoutConnect->addWidget(lblStatus);
+    layoutConnect->addStretch(1);
+    layoutConnect->addWidget(tbStatus);
+
+    SectionTitle *titleConnnectionStatus = new SectionTitle();
+    titleConnnectionStatus->setTitle(tr("titleConnectionStatus"));
+
+    SectionTitle *titleAccountDetails = new SectionTitle();
+    titleAccountDetails->setTitle(tr("titleAccountDetails"));
 
     QLabel *lblServer = new QLabel(tr("lblServer"));
-    lblServer->setStyleSheet("font-weight: normal;");
-    QLabel *lblCity = new QLabel(tr("lblCity"));
-    lblCity->setStyleSheet("font-weight: normal;");
-    QLabel *lblCountry = new QLabel(tr("lblCountry"));
-    lblCountry->setStyleSheet("font-weight: normal;");
-    QLabel *lblProtocol = new QLabel(tr("lblProtocol"));
-    lblProtocol->setStyleSheet("font-weight: normal;");
-    QLabel *lblUploaded = new QLabel(tr("lblUploaded"));
-    lblUploaded->setStyleSheet("font-weight: normal;");
-    QLabel *lblDownloaded = new QLabel(tr("lblDownloaded"));
-    lblDownloaded->setStyleSheet("font-weight: normal;");
-    QLabel *lblUptime = new QLabel(tr("lblUptime"));
-    lblUptime->setStyleSheet("font-weight: normal;");
+    lblServer->setStyleSheet("font-weight: bold;");
+    txtStatusServer = new QLineEdit("--");
+    txtStatusServer->setEnabled(false);
+    txtStatusServer->setStyleSheet("color: " + lblServer->palette().text().color().name() + ";");
 
-    lblStatusServer = new QLabel("--");
-    lblStatusServer->setStyleSheet("font-weight: normal;");
-    lblStatusCity = new QLabel("--");
-    lblStatusCity->setStyleSheet("font-weight: normal;");
-    lblStatusCountry = new QLabel("--");
-    lblStatusCountry->setStyleSheet("font-weight: normal;");
-    lblStatusProtocol = new QLabel("--");
-    lblStatusProtocol->setStyleSheet("font-weight: normal;");
-    lblStatusUploaded = new QLabel("--");
-    lblStatusUploaded->setStyleSheet("font-weight: normal;");
-    lblStatusDownloaded = new QLabel("--");
-    lblStatusDownloaded->setStyleSheet("font-weight: normal;");
-    lblStatusUptime = new QLabel("--");
-    lblStatusUptime->setStyleSheet("font-weight: normal;");
+    QLabel *lblCity = new QLabel(tr("lblCity"));
+    lblCity->setStyleSheet("font-weight: bold;");
+    txtStatusCity = new QLineEdit("--");
+    txtStatusCity->setEnabled(false);
+    txtStatusCity->setStyleSheet("color: " + lblCity->palette().text().color().name() + ";");
+
+    QLabel *lblCountry = new QLabel(tr("lblCountry"));
+    lblCountry->setStyleSheet("font-weight: bold;");
+    txtStatusCountry = new QLineEdit("--");
+    txtStatusCountry->setEnabled(false);
+    txtStatusCountry->setStyleSheet("color: " + lblCountry->palette().text().color().name() + ";");
+
+    QLabel *lblProtocol = new QLabel(tr("lblProtocol"));
+    lblProtocol->setStyleSheet("font-weight: bold;");
+    txtStatusProtocol = new QLineEdit("--");
+    txtStatusProtocol->setEnabled(false);
+    txtStatusProtocol->setStyleSheet("color: " + lblProtocol->palette().text().color().name() + ";");
+
+    QLabel *lblUploaded = new QLabel(tr("lblUploaded"));
+    lblUploaded->setStyleSheet("font-weight: bold;");
+    txtStatusUploaded = new QLineEdit("--");
+    txtStatusUploaded->setEnabled(false);
+    txtStatusUploaded->setStyleSheet("color: " + lblUploaded->palette().text().color().name() + ";");
+
+    QLabel *lblDownloaded = new QLabel(tr("lblDownloaded"));
+    lblDownloaded->setStyleSheet("font-weight: bold;");
+    txtStatusDownloaded = new QLineEdit("--");
+    txtStatusDownloaded->setEnabled(false);
+    txtStatusDownloaded->setStyleSheet("color: " + lblDownloaded->palette().text().color().name() + ";");
+
+    QLabel *lblUptime = new QLabel(tr("lblUptime"));
+    lblUptime->setStyleSheet("font-weight: bold;");
+    txtStatusUptime = new QLineEdit("--");
+    txtStatusUptime->setEnabled(false);
+    txtStatusUptime->setStyleSheet("color: " + lblUptime->palette().text().color().name() + ";");
+
+    QLabel *lblUsername = new QLabel(tr("lblUsername"));
+    lblUsername->setStyleSheet("font-weight: bold;");
+    txtUsername = new QLineEdit("--");
+    txtUsername->setEnabled(false);
+    txtUsername->setStyleSheet("color: " + lblUsername->palette().text().color().name() + ";");
+
+    QLabel *lblLicense = new QLabel(tr("lblLicense"));
+    lblLicense->setStyleSheet("font-weight: bold;");
+    txtLicense = new QLineEdit("--");
+    txtLicense->setEnabled(false);
+    txtLicense->setStyleSheet("color: " + lblLicense->palette().text().color().name() + ";");
+
+    QLabel *lblVersion = new QLabel(tr("appTitle") + " " + tr("appVersion"));
+    lblVersion->setEnabled(false);
+    lblVersion->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+    lblVersion->setAlignment(Qt::AlignRight);
 
     QGridLayout *layoutStatus = new QGridLayout();
-    layoutStatus->addWidget(txtStatus, 0, 0, 1, 2);
-    layoutStatus->addWidget(pbDisconnect, 0, 2);
-    layoutStatus->addWidget(lblServer, 1, 0);
-    layoutStatus->addWidget(lblStatusServer, 1, 1, 1, 2);
-    layoutStatus->addWidget(lblCity, 2, 0);
-    layoutStatus->addWidget(lblStatusCity, 2, 1, 1, 2);
-    layoutStatus->addWidget(lblCountry, 3, 0);
-    layoutStatus->addWidget(lblStatusCountry, 3, 1, 1, 2);
-    layoutStatus->addWidget(lblProtocol, 4, 0);
-    layoutStatus->addWidget(lblStatusProtocol, 4, 1, 1, 2);
-    layoutStatus->addWidget(lblUploaded, 5, 0);
-    layoutStatus->addWidget(lblStatusUploaded, 5, 1, 1, 2);
-    layoutStatus->addWidget(lblDownloaded, 6, 0);
-    layoutStatus->addWidget(lblStatusDownloaded, 6, 1, 1, 2);
-    layoutStatus->addWidget(lblUptime, 7, 0);
-    layoutStatus->addWidget(lblStatusUptime, 7, 1, 1, 2);
+    layoutStatus->setContentsMargins(0, 0, 0, 0);
+    layoutStatus->addItem(layoutConnect, 0, 0, 1, 3);
+    layoutStatus->addWidget(titleConnnectionStatus, 1, 0, 1, 3);
+    layoutStatus->addWidget(lblServer, 2, 0);
+    layoutStatus->addWidget(txtStatusServer, 2, 1, 1, 2);
+    layoutStatus->addWidget(lblCity, 3, 0);
+    layoutStatus->addWidget(txtStatusCity, 3, 1, 1, 2);
+    layoutStatus->addWidget(lblCountry, 4, 0);
+    layoutStatus->addWidget(txtStatusCountry, 4, 1, 1, 2);
+    layoutStatus->addWidget(lblProtocol, 5, 0);
+    layoutStatus->addWidget(txtStatusProtocol, 5, 1, 1, 2);
+    layoutStatus->addWidget(lblUploaded, 6, 0);
+    layoutStatus->addWidget(txtStatusUploaded, 6, 1, 1, 2);
+    layoutStatus->addWidget(lblDownloaded, 7, 0);
+    layoutStatus->addWidget(txtStatusDownloaded, 7, 1, 1, 2);
+    layoutStatus->addWidget(lblUptime, 8, 0);
+    layoutStatus->addWidget(txtStatusUptime, 8, 1, 1, 2);
+    layoutStatus->addItem(new QSpacerItem(0, 30, QSizePolicy::MinimumExpanding, QSizePolicy::Fixed), 9, 0, 1, 3);
+    layoutStatus->addWidget(titleAccountDetails, 10, 0, 1, 3);
+    layoutStatus->addWidget(lblUsername, 11, 0);
+    layoutStatus->addWidget(txtUsername, 11, 1, 1, 2);
+    layoutStatus->addWidget(lblLicense, 12, 0);
+    layoutStatus->addWidget(txtLicense, 12, 1, 1, 2);
+    layoutStatus->addWidget(lblVersion, 14, 0, 1, 3);
     layoutStatus->setColumnStretch(1, 1);
-    layoutStatus->setColumnMinimumWidth(0, 120);
+    layoutStatus->setRowStretch(13, 1);
+    layoutStatus->setColumnMinimumWidth(0, 130);
 
-    QGroupBox *boxStatus = new QGroupBox();
-    boxStatus->setTitle(tr("boxHeaderStatus"));
-    boxStatus->setStyleSheet("font-weight: bold;");
-    boxStatus->setLayout(layoutStatus);
+    QWidget *wxStatus = new QWidget();
+    wxStatus->setLayout(layoutStatus);
 
     /**
      * -------------------------------------------
-     *  create connection box: types
+     * create types widget
      */
+
+    SectionTitle *titleConnnectionType = new SectionTitle();
+    titleConnnectionType->setTitle(tr("titleConnnectionType"));
 
     serverListByType = new QVector<QString>();
     serverListByTypeModel = new QStringListModel();
@@ -110,7 +167,7 @@ void Kompass::setupUi()
     lstServersByType->setStyleSheet("font-weight: normal;");
     QObject::connect(lstServersByType, &QListView::clicked, [this] {
         QModelIndexList indexes = this->lstServersByType->selectionModel()->selectedIndexes();
-        pbConnectType->setEnabled(indexes.count() > 0);
+        tbConnectType->setEnabled(indexes.count() > 0);
     });
 
     txtFilterType = new QLineEdit();
@@ -136,33 +193,57 @@ void Kompass::setupUi()
         this->serverListByTypeModel->setStringList(*filteredServerList);
     });
 
-    pbConnectType = new QPushButton();
-    pbConnectType->setEnabled(false);
-    pbConnectType->setText(tr("pbConnectType"));
-    pbConnectType->setStyleSheet("font-weight: normal;");
-    pbConnectType->setMinimumWidth(140);
-    pbConnectType->setIcon(QIcon::fromTheme("network-vpn-symbolic"));
-    QObject::connect(pbConnectType, &QPushButton::clicked, [this]()
-    {
-        QString type = this->lstServersByType->currentIndex().data().toString();
-        type = type.replace(" ", "_");
-        connectVpn(QStringList() << "connect" << type);
+    QLabel *lblConnectType = new QLabel(tr("lblConnectType"));
+    lblConnectType->setStyleSheet("font-size: 22px; font-weight: bold; color: " + lblStatus->palette().highlight().color().name() + ";");
+    tbConnectType = new ToggleButton(16, 20, true);
+    tbConnectType->overrideTextColor(true, QColor::fromRgb(180, 239, 180));
+    tbConnectType->overrideTrackColor(true, QColor::fromRgb(180, 239, 180));
+    tbConnectType->overrideThumbColor(true, QColor::fromRgb(58, 206, 58));
+    tbConnectType->overrideTextColor(false, QColor::fromRgb(236, 180, 180));
+    tbConnectType->overrideTrackColor(false, QColor::fromRgb(236, 180, 180));
+    tbConnectType->overrideThumbColor(false, QColor::fromRgb(206, 58, 58));
+    tbConnectType->overrideOpacity(1);
+    tbConnectType->setEnabled(false);
+    QObject::connect(tbConnectType, &ToggleButton::clicked, [this]() {
+        tbConnectType->setDisabled(true);
+        if (tbConnectType->isChecked())
+        {
+            QString type = this->lstServersByType->currentIndex().data().toString();
+            type = type.replace(" ", "_");
+            connectVpn(QStringList() << "connect" << type);
+            mnStatus->setStyleSheet("font-weight: normal; color: " + this->ui->palette().light().color().name() + "; background: " + this->ui->palette().highlight().color().name() + ";");
+            mnTypes->setStyleSheet("font-weight: normal; color: " + this->ui->palette().highlight().color().name() + "; background: " + this->ui->palette().light().color().name() + ";");
+            stackMain->setCurrentIndex(0);
+            tbConnectType->setChecked(true);
+        }
+        else
+        {
+            disconnectVpn();
+        }
     });
+    QHBoxLayout *layoutConnectType = new QHBoxLayout();
+    layoutConnectType->setContentsMargins(0, 0, 0, 50);
+    layoutConnectType->addWidget(lblConnectType);
+    layoutConnectType->addStretch(1);
+    layoutConnectType->addWidget(tbConnectType);
 
-    QGridLayout *layoutTypes = new QGridLayout();
-    layoutTypes->addWidget(lstServersByType, 0, 0, 1, 2);
-    layoutTypes->addWidget(txtFilterType, 1, 0);
-    layoutTypes->addWidget(pbConnectType, 1, 1);
+    QVBoxLayout *layoutTypes = new QVBoxLayout();
+    layoutTypes->setContentsMargins(0, 0, 0, 0);
+    layoutTypes->addItem(layoutConnectType);
+    layoutTypes->addWidget(titleConnnectionType);
+    layoutTypes->addWidget(lstServersByType);
+    layoutTypes->addWidget(txtFilterType);
 
-    QGroupBox *boxTypes = new QGroupBox();
-    boxTypes->setTitle(tr("boxHeaderTypes"));
-    boxTypes->setStyleSheet("font-weight: bold;");
-    boxTypes->setLayout(layoutTypes);
+    QWidget *wxTypes = new QWidget();
+    wxTypes->setLayout(layoutTypes);
 
     /**
      * -------------------------------------------
-     *  create connection box: countries
+     * create countries widget
      */
+
+    SectionTitle *titleConnnectionCountry = new SectionTitle();
+    titleConnnectionCountry->setTitle(tr("titleConnnectionCountry"));
 
     serverListByCountry = new QVector<QString>();
     serverListByCountryModel = new QStringListModel();
@@ -172,8 +253,7 @@ void Kompass::setupUi()
     lstServersByCountry->setStyleSheet("font-weight: normal;");
     QObject::connect(lstServersByCountry, &QListView::clicked, [this] {
         QModelIndexList indexes = this->lstServersByCountry->selectionModel()->selectedIndexes();
-        QString country = this->lstServersByCountry->currentIndex().data().toString();
-        pbConnectCountry->setEnabled(indexes.count() > 0);
+        tbConnectCountry->setEnabled(indexes.count() > 0);
     });
 
     txtFilterCountry = new QLineEdit();
@@ -199,64 +279,76 @@ void Kompass::setupUi()
         this->serverListByCountryModel->setStringList(*filteredServerList);
     });
 
-    pbConnectCountry = new QPushButton();
-    pbConnectCountry->setEnabled(false);
-    pbConnectCountry->setText(tr("pbConnectCountry"));
-    pbConnectCountry->setStyleSheet("font-weight: normal;");
-    pbConnectCountry->setMinimumWidth(140);
-    pbConnectCountry->setIcon(QIcon::fromTheme("network-vpn-symbolic"));
-    QObject::connect(pbConnectCountry, &QPushButton::clicked, [this]()
-    {
-        QString country = this->lstServersByCountry->currentIndex().data().toString();
-        country = country.replace(" ", "_");
-        connectVpn(QStringList() << "connect" << country);
+    QLabel *lblConnectCountry = new QLabel(tr("lblConnectCountry"));
+    lblConnectCountry->setStyleSheet("font-size: 22px; font-weight: bold; color: " + lblStatus->palette().highlight().color().name() + ";");
+    tbConnectCountry = new ToggleButton(16, 20, true);
+    tbConnectCountry->overrideTextColor(true, QColor::fromRgb(180, 239, 180));
+    tbConnectCountry->overrideTrackColor(true, QColor::fromRgb(180, 239, 180));
+    tbConnectCountry->overrideThumbColor(true, QColor::fromRgb(58, 206, 58));
+    tbConnectCountry->overrideTextColor(false, QColor::fromRgb(236, 180, 180));
+    tbConnectCountry->overrideTrackColor(false, QColor::fromRgb(236, 180, 180));
+    tbConnectCountry->overrideThumbColor(false, QColor::fromRgb(206, 58, 58));
+    tbConnectCountry->overrideOpacity(1);
+    tbConnectCountry->setEnabled(false);
+    QObject::connect(tbConnectCountry, &ToggleButton::clicked, [this]() {
+        tbConnectCountry->setDisabled(true);
+        if (tbConnectCountry->isChecked())
+        {
+            QString country = this->lstServersByCountry->currentIndex().data().toString();
+            country = country.replace(" ", "_");
+            connectVpn(QStringList() << "connect" << country);
+            mnStatus->setStyleSheet("font-weight: normal; color: " + this->ui->palette().light().color().name() + "; background: " + this->ui->palette().highlight().color().name() + ";");
+            mnCountries->setStyleSheet("font-weight: normal; color: " + this->ui->palette().highlight().color().name() + "; background: " + this->ui->palette().light().color().name() + ";");
+            stackMain->setCurrentIndex(0);
+            tbConnectCountry->setChecked(true);
+        }
+        else
+        {
+            disconnectVpn();
+        }
     });
+    QHBoxLayout *layoutConnectCountry = new QHBoxLayout();
+    layoutConnectCountry->setContentsMargins(0, 0, 0, 50);
+    layoutConnectCountry->addWidget(lblConnectCountry);
+    layoutConnectCountry->addStretch(1);
+    layoutConnectCountry->addWidget(tbConnectCountry);
 
-    QGridLayout *layoutCountries = new QGridLayout();
-    layoutCountries->addWidget(lstServersByCountry, 0, 0, 1, 2);
-    layoutCountries->addWidget(txtFilterCountry, 1, 0);
-    layoutCountries->addWidget(pbConnectCountry, 1, 1);
+    QVBoxLayout *layoutCountries = new QVBoxLayout();
+    layoutCountries->setContentsMargins(0, 0, 0, 0);
+    layoutCountries->addItem(layoutConnectCountry);
+    layoutCountries->addWidget(titleConnnectionCountry);
+    layoutCountries->addWidget(lstServersByCountry);
+    layoutCountries->addWidget(txtFilterCountry);
 
-    QGroupBox *boxCountries = new QGroupBox();
-    boxCountries->setTitle(tr("boxHeaderCountries"));
-    boxCountries->setStyleSheet("font-weight: bold;");
-    boxCountries->setLayout(layoutCountries);
-
-    /**
-     * -------------------------------------------
-     *  combine types and countries into layout
-     */
-
-    QHBoxLayout *layoutConnectionTypes = new QHBoxLayout();
-    layoutConnectionTypes->setContentsMargins(0, 0, 0, 0);
-    layoutConnectionTypes->addWidget(boxTypes);
-    layoutConnectionTypes->addSpacing(20);
-    layoutConnectionTypes->addWidget(boxCountries);
+    QWidget *wxCountries = new QWidget();
+    wxCountries->setLayout(layoutCountries);
 
     /**
      * -------------------------------------------
-     *  create dialog button controls
+     *  Button Controls
      */
 
     pbQuit = new QPushButton();
-    pbQuit->setText(tr("pbQuit"));
-    pbQuit->setMinimumWidth(160);
+    pbQuit->setToolTip(tr("pbQuitToolTip"));
+    pbQuit->setFlat(true);
     pbQuit->setIcon(QIcon::fromTheme("application-exit"));
     QObject::connect(pbQuit, &QPushButton::clicked, [this]()
     {
         this->quit(EXIT_CODE_NORMAL);
     });
+
     pbMinimize = new QPushButton();
-    pbMinimize->setText(tr("pbMinimize"));
-    pbMinimize->setMinimumWidth(160);
+    pbMinimize->setToolTip(tr("pbMinimizeToolTip"));
+    pbMinimize->setFlat(true);
     pbMinimize->setIcon(QIcon::fromTheme("system-tray-symbolic"));
     QObject::connect(pbMinimize, &QPushButton::clicked, [this]()
     {
         this->hideUi();
     });
+
     pbSettings = new QPushButton();
-    pbSettings->setText(tr("pbSettings"));
-    pbSettings->setMinimumWidth(160);
+    pbSettings->setToolTip(tr("pbSettingsToolTip"));
+    pbSettings->setFlat(true);
     pbSettings->setIcon(QIcon::fromTheme("settings"));
     QObject::connect(pbSettings, &QPushButton::clicked, [this]()
     {
@@ -266,7 +358,7 @@ void Kompass::setupUi()
         }
         updatingStatus = true;
         Settings *dlgSettings = new Settings();
-        dlgSettings->setAttribute( Qt::WA_DeleteOnClose );
+        dlgSettings->setAttribute(Qt::WA_DeleteOnClose);
         dlgSettings->activateWindow();
         dlgSettings->raise();
         dlgSettings->exec();
@@ -278,57 +370,111 @@ void Kompass::setupUi()
         updatingStatus = false;
     });
 
-    QHBoxLayout *layoutDialogControls = new QHBoxLayout();
-    layoutDialogControls->setContentsMargins(0, 0, 0, 0);
-    layoutDialogControls->addWidget(pbMinimize);
-    layoutDialogControls->addSpacing(10);
-    layoutDialogControls->addWidget(pbSettings);
-    layoutDialogControls->addStretch(1);
-    layoutDialogControls->addWidget(pbQuit);
+    QHBoxLayout *layoutButtons = new QHBoxLayout();
+    layoutButtons->setContentsMargins(0, 0, 0, 0);
+    layoutButtons->addStretch(1);
+    layoutButtons->addWidget(pbMinimize);
+    layoutButtons->addSpacing(20);
+    layoutButtons->addWidget(pbSettings);
+    layoutButtons->addSpacing(20);
+    layoutButtons->addWidget(pbQuit);
+    layoutButtons->addStretch(1);
 
     /**
      * -------------------------------------------
-     *  create the main widget
+     *  create main application window
      */
-
-    QVBoxLayout *layoutMain = new QVBoxLayout();
-    layoutMain->setContentsMargins(20, 15, 20, 15);
-    layoutMain->addWidget(boxStatus);
-    layoutMain->addSpacing(20);
-    layoutMain->addItem(layoutConnectionTypes);
-    layoutMain->addSpacing(20);
-    layoutMain->addItem(layoutDialogControls);
-
-    /**
-     * -------------------------------------------
-     * create a status bar
-     */
-
-    lblStatusConnection = new QLabel("Disconnected");
-    lblStatusConnection->setEnabled(false);
-
-    QLabel *lblVersion = new QLabel(tr("appTitle") + " " + tr("appVersion"));
-    lblVersion->setEnabled(false);
-
-    QStatusBar *statusBar = new QStatusBar();
-    statusBar->setContentsMargins(3, 0, 0, 0);
-    statusBar->addPermanentWidget(lblStatusConnection, 1);
-    statusBar->addPermanentWidget(lblVersion);
-
-    /**
-     * -------------------------------------------
-     * create application widget
-     */
-    QVBoxLayout *layoutApplication = new QVBoxLayout();
-    layoutApplication->setContentsMargins(0, 0, 0, 0);
-    layoutApplication->addItem(layoutMain);
-    layoutApplication->addWidget(statusBar);
-
-    QWidget *widget = new QWidget();
-    widget->setLayout(layoutApplication);
 
     ui = new KompassWindow();
-    ui->setCentralWidget(widget);
+
+    /**
+     * -------------------------------------------
+     *  add status, types, and servers to main stack
+     */
+
+    stackMain = new QStackedWidget();
+    stackMain->setContentsMargins(0, 25, 20, 20);
+    stackMain->addWidget(wxStatus);
+    stackMain->addWidget(wxTypes);
+    stackMain->addWidget(wxCountries);
+
+    /**
+     * -------------------------------------------
+     *  add all menu elements
+     */
+
+    mnStatus = new ClickableLabel();
+    mnStatus->setText(tr("mnStatus"));
+    mnStatus->setContentsMargins(20, 10, 0, 10);
+    mnStatus->setAutoFillBackground(true);
+    mnStatus->setStyleSheet("font-weight: normal; color: " + this->ui->palette().light().color().name() + "; background: " + this->ui->palette().highlight().color().name() + ";");
+    QObject::connect(mnStatus, &ClickableLabel::clicked, [this]() {
+        mnStatus->setStyleSheet("font-weight: normal; color: " + this->ui->palette().light().color().name() + "; background: " + this->ui->palette().highlight().color().name() + ";");
+        mnTypes->setStyleSheet("font-weight: normal; color: " + this->ui->palette().highlight().color().name() + "; background: " + this->ui->palette().light().color().name() + ";");
+        mnCountries->setStyleSheet("font-weight: normal; color: " + this->ui->palette().highlight().color().name() + "; background: " + this->ui->palette().light().color().name() + ";");
+        stackMain->setCurrentIndex(0);
+    });
+
+    mnTypes = new ClickableLabel();
+    mnTypes->setText(tr("mnTypes"));
+    mnTypes->setContentsMargins(20, 10, 0, 10);
+    mnTypes->setAutoFillBackground(true);
+    mnTypes->setStyleSheet("font-weight: normal; color: " + this->ui->palette().highlight().color().name() + "; background: " + this->ui->palette().light().color().name() + ";");
+    QObject::connect(mnTypes, &ClickableLabel::clicked, [this]() {
+        mnStatus->setStyleSheet("font-weight: normal; color: " + this->ui->palette().highlight().color().name() + "; background: " + this->ui->palette().light().color().name() + ";");
+        mnTypes->setStyleSheet("font-weight: normal; color: " + this->ui->palette().light().color().name() + "; background: " + this->ui->palette().highlight().color().name() + ";");
+        mnCountries->setStyleSheet("font-weight: normal; color: " + this->ui->palette().highlight().color().name() + "; background: " + this->ui->palette().light().color().name() + ";");
+        stackMain->setCurrentIndex(1);
+    });
+
+    mnCountries = new ClickableLabel();
+    mnCountries->setText(tr("mnCountries"));
+    mnCountries->setContentsMargins(20, 10, 0, 10);
+    mnCountries->setAutoFillBackground(true);
+    mnCountries->setStyleSheet("font-weight: normal; color: " + this->ui->palette().highlight().color().name() + "; background: " + this->ui->palette().light().color().name() + ";");
+    QObject::connect(mnCountries, &ClickableLabel::clicked, [this]() {
+        mnStatus->setStyleSheet("font-weight: normal; color: " + this->ui->palette().highlight().color().name() + "; background: " + this->ui->palette().light().color().name() + ";");
+        mnTypes->setStyleSheet("font-weight: normal; color: " + this->ui->palette().highlight().color().name() + "; background: " + this->ui->palette().light().color().name() + ";");
+        mnCountries->setStyleSheet("font-weight: normal; color: " + this->ui->palette().light().color().name() + "; background: " + this->ui->palette().highlight().color().name() + ";");
+        stackMain->setCurrentIndex(2);
+    });
+
+    QVBoxLayout *layoutMenu = new QVBoxLayout();
+    layoutMenu->setContentsMargins(0, 25, 0, 20);
+    layoutMenu->addWidget(mnStatus);
+    layoutMenu->addWidget(mnTypes);
+    layoutMenu->addWidget(mnCountries);
+    layoutMenu->addStretch(1);
+    layoutMenu->addItem(layoutButtons);
+
+    QWidget *wxMenu = new QWidget();
+    wxMenu->setMinimumWidth(200);
+    wxMenu->setMaximumWidth(200);
+    wxMenu->setAutoFillBackground(true);
+    wxMenu->setStyleSheet("background: " + this->ui->palette().light().color().name() + ";");
+    wxMenu->setLayout(layoutMenu);
+
+    /**
+     * -------------------------------------------
+     *  add menu and stack to central widget
+     */
+
+    QHBoxLayout *layoutCentral = new QHBoxLayout();
+    layoutCentral->setContentsMargins(0, 0, 0, 0);
+    layoutCentral->addWidget(wxMenu);
+    layoutCentral->addSpacing(20);
+    layoutCentral->addWidget(stackMain);
+
+    QWidget *wxCentral = new QWidget();
+    wxCentral->setContentsMargins(0, 0, 0, 0);
+    wxCentral->setLayout(layoutCentral);
+
+    /**
+     * -------------------------------------------
+     *  show apllication window
+     */
+
+    ui->setCentralWidget(wxCentral);
     ui->show();
     ui->activateWindow();
     ui->raise();
@@ -419,8 +565,36 @@ void Kompass::setupTray()
  */
 void Kompass::setupData()
 {
+    setupDataAccount();
     setupDataTypes();
     setupDataCountries();
+}
+
+/**
+ * Load account details
+ * @brief Kompass::setupDataTypes
+ */
+void Kompass::setupDataAccount()
+{
+    QProcess *commandAccount = new QProcess();
+    commandAccount->start("nordvpn", QStringList() << "account");
+    commandAccount->waitForFinished();
+
+    QString outputAccount = commandAccount->readAllStandardOutput();
+    if (outputAccount != nullptr && outputAccount.length())
+    {
+        QStringList lines = outputAccount.trimmed().split(QString("\n"));
+        for (QString line : lines) {
+            if (line.trimmed().toLower().startsWith("email")) {
+                QString username = line.mid(line.indexOf(":") + 1).trimmed();
+                txtUsername->setText(username);
+            }
+            if (line.trimmed().toLower().startsWith("vpn service")) {
+                QString service = line.mid(line.indexOf(":") + 1).trimmed();
+                txtLicense->setText(service);
+            }
+        }
+    }
 }
 
 /**
@@ -449,7 +623,7 @@ void Kompass::setupDataTypes()
         lstServersByType->setSelectionMode(QAbstractItemView::SingleSelection);
         lstServersByType->selectionModel()->clearSelection();
         txtFilterType->setText(QString());
-        pbConnectType->setEnabled(false);
+        tbConnectType->setEnabled(false);
     }
 }
 
@@ -481,7 +655,7 @@ void Kompass::setupDataCountries()
         lstServersByCountry->setSelectionMode(QAbstractItemView::SingleSelection);
         lstServersByCountry->selectionModel()->clearSelection();
         txtFilterCountry->setText(QString());
-        pbConnectCountry->setEnabled(false);
+        tbConnectCountry->setEnabled(false);
     }
 }
 
@@ -732,21 +906,20 @@ void Kompass::updateUi(int status, QString vpnDetails)
             mnStatusConnection->setText(tr("statusConnecting"));
             mnStatusUploaded->setText("--");
             mnStatusDownloaded->setText("--");
-            lblStatusConnection->setText(tr("statusConnecting"));
-            txtStatus->setText(tr("statusConnecting"));
-            txtStatus->setStyleSheet("font-weight: bold; color: rgb(177, 177, 0); background: rgb(255, 255, 235); selection-background-color: rgb(255, 255, 235);");
-            lblStatusServer->setText("--");
-            lblStatusCity->setText("--");
-            lblStatusCountry->setText("--");
-            lblStatusProtocol->setText("--");
-            lblStatusUploaded->setText("--");
-            lblStatusDownloaded->setText("--");
-            lblStatusUptime->setText("--");
+            tbStatus->setChecked(false);
+            txtStatusServer->setText("--");
+            txtStatusCity->setText("--");
+            txtStatusCountry->setText("--");
+            txtStatusProtocol->setText("--");
+            txtStatusUploaded->setText("--");
+            txtStatusDownloaded->setText("--");
+            txtStatusUptime->setText("--");
             actionConnect->setEnabled(false);
             actionDisconnect->setEnabled(false);
-            pbDisconnect->setEnabled(false);
-            pbConnectType->setEnabled(false);
-            pbConnectCountry->setEnabled(false);
+            tbConnectType->setChecked(false);
+            tbConnectType->setEnabled(false);
+            tbConnectCountry->setChecked(false);
+            tbConnectCountry->setEnabled(false);
             lstServersByType->setEnabled(false);
             lstServersByCountry->setEnabled(false);
             txtFilterType->setEnabled(false);
@@ -761,66 +934,64 @@ void Kompass::updateUi(int status, QString vpnDetails)
             mnStatusConnection->setText(tr("statusDisconnected"));
             mnStatusUploaded->setText("--");
             mnStatusDownloaded->setText("--");
-            lblStatusConnection->setText(tr("statusDisconnected"));
-            txtStatus->setText(tr("statusDisconnected"));
-            txtStatus->setStyleSheet("font-weight: bold; color: rgb(177, 0, 0); background: rgb(255, 216, 216); selection-background-color: rgb(255, 216, 216);");
-            lblStatusServer->setText("--");
-            lblStatusCity->setText("--");
-            lblStatusCountry->setText("--");
-            lblStatusProtocol->setText("--");
-            lblStatusUploaded->setText("--");
-            lblStatusDownloaded->setText("--");
-            lblStatusUptime->setText("--");
+            tbStatus->setChecked(false);
+            tbStatus->setEnabled(true);
+            txtStatusServer->setText("--");
+            txtStatusCity->setText("--");
+            txtStatusCountry->setText("--");
+            txtStatusProtocol->setText("--");
+            txtStatusUploaded->setText("--");
+            txtStatusDownloaded->setText("--");
+            txtStatusUptime->setText("--");
             txtFilterType->setEnabled(true);
             txtFilterCountry->setEnabled(true);
             lstServersByType->setEnabled(true);
             lstServersByCountry->setEnabled(true);
-            pbConnectType->setEnabled(selectedTypesIndex.length() > 0);
-            pbConnectCountry->setEnabled(selectedCountriesIndex.length() > 0);
+            tbConnectType->setChecked(false);
+            tbConnectType->setEnabled(selectedTypesIndex.length() > 0);
+            tbConnectCountry->setChecked(false);
+            tbConnectCountry->setEnabled(selectedCountriesIndex.length() > 0);
             actionConnect->setEnabled(true);
             actionDisconnect->setEnabled(false);
-            pbDisconnect->setEnabled(false);
             pbSettings->setEnabled(true);
             break;
         case STATUS_CONNECTED:
             mnStatusConnection->setIcon(QIcon::fromTheme("network-vpn-symbolic"));
             mnStatusConnection->setText(tr("statusConnected"));
-            lblStatusConnection->setText(tr("statusConnected"));
-            txtStatus->setText(tr("statusConnected"));
-            txtStatus->setStyleSheet("font-weight: bold; color: rgb(33, 131, 33); background: rgb(229, 248, 229); selection-background-color: rgb(229, 248, 229);");
+            tbStatus->setChecked(true);
+            tbStatus->setEnabled(true);
             if (vpnStatus->value("server").length() > 0) {
-                lblStatusServer->setText(vpnStatus->value("server"));
+                txtStatusServer->setText(vpnStatus->value("server"));
             }
             if (vpnStatus->value("city").length() > 0) {
-                lblStatusCity->setText(vpnStatus->value("city"));
+                txtStatusCity->setText(vpnStatus->value("city"));
             }
             if (vpnStatus->value("country").length() > 0) {
-                lblStatusCountry->setText(vpnStatus->value("country"));
+                txtStatusCountry->setText(vpnStatus->value("country"));
                 mnStatusConnection->setText(tr("statusConnected") + ": " + vpnStatus->value("country"));
             }
             if (vpnStatus->value("protocol").length() > 0 && vpnStatus->value("technology").length() > 0) {
-                lblStatusProtocol->setText(vpnStatus->value("protocol") + " [" + vpnStatus->value("technology") + "]");
+                txtStatusProtocol->setText(vpnStatus->value("protocol") + " [" + vpnStatus->value("technology") + "]");
             }
             if (vpnStatus->value("uploaded").length() > 0) {
-                lblStatusUploaded->setText(vpnStatus->value("uploaded"));
+                txtStatusUploaded->setText(vpnStatus->value("uploaded"));
                 mnStatusUploaded->setText(vpnStatus->value("uploaded"));
                 mnStatusUploaded->setVisible(true);
             }
             if (vpnStatus->value("downloaded").length() > 0) {
-                lblStatusDownloaded->setText(vpnStatus->value("downloaded"));
+                txtStatusDownloaded->setText(vpnStatus->value("downloaded"));
                 mnStatusDownloaded->setText(vpnStatus->value("downloaded"));
                 mnStatusDownloaded->setVisible(true);
             }
             if (vpnStatus->value("uptime").length() > 0) {
-                lblStatusUptime->setText(vpnStatus->value("uptime"));
+                txtStatusUptime->setText(vpnStatus->value("uptime"));
                 mnStatusUptime->setText(vpnStatus->value("uptime"));
                 mnStatusUptime->setVisible(true);
             }
             actionDisconnect->setEnabled(true);
-            pbDisconnect->setEnabled(true);
             actionConnect->setEnabled(false);
-            pbConnectType->setEnabled(false);
-            pbConnectCountry->setEnabled(false);
+            tbConnectType->setEnabled(false);
+            tbConnectCountry->setEnabled(false);
             lstServersByType->setEnabled(false);
             lstServersByCountry->setEnabled(false);
             txtFilterType->setEnabled(false);
@@ -828,11 +999,11 @@ void Kompass::updateUi(int status, QString vpnDetails)
             pbSettings->setEnabled(true);
             break;
         case STATUS_DISABLED:
+            tbStatus->setEnabled(false);
             actionConnect->setEnabled(false);
             actionDisconnect->setEnabled(false);
-            pbDisconnect->setEnabled(false);
-            pbConnectType->setEnabled(false);
-            pbConnectCountry->setEnabled(false);
+            tbConnectType->setEnabled(false);
+            tbConnectCountry->setEnabled(false);
             lstServersByType->setEnabled(false);
             lstServersByCountry->setEnabled(false);
             txtFilterType->setEnabled(false);

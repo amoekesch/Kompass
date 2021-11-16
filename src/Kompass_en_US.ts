@@ -9,7 +9,31 @@
         </message>
         <message>
             <source>appVersion</source>
-            <translation>v1.0.1</translation>
+            <translation>v1.2</translation>
+        </message>
+        <message>
+            <source>mnStatus</source>
+            <translation>Connection Status</translation>
+        </message>
+        <message>
+            <source>mnTypes</source>
+            <translation>Connect Server Type</translation>
+        </message>
+        <message>
+            <source>mnCountries</source>
+            <translation>Connect to Country</translation>
+        </message>
+        <message>
+            <source>titleConnectionStatus</source>
+            <translation>Connection Status</translation>
+        </message>
+        <message>
+            <source>titleAccountDetails</source>
+            <translation>Account Details</translation>
+        </message>
+        <message>
+            <source>lblStatus</source>
+            <translation>Connected</translation>
         </message>
         <message>
             <source>lblServer</source>
@@ -40,40 +64,40 @@
             <translation> Uptime:</translation>
         </message>
         <message>
-            <source>boxHeaderStatus</source>
-            <translation>Connection Status</translation>
+            <source>lblUsername</source>
+            <translation> Username:</translation>
         </message>
         <message>
-            <source>boxHeaderTypes</source>
-            <translation>Server Types</translation>
+            <source>lblLicense</source>
+            <translation> Service:</translation>
         </message>
         <message>
-            <source>boxHeaderCountries</source>
-            <translation>Servers by Country</translation>
+            <source>pbQuitToolTip</source>
+            <translation>Quit Kompass</translation>
         </message>
         <message>
-            <source>pbQuit</source>
-            <translation>  Quit Kompass</translation>
+            <source>pbMinimizeToolTip</source>
+            <translation>Minimize to Tray</translation>
         </message>
         <message>
-            <source>pbMinimize</source>
-            <translation>  Minimize to Tray</translation>
+            <source>pbSettingsToolTip</source>
+            <translation>Kompass Settings</translation>
         </message>
         <message>
-            <source>pbSettings</source>
-            <translation>  Settings</translation>
+            <source>titleConnnectionType</source>
+            <translation>Available Server Types</translation>
         </message>
         <message>
-            <source>pbConnectType</source>
-            <translation>  Connect</translation>
+            <source>lblConnectType</source>
+            <translation>Connect Server Type</translation>
         </message>
         <message>
-            <source>pbConnectCountry</source>
-            <translation>  Connect</translation>
+            <source>titleConnnectionCountry</source>
+            <translation>Connect to Country</translation>
         </message>
         <message>
-            <source>pbDisconnect</source>
-            <translation>  Disconnect</translation>
+            <source>lblConnectCountry</source>
+            <translation>Available Countries</translation>
         </message>
         <message>
             <source>txtFilter</source>
