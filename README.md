@@ -47,4 +47,3 @@ Kompass is written in C++/QT for the KDE Plasma desktop environment and relies h
 * [KDE](https://kde.org/)
 * [QT](https://www.qt.io/) (v4.0+)
 * [NordVPN CLI](https://nordvpn.com/download/linux/) (v3.12.0+)
-* [QT Waiting Spinner](https://github.com/snowwlex/QtWaitingSpinner)
