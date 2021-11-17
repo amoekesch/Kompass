@@ -24,11 +24,11 @@ $ sudo ./installer.sh
 ```
 
 ## Usage
-**Kompass is easy to use.** Select either a VPN server type or a country to connect to, then hit the *Connect* button:
+**Kompass is easy to use.** Select either a specific VPN server type, or a country to connect to, or put your fate in the hands of NordVPN and let it decude what is the fastest server to use. Toggle the *Connect* switch and that's it.
 ![Kompass Disconnected](https://github.com/amoekesch/Kompass/raw/main/doc/kompass_disconnected.png)
-As soon as Kompass could establish a connection with the selected VPN server type or country, the user interface will show the connection status and additional connection details:
+As soon as Kompass could establish a connection with a VPN server, the user interface will show the connection status and additional connection details:
 ![Kompass Connected](https://github.com/amoekesch/Kompass/raw/main/doc/kompass_connected.png)
-Use the *Disconnect* button to disconnect from the current VPN server and use the *Minimize to Tray* button to hide the application in your system tray:
+To *Disconnect* toggle that switch once more and Kompass will disconnect your from the VPN. The *Minimize to Tray* button in the lower left corner sends Kompass to your system tray:
 
 ![Kompass Tray](https://github.com/amoekesch/Kompass/raw/main/doc/kompass_tray.png)
 
