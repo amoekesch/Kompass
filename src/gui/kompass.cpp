@@ -26,6 +26,20 @@ void Kompass::setupUi()
      * -------------------------------------------
      * create status widget
      */
+    QWidget *wxSpinner = new QWidget();
+    wxSpinner->setContentsMargins(0, 0, 30, 0);
+
+    svgSpinner = new QSvgWidget();
+    svgSpinner->load(QString(":/img/spinner.svg"));
+    svgSpinner->setFixedWidth(32);
+    svgSpinner->setFixedHeight(32);
+    svgSpinner->setGeometry(0, 0, 32, 32);
+    svgSpinner->setStyleSheet("background: transparent;");
+
+    QHBoxLayout *layoutSpinner = new QHBoxLayout();
+    layoutSpinner->setContentsMargins(0, 0, 0, 0);
+    layoutSpinner->addWidget(svgSpinner);
+    wxSpinner->setLayout(layoutSpinner);
 
     QLabel *lblStatus = new QLabel(tr("lblStatus"));
     lblStatus->setStyleSheet("font-size: 22px; font-weight: bold; color: " + lblStatus->palette().highlight().color().name() + ";");
@@ -39,19 +53,14 @@ void Kompass::setupUi()
     tbStatus->overrideOpacity(1);
     tbStatus->setEnabled(false);
     QObject::connect(tbStatus, &ToggleButton::clicked, [this]() {
-        if (tbStatus->isChecked())
-        {
-            connectVpn(QStringList());
-        }
-        else
-        {
-            disconnectVpn();
-        }
+        toggleVpn(QStringList() << "connect", tbStatus->isChecked());
     });
+
     QHBoxLayout *layoutConnect = new QHBoxLayout();
     layoutConnect->setContentsMargins(0, 0, 0, 50);
     layoutConnect->addWidget(lblStatus);
     layoutConnect->addStretch(1);
+    layoutConnect->addWidget(wxSpinner);
     layoutConnect->addWidget(tbStatus);
 
     SectionTitle *titleConnnectionStatus = new SectionTitle();
@@ -205,22 +214,15 @@ void Kompass::setupUi()
     tbConnectType->overrideOpacity(1);
     tbConnectType->setEnabled(false);
     QObject::connect(tbConnectType, &ToggleButton::clicked, [this]() {
-        tbConnectType->setDisabled(true);
-        if (tbConnectType->isChecked())
-        {
-            QString type = this->lstServersByType->currentIndex().data().toString();
-            type = type.replace(" ", "_");
-            connectVpn(QStringList() << "connect" << type);
-            mnStatus->setStyleSheet("font-weight: normal; color: " + this->ui->palette().light().color().name() + "; background: " + this->ui->palette().highlight().color().name() + ";");
-            mnTypes->setStyleSheet("font-weight: normal; color: " + this->ui->palette().highlight().color().name() + "; background: " + this->ui->palette().light().color().name() + ";");
-            stackMain->setCurrentIndex(0);
-            tbConnectType->setChecked(true);
-        }
-        else
-        {
-            disconnectVpn();
-        }
+        QString type = this->lstServersByType->currentIndex().data().toString();
+        type = type.replace(" ", "_");
+        mnStatus->setStyleSheet("font-weight: normal; color: " + this->ui->palette().light().color().name() + "; background: " + this->ui->palette().highlight().color().name() + ";");
+        mnTypes->setStyleSheet("font-weight: normal; color: " + this->ui->palette().highlight().color().name() + "; background: " + this->ui->palette().light().color().name() + ";");
+        stackMain->setCurrentIndex(0);
+        tbConnectType->setChecked(true);
+        toggleVpn(QStringList() << "connect" << type, tbConnectType->isChecked());
     });
+
     QHBoxLayout *layoutConnectType = new QHBoxLayout();
     layoutConnectType->setContentsMargins(0, 0, 0, 50);
     layoutConnectType->addWidget(lblConnectType);
@@ -291,21 +293,13 @@ void Kompass::setupUi()
     tbConnectCountry->overrideOpacity(1);
     tbConnectCountry->setEnabled(false);
     QObject::connect(tbConnectCountry, &ToggleButton::clicked, [this]() {
-        tbConnectCountry->setDisabled(true);
-        if (tbConnectCountry->isChecked())
-        {
-            QString country = this->lstServersByCountry->currentIndex().data().toString();
-            country = country.replace(" ", "_");
-            connectVpn(QStringList() << "connect" << country);
-            mnStatus->setStyleSheet("font-weight: normal; color: " + this->ui->palette().light().color().name() + "; background: " + this->ui->palette().highlight().color().name() + ";");
-            mnCountries->setStyleSheet("font-weight: normal; color: " + this->ui->palette().highlight().color().name() + "; background: " + this->ui->palette().light().color().name() + ";");
-            stackMain->setCurrentIndex(0);
-            tbConnectCountry->setChecked(true);
-        }
-        else
-        {
-            disconnectVpn();
-        }
+        QString country = this->lstServersByCountry->currentIndex().data().toString();
+        country = country.replace(" ", "_");
+        mnStatus->setStyleSheet("font-weight: normal; color: " + this->ui->palette().light().color().name() + "; background: " + this->ui->palette().highlight().color().name() + ";");
+        mnCountries->setStyleSheet("font-weight: normal; color: " + this->ui->palette().highlight().color().name() + "; background: " + this->ui->palette().light().color().name() + ";");
+        stackMain->setCurrentIndex(0);
+        tbConnectCountry->setChecked(true);
+        toggleVpn(QStringList() << "connect" << country, tbConnectCountry->isChecked());
     });
     QHBoxLayout *layoutConnectCountry = new QHBoxLayout();
     layoutConnectCountry->setContentsMargins(0, 0, 0, 50);
@@ -495,13 +489,13 @@ void Kompass::setupTray()
     // create connect menu item
     actionConnect = new QAction(tr("trayActionConnect"), trayIcon);
     QObject::connect(actionConnect, &QAction::triggered, [this]() {
-        connectVpn(QStringList());
+        toggleVpn(QStringList() << "connect", true);
     });
 
     // create connect menu item
     actionDisconnect = new QAction(tr("trayActionDisconnect"), trayIcon);
     QObject::connect(actionDisconnect, &QAction::triggered, [this]() {
-        disconnectVpn();
+        toggleVpn(QStringList(), false);
     });
 
     // create show menu item
@@ -669,7 +663,7 @@ void Kompass::setupStatusMonitor()
     QTimer *statusMonitor = new QTimer();
     statusMonitor->start(2000);
     QObject::connect(statusMonitor, &QTimer::timeout, [this]() {
-        if (this->updatingStatus || this->currentStatus == STATUS_CONNECTING)
+        if (this->updatingStatus || this->currentStatus == STATUS_CONNECTING  || this->currentStatus == STATUS_DISCONNECTING)
         {
             // skip
             return;
@@ -693,16 +687,86 @@ void Kompass::setupStatusMonitor()
 }
 
 /**
+ * dis-/connects theVPN
+ * @brief Kompass::toggleVpn
+ * @param commands
+ */
+void Kompass::toggleVpn(QStringList commands, bool connect)
+{
+
+    updateUi(Kompass::STATUS_DISABLED);
+    svgSpinner->setVisible(true);
+
+    bool connected = false;
+    ConnectionResult *cnResult = new ConnectionResult();
+
+    if (connect)
+    {
+        updateUi(Kompass::STATUS_CONNECTING);
+        connectVpn(*&cnResult, commands);
+        connected = cnResult->isSuccessful();
+
+        if (!connected && cnResult->getResult().trimmed().length() > 0)
+        {
+            QMessageBox msg = QMessageBox();
+            msg.setWindowIcon(QIcon::fromTheme("compass"));
+            msg.setWindowTitle(tr("appTitle"));
+            msg.setText(tr("msgErrorConnecting") + cnResult->getResult().trimmed());
+            msg.setIcon(QMessageBox::Warning);
+            msg.setDefaultButton(QMessageBox::Ok);
+            msg.setStandardButtons(QMessageBox::Ok);
+            msg.setWindowModality(Qt::WindowModality::ApplicationModal);
+            msg.activateWindow();
+            msg.show();
+            msg.exec();
+        }
+    }
+    else
+    {
+        updateUi(Kompass::STATUS_DISCONNECTING);
+        disconnectVpn(*&cnResult);
+        connected = !cnResult->isSuccessful();
+
+        if (connected && cnResult->getResult().trimmed().length() > 0)
+        {
+            QMessageBox msg = QMessageBox();
+            msg.setWindowIcon(QIcon::fromTheme("compass"));
+            msg.setWindowTitle(tr("appTitle"));
+            msg.setText(tr("msgErrorDisconnecting") + cnResult->getResult().trimmed());
+            msg.setIcon(QMessageBox::Warning);
+            msg.setDefaultButton(QMessageBox::Ok);
+            msg.setStandardButtons(QMessageBox::Ok);
+            msg.setWindowModality(Qt::WindowModality::ApplicationModal);
+            msg.activateWindow();
+            msg.show();
+            msg.exec();
+        }
+    }
+
+    if (connected)
+    {
+        updateUi(Kompass::STATUS_CONNECTED);
+    }
+    else
+    {
+        updateUi(Kompass::STATUS_DISCONNECTED);
+    }
+}
+
+/**
  * Calls NordVPN binary to connect using the given list
  * if commands. If no commands are given, Kompass will
  * connect to (what NordVPN considers) the fastest server.
  * @brief Kompass::connectVpn
  * @param commands
+ * @return result of the connection attempt
  */
-void Kompass::connectVpn(QStringList commands)
+void Kompass::connectVpn(ConnectionResult *&connectionResult, QStringList commands)
 {
     // Update UI
-    updateUi(STATUS_CONNECTING, nullptr);
+    while (updatingStatus) {
+        // wait
+    }
 
     // execute command
     QProcess *command = new QProcess();
@@ -721,21 +785,20 @@ void Kompass::connectVpn(QStringList commands)
 
     if (error == nullptr || (error != nullptr && error.trimmed().length() == 0))
     {
-        updateUi(STATUS_CONNECTED, nullptr);
+        if (output != nullptr && !output.toLower().contains("connected"))
+        {
+            connectionResult->setSuccessful(false);
+            connectionResult->setResult(output.trimmed());
+        }
+        else
+        {
+            connectionResult->setSuccessful(true);
+        }
     }
     else
     {
-        updateUi(STATUS_DISCONNECTED, nullptr);
-        QMessageBox msg = QMessageBox();
-        msg.setWindowIcon(QIcon::fromTheme("compass"));
-        msg.setWindowTitle(tr("appTitle"));
-        msg.setText(tr("msgErrorConnecting") + error.trimmed());
-        msg.setIcon(QMessageBox::Warning);
-        msg.setDefaultButton(QMessageBox::Ok);
-        msg.setStandardButtons(QMessageBox::Ok);
-        msg.setWindowModality(Qt::WindowModality::ApplicationModal);
-        msg.activateWindow();
-        msg.show();
+        connectionResult->setSuccessful(false);
+        connectionResult->setResult(error);
     }
 }
 
@@ -743,10 +806,12 @@ void Kompass::connectVpn(QStringList commands)
  * Disconnect the current VPN Connection
  * @brief Kompass::disconnectVpn
  */
-void Kompass::disconnectVpn()
-{    
+void Kompass::disconnectVpn(ConnectionResult *&connectionResult)
+{
     // Update UI
-    updateUi(STATUS_DISABLED, nullptr);
+    while (updatingStatus) {
+        // wait
+    }
 
     // execute command
     QProcess *command = new QProcess();
@@ -758,20 +823,12 @@ void Kompass::disconnectVpn()
 
     if (error == nullptr || (error != nullptr && error.trimmed().length() == 0))
     {
-        updateUi(STATUS_DISCONNECTED, nullptr);
+        connectionResult->setSuccessful(true);
     }
     else
     {
-        QMessageBox msg = QMessageBox();
-        msg.setWindowIcon(QIcon::fromTheme("compass"));
-        msg.setWindowTitle(tr("appTitle"));
-        msg.setText("msgErrorDisconnecting" + error.trimmed());
-        msg.setIcon(QMessageBox::Warning);
-        msg.setDefaultButton(QMessageBox::Ok);
-        msg.setStandardButtons(QMessageBox::Ok);
-        msg.setWindowModality(Qt::WindowModality::ApplicationModal);
-        msg.activateWindow();
-        msg.show();
+        connectionResult->setSuccessful(false);
+        connectionResult->setResult(error);
     }
 }
 
@@ -899,6 +956,8 @@ void Kompass::updateUi(int status, QString vpnDetails)
     switch (status)
     {
         case STATUS_CONNECTING:
+        case STATUS_DISCONNECTING:
+            svgSpinner->setVisible(true);
             mnStatusUploaded->setVisible(false);
             mnStatusDownloaded->setVisible(false);
             mnStatusUptime->setVisible(false);
@@ -907,6 +966,7 @@ void Kompass::updateUi(int status, QString vpnDetails)
             mnStatusUploaded->setText("--");
             mnStatusDownloaded->setText("--");
             tbStatus->setChecked(false);
+            tbStatus->setEnabled(false);
             txtStatusServer->setText("--");
             txtStatusCity->setText("--");
             txtStatusCountry->setText("--");
@@ -926,7 +986,7 @@ void Kompass::updateUi(int status, QString vpnDetails)
             txtFilterCountry->setEnabled(false);
             pbSettings->setEnabled(false);
             break;
-        case STATUS_DISCONNECTED:
+        case STATUS_DISCONNECTED:;
             mnStatusUploaded->setVisible(false);
             mnStatusDownloaded->setVisible(false);
             mnStatusUptime->setVisible(false);
@@ -954,6 +1014,7 @@ void Kompass::updateUi(int status, QString vpnDetails)
             actionConnect->setEnabled(true);
             actionDisconnect->setEnabled(false);
             pbSettings->setEnabled(true);
+            svgSpinner->setVisible(false);
             break;
         case STATUS_CONNECTED:
             mnStatusConnection->setIcon(QIcon::fromTheme("network-vpn-symbolic"));
@@ -997,6 +1058,7 @@ void Kompass::updateUi(int status, QString vpnDetails)
             txtFilterType->setEnabled(false);
             txtFilterCountry->setEnabled(false);
             pbSettings->setEnabled(true);
+            svgSpinner->setVisible(false);
             break;
         case STATUS_DISABLED:
             tbStatus->setEnabled(false);

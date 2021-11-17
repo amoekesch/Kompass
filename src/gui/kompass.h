@@ -18,11 +18,14 @@
 #include <QSystemTrayIcon>
 #include <QTimer>
 #include <QWidgetAction>
+#include <QSvgRenderer>
+#include <QSvgWidget>
 #include "clickablelabel.h"
 #include "kompasswindow.h"
 #include "sectiontitle.h"
 #include "settings.h"
 #include "togglebutton.h"
+#include "../data/connectionresult.h"
 
 QT_BEGIN_NAMESPACE
     namespace Ui { class Kompass;}
@@ -43,6 +46,7 @@ class Kompass : public QObject
         static const int STATUS_CONNECTED = 11;
         static const int STATUS_DISCONNECTED = 12;
         static const int STATUS_CONNECTING = 13;
+        static const int STATUS_DISCONNECTING = 14;
 
         // status variables
         int currentStatus = -1;
@@ -50,6 +54,7 @@ class Kompass : public QObject
 
         // ui components
         KompassWindow *ui;
+        QSvgWidget *svgSpinner;
         QStackedWidget *stackMain;
         ClickableLabel *mnStatus;
         ClickableLabel *mnTypes;
@@ -98,8 +103,9 @@ class Kompass : public QObject
         void setupDataTypes();
         void setupDataCountries();
         void setupStatusMonitor();
-        void connectVpn(QStringList commands);
-        void disconnectVpn();
+        void toggleVpn(QStringList commands, bool connect);
+        void connectVpn(ConnectionResult *&connectionResult, QStringList commands);
+        void disconnectVpn(ConnectionResult *&connectionResult);
         void updateUi(int status, QString vpnStatus = nullptr);
         void showUi();
         void hideUi();
