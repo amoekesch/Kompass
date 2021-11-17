@@ -299,7 +299,7 @@
         </message>
         <message>
             <source>errorPrefixObfuscate</source>
-            <translation>&lt;u&gt;Obfuscate&lt;/u&gt;: </translation>
+            <translation>&lt;u&gt;Obfuscate&lt;/u&gt;: Please note, that protocol obfuscation is not supported with the NordLynx VPN technology.&lt;br&gt;</translation>
         </message>
         <message>
             <source>errorPrefixNotify</source>
