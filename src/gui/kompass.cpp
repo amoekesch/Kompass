@@ -697,59 +697,71 @@ void Kompass::toggleVpn(QStringList commands, bool connect)
     updateUi(Kompass::STATUS_DISABLED);
     svgSpinner->setVisible(true);
 
-    bool connected = false;
-    ConnectionResult *cnResult = new ConnectionResult();
-
     if (connect)
     {
         updateUi(Kompass::STATUS_CONNECTING);
-        connectVpn(*&cnResult, commands);
-        connected = cnResult->isSuccessful();
+        QThread *thread = QThread::create([this, commands]{
+            ConnectionResult *cnResult = connectVpn(commands);
+            if (!cnResult->isSuccessful() && cnResult->getResult().trimmed().length() > 0)
+            {
+                updateUi(Kompass::STATUS_DISCONNECTED);
 
-        if (!connected && cnResult->getResult().trimmed().length() > 0)
-        {
-            QMessageBox msg = QMessageBox();
-            msg.setWindowIcon(QIcon::fromTheme("compass"));
-            msg.setWindowTitle(tr("appTitle"));
-            msg.setText(tr("msgErrorConnecting") + cnResult->getResult().trimmed());
-            msg.setIcon(QMessageBox::Warning);
-            msg.setDefaultButton(QMessageBox::Ok);
-            msg.setStandardButtons(QMessageBox::Ok);
-            msg.setWindowModality(Qt::WindowModality::ApplicationModal);
-            msg.activateWindow();
-            msg.show();
-            msg.exec();
-        }
+                QMessageBox msg = QMessageBox();
+                msg.setWindowIcon(QIcon::fromTheme("compass"));
+                msg.setWindowTitle(tr("appTitle"));
+                msg.setText(tr("msgErrorConnecting") + cnResult->getResult().trimmed());
+                msg.setIcon(QMessageBox::Warning);
+                msg.setDefaultButton(QMessageBox::Ok);
+                msg.setStandardButtons(QMessageBox::Ok);
+                msg.setWindowModality(Qt::WindowModality::ApplicationModal);
+                msg.activateWindow();
+                msg.show();
+                msg.exec();
+            }
+            else if (!cnResult->isSuccessful())
+            {
+                // should never happen
+                updateUi(Kompass::STATUS_DISCONNECTED);
+            }
+            else
+            {
+                updateUi(Kompass::STATUS_CONNECTED);
+            }
+        });
+        thread->start();
     }
     else
     {
         updateUi(Kompass::STATUS_DISCONNECTING);
-        disconnectVpn(*&cnResult);
-        connected = !cnResult->isSuccessful();
+        QThread *thread = QThread::create([this, commands]{
+            ConnectionResult *cnResult = disconnectVpn();
+            if (!cnResult->isSuccessful() && cnResult->getResult().trimmed().length() > 0)
+            {
+                updateUi(Kompass::STATUS_CONNECTED);
 
-        if (connected && cnResult->getResult().trimmed().length() > 0)
-        {
-            QMessageBox msg = QMessageBox();
-            msg.setWindowIcon(QIcon::fromTheme("compass"));
-            msg.setWindowTitle(tr("appTitle"));
-            msg.setText(tr("msgErrorDisconnecting") + cnResult->getResult().trimmed());
-            msg.setIcon(QMessageBox::Warning);
-            msg.setDefaultButton(QMessageBox::Ok);
-            msg.setStandardButtons(QMessageBox::Ok);
-            msg.setWindowModality(Qt::WindowModality::ApplicationModal);
-            msg.activateWindow();
-            msg.show();
-            msg.exec();
-        }
-    }
-
-    if (connected)
-    {
-        updateUi(Kompass::STATUS_CONNECTED);
-    }
-    else
-    {
-        updateUi(Kompass::STATUS_DISCONNECTED);
+                QMessageBox msg = QMessageBox();
+                msg.setWindowIcon(QIcon::fromTheme("compass"));
+                msg.setWindowTitle(tr("appTitle"));
+                msg.setText(tr("msgErrorDisconnecting") + cnResult->getResult().trimmed());
+                msg.setIcon(QMessageBox::Warning);
+                msg.setDefaultButton(QMessageBox::Ok);
+                msg.setStandardButtons(QMessageBox::Ok);
+                msg.setWindowModality(Qt::WindowModality::ApplicationModal);
+                msg.activateWindow();
+                msg.show();
+                msg.exec();
+            }
+            else if (!cnResult->isSuccessful())
+            {
+                // should never happen
+                updateUi(Kompass::STATUS_CONNECTED);
+            }
+            else
+            {
+                updateUi(Kompass::STATUS_DISCONNECTED);
+            }
+        });
+        thread->start();
     }
 }
 
@@ -761,7 +773,7 @@ void Kompass::toggleVpn(QStringList commands, bool connect)
  * @param commands
  * @return result of the connection attempt
  */
-void Kompass::connectVpn(ConnectionResult *&connectionResult, QStringList commands)
+ConnectionResult* Kompass::connectVpn(QStringList commands)
 {
     // Update UI
     while (updatingStatus) {
@@ -780,6 +792,7 @@ void Kompass::connectVpn(ConnectionResult *&connectionResult, QStringList comman
     }
     command->waitForFinished();
 
+    ConnectionResult *connectionResult = new ConnectionResult();
     QString output = command->readAllStandardOutput();
     QString error = command->readAllStandardError();
 
@@ -800,13 +813,16 @@ void Kompass::connectVpn(ConnectionResult *&connectionResult, QStringList comman
         connectionResult->setSuccessful(false);
         connectionResult->setResult(error);
     }
+
+    return connectionResult;
 }
 
 /**
  * Disconnect the current VPN Connection
  * @brief Kompass::disconnectVpn
+ * @return result of the disconnect attempt
  */
-void Kompass::disconnectVpn(ConnectionResult *&connectionResult)
+ConnectionResult* Kompass::disconnectVpn()
 {
     // Update UI
     while (updatingStatus) {
@@ -818,6 +834,7 @@ void Kompass::disconnectVpn(ConnectionResult *&connectionResult)
     command->start("nordvpn", QStringList() << "disconnect");
     command->waitForFinished();
 
+    ConnectionResult *connectionResult = new ConnectionResult();
     QString output = command->readAllStandardOutput();
     QString error = command->readAllStandardError();
 
@@ -830,6 +847,8 @@ void Kompass::disconnectVpn(ConnectionResult *&connectionResult)
         connectionResult->setSuccessful(false);
         connectionResult->setResult(error);
     }
+
+    return connectionResult;
 }
 
 /**
@@ -976,9 +995,7 @@ void Kompass::updateUi(int status, QString vpnDetails)
             txtStatusUptime->setText("--");
             actionConnect->setEnabled(false);
             actionDisconnect->setEnabled(false);
-            tbConnectType->setChecked(false);
             tbConnectType->setEnabled(false);
-            tbConnectCountry->setChecked(false);
             tbConnectCountry->setEnabled(false);
             lstServersByType->setEnabled(false);
             lstServersByCountry->setEnabled(false);

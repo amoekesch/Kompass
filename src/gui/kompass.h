@@ -104,8 +104,8 @@ class Kompass : public QObject
         void setupDataCountries();
         void setupStatusMonitor();
         void toggleVpn(QStringList commands, bool connect);
-        void connectVpn(ConnectionResult *&connectionResult, QStringList commands);
-        void disconnectVpn(ConnectionResult *&connectionResult);
+        ConnectionResult* connectVpn(QStringList commands);
+        ConnectionResult* disconnectVpn();
         void updateUi(int status, QString vpnStatus = nullptr);
         void showUi();
         void hideUi();
