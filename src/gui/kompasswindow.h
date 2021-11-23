@@ -4,10 +4,6 @@
 #include <QCloseEvent>
 #include <QMainWindow>
 
-QT_BEGIN_NAMESPACE
-    namespace Ui { class KompassWindow;}
-QT_END_NAMESPACE
-
 class KompassWindow : public QMainWindow
 {
     Q_OBJECT
