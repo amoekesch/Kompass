@@ -1,6 +1,7 @@
 #include "gui/kompass.h"
 
 #include <QApplication>
+#include <QFontDatabase>
 #include <QLocale>
 #include <QTranslator>
 #include <launchverification.h>
@@ -27,6 +28,9 @@ int main(int argc, char *argv[])
         }
     }
 
+    // add application font
+    QFontDatabase::addApplicationFont(":/font/FontAwesome.otf");
+
     // start launch verification sequence
     auto *launcher = new LaunchVerification();
 \
@@ -38,17 +42,23 @@ int main(int argc, char *argv[])
     }
 
     // vrify NordVPN version
-    launcher->retry = true;
-    while (launcher->retry && !launcher->validVersion)
+    if (launcher->validBinary)
     {
-        launcher->verifyVersion();
+        launcher->retry = true;
+        while (launcher->retry && !launcher->validVersion)
+        {
+            launcher->verifyVersion();
+        }
     }
 
     // verify NordVPN account
-    launcher->retry = true;
-    while (launcher->retry && !launcher->validAccount)
+    if (launcher->validBinary && launcher->validVersion)
     {
-        launcher->verifyAccount();
+        launcher->retry = true;
+        while (launcher->retry && !launcher->validAccount)
+        {
+            launcher->verifyAccount();
+        }
     }
 
     // launch the UI
