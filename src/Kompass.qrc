@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>img/spinner.svg</file>
+        <file>font/FontAwesome.otf</file>
     </qresource>
 </RCC>
