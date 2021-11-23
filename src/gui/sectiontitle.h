@@ -12,7 +12,11 @@ class SectionTitle : public QWidget
     public:
         explicit SectionTitle(QWidget *parent = nullptr);
         void setTitle(QString title);
+        void addControls(QList<QWidget*> controls);
+
+    private:
         QLabel *lblTitle;
+        QHBoxLayout *layout;
 };
 
 #endif // SECTIONTITLE_H

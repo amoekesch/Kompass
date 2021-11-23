@@ -17,7 +17,7 @@ SectionTitle::SectionTitle(QWidget *parent) : QWidget(parent)
     lnTitlePost->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
     lnTitlePost->setStyleSheet(QString("background-color: " + clr + ";"));
 
-    QHBoxLayout *layout = new QHBoxLayout();
+    layout = new QHBoxLayout();
     layout->setContentsMargins(0, 0, 0, 15);
     layout->addWidget(lnTitlePre);
     layout->addWidget(lblTitle);
@@ -30,4 +30,12 @@ SectionTitle::SectionTitle(QWidget *parent) : QWidget(parent)
 void SectionTitle::setTitle(QString title)
 {
     lblTitle->setText(title);
+}
+
+void SectionTitle::addControls(QList<QWidget*> controls)
+{
+    for (QWidget *control : controls)
+    {
+        layout->addWidget(control);
+    }
 }
