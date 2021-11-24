@@ -9,7 +9,7 @@
         </message>
         <message>
             <source>appVersion</source>
-            <translation>v1.2</translation>
+            <translation>v1.3</translation>
         </message>
         <message>
             <source>mnStatus</source>
