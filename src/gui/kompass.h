@@ -90,6 +90,7 @@ class Kompass : public QObject
         QPushButton *pbMinimize;
         QPushButton *pbSettings;
         QPushButton *pbRefreshServers;
+        SectionTitle *titleConnnectionServerList;
 
         // tray menu
         QSystemTrayIcon *trayIcon;
