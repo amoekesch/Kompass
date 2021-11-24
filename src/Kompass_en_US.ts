@@ -24,6 +24,10 @@
             <translation>Connect to Country</translation>
         </message>
         <message>
+            <source>mnServers</source>
+            <translation>Connect to Server</translation>
+        </message>
+        <message>
             <source>titleConnectionStatus</source>
             <translation>Connection Status</translation>
         </message>
@@ -93,11 +97,43 @@
         </message>
         <message>
             <source>titleConnnectionCountry</source>
-            <translation>Connect to Country</translation>
+            <translation>Available Countries</translation>
         </message>
         <message>
             <source>lblConnectCountry</source>
-            <translation>Available Countries</translation>
+            <translation>Connect to Country</translation>
+        </message>
+        <message>
+            <source>lblConnectServer</source>
+            <translation>Connect to Server</translation>
+        </message>
+        <message>
+            <source>titleConnnectionServerDetails</source>
+            <translation>Server Details</translation>
+        </message>
+        <message>
+            <source>titleConnnectionServerList</source>
+            <translation>Available Servers</translation>
+        </message>
+        <message>
+            <source>titleConnnectionServerListCount</source>
+            <translation>Available Servers [%0]</translation>
+        </message>
+        <message>
+            <source>lblServerDetailsHost</source>
+            <translation>Server:</translation>
+        </message>
+        <message>
+            <source>lblServerDetailsCountry</source>
+            <translation>Country:</translation>
+        </message>
+        <message>
+            <source>lblServerDetailsCity</source>
+            <translation>City:</translation>
+        </message>
+        <message>
+            <source>lblServerDetailsTechnologies</source>
+            <translation>Protocols:</translation>
         </message>
         <message>
             <source>txtFilter</source>
@@ -136,8 +172,39 @@
             <translation>Connecting to a NordVPN server failed due to the following error:&lt;br&gt;&lt;br&gt;</translation>
         </message>
         <message>
+            <source>msgErrorConnectingByServer</source>
+            <translation>&lt;b&gt;Connecting to a NordVPN server failed.&lt;/b&gt; Please note, selecting a specific server manually might fail due to your specific settings and the available protocols on that server.&lt;br&gt;&lt;br&gt;Here's what NordVPN had to say:&lt;br&gt;</translation>
+        </message>
+        <message>
             <source>msgErrorDisconnecting</source>
             <translation>Disconnecting NordVPN failed due to the following error:&lt;br&gt;&lt;br&gt;</translation>
+        </message>
+    </context>
+    <context>
+        <name>VPNServerModel</name>
+        <message>
+            <source>serverTableHeaderId</source>
+            <translation>Server ID</translation>
+        </message>
+        <message>
+            <source>serverTableHeaderCountry</source>
+            <translation>Country</translation>
+        </message>
+        <message>
+            <source>serverTableHeaderCity</source>
+            <translation>City</translation>
+        </message>
+        <message>
+            <source>serverTableHeaderName</source>
+            <translation>Server Name</translation>
+        </message>
+        <message>
+            <source>serverTableHeaderHost</source>
+            <translation>Host</translation>
+        </message>
+        <message>
+            <source>serverTableHeaderTechnology</source>
+            <translation>Protocols</translation>
         </message>
     </context>
     <context>

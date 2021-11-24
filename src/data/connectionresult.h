@@ -3,10 +3,6 @@
 
 #include <QObject>
 
-QT_BEGIN_NAMESPACE
-    namespace Ui { class ConnectionResult;}
-QT_END_NAMESPACE
-
 class ConnectionResult : public QObject
 {
     Q_OBJECT

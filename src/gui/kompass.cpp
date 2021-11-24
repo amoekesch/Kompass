@@ -53,7 +53,7 @@ void Kompass::setupUi()
     tbStatus->overrideOpacity(1);
     tbStatus->setEnabled(false);
     QObject::connect(tbStatus, &ToggleButton::clicked, [this]() {
-        toggleVpn(QStringList() << "connect", tbStatus->isChecked());
+        toggleVpn(QStringList() << "connect", tbStatus->isChecked(), CONNECTION_TRIGGER_FASTEST);
     });
 
     QHBoxLayout *layoutConnect = new QHBoxLayout();
@@ -72,56 +72,47 @@ void Kompass::setupUi()
     QLabel *lblServer = new QLabel(tr("lblServer"));
     lblServer->setStyleSheet("font-weight: bold;");
     txtStatusServer = new QLineEdit("--");
-    txtStatusServer->setEnabled(false);
-    txtStatusServer->setStyleSheet("color: " + lblServer->palette().text().color().name() + ";");
+    txtStatusServer->setReadOnly(true);
 
     QLabel *lblCity = new QLabel(tr("lblCity"));
     lblCity->setStyleSheet("font-weight: bold;");
     txtStatusCity = new QLineEdit("--");
-    txtStatusCity->setEnabled(false);
-    txtStatusCity->setStyleSheet("color: " + lblCity->palette().text().color().name() + ";");
+    txtStatusCity->setReadOnly(true);
 
     QLabel *lblCountry = new QLabel(tr("lblCountry"));
     lblCountry->setStyleSheet("font-weight: bold;");
     txtStatusCountry = new QLineEdit("--");
-    txtStatusCountry->setEnabled(false);
-    txtStatusCountry->setStyleSheet("color: " + lblCountry->palette().text().color().name() + ";");
+    txtStatusCountry->setReadOnly(true);
 
     QLabel *lblProtocol = new QLabel(tr("lblProtocol"));
     lblProtocol->setStyleSheet("font-weight: bold;");
     txtStatusProtocol = new QLineEdit("--");
-    txtStatusProtocol->setEnabled(false);
-    txtStatusProtocol->setStyleSheet("color: " + lblProtocol->palette().text().color().name() + ";");
+    txtStatusProtocol->setReadOnly(true);
 
     QLabel *lblUploaded = new QLabel(tr("lblUploaded"));
     lblUploaded->setStyleSheet("font-weight: bold;");
     txtStatusUploaded = new QLineEdit("--");
-    txtStatusUploaded->setEnabled(false);
-    txtStatusUploaded->setStyleSheet("color: " + lblUploaded->palette().text().color().name() + ";");
+    txtStatusUploaded->setReadOnly(true);
 
     QLabel *lblDownloaded = new QLabel(tr("lblDownloaded"));
     lblDownloaded->setStyleSheet("font-weight: bold;");
     txtStatusDownloaded = new QLineEdit("--");
-    txtStatusDownloaded->setEnabled(false);
-    txtStatusDownloaded->setStyleSheet("color: " + lblDownloaded->palette().text().color().name() + ";");
+    txtStatusDownloaded->setReadOnly(true);
 
     QLabel *lblUptime = new QLabel(tr("lblUptime"));
     lblUptime->setStyleSheet("font-weight: bold;");
     txtStatusUptime = new QLineEdit("--");
-    txtStatusUptime->setEnabled(false);
-    txtStatusUptime->setStyleSheet("color: " + lblUptime->palette().text().color().name() + ";");
+    txtStatusUptime->setReadOnly(true);
 
     QLabel *lblUsername = new QLabel(tr("lblUsername"));
     lblUsername->setStyleSheet("font-weight: bold;");
     txtUsername = new QLineEdit("--");
-    txtUsername->setEnabled(false);
-    txtUsername->setStyleSheet("color: " + lblUsername->palette().text().color().name() + ";");
+    txtUsername->setReadOnly(true);
 
     QLabel *lblLicense = new QLabel(tr("lblLicense"));
     lblLicense->setStyleSheet("font-weight: bold;");
     txtLicense = new QLineEdit("--");
-    txtLicense->setEnabled(false);
-    txtLicense->setStyleSheet("color: " + lblLicense->palette().text().color().name() + ";");
+    txtLicense->setReadOnly(true);
 
     QLabel *lblVersion = new QLabel(tr("appTitle") + " " + tr("appVersion"));
     lblVersion->setEnabled(false);
@@ -173,7 +164,9 @@ void Kompass::setupUi()
 
     lstServersByType = new QListView();
     lstServersByType->setEnabled(false);
-    lstServersByType->setStyleSheet("font-weight: normal;");
+    lstServersByType->setHorizontalScrollMode(QListView::ScrollPerPixel);
+    lstServersByType->setVerticalScrollMode(QListView::ScrollPerPixel);
+    lstServersByType->setEditTriggers(QAbstractItemView::NoEditTriggers);
     QObject::connect(lstServersByType, &QListView::clicked, [this] {
         QModelIndexList indexes = this->lstServersByType->selectionModel()->selectedIndexes();
         tbConnectType->setEnabled(indexes.count() > 0);
@@ -182,7 +175,6 @@ void Kompass::setupUi()
     txtFilterType = new QLineEdit();
     txtFilterType->setEnabled(false);
     txtFilterType->setPlaceholderText(tr("txtFilter"));
-    txtFilterType->setStyleSheet("font-weight: normal;");
     QObject::connect(txtFilterType, &QLineEdit::textChanged, [this] {
         QString filter = this->txtFilterType->text().trimmed().toLower();
         if (filter.length() == 0)
@@ -220,7 +212,7 @@ void Kompass::setupUi()
         mnTypes->setStyleSheet("font-weight: normal; color: " + this->ui->palette().highlight().color().name() + "; background: " + this->ui->palette().light().color().name() + ";");
         stackMain->setCurrentIndex(0);
         tbConnectType->setChecked(true);
-        toggleVpn(QStringList() << "connect" << type, tbConnectType->isChecked());
+        toggleVpn(QStringList() << "connect" << type, tbConnectType->isChecked(), CONNECTION_TRIGGER_TYPE);
     });
 
     QHBoxLayout *layoutConnectType = new QHBoxLayout();
@@ -252,7 +244,9 @@ void Kompass::setupUi()
 
     lstServersByCountry = new QListView();
     lstServersByCountry->setEnabled(false);
-    lstServersByCountry->setStyleSheet("font-weight: normal;");
+    lstServersByCountry->setHorizontalScrollMode(QListView::ScrollPerPixel);
+    lstServersByCountry->setVerticalScrollMode(QListView::ScrollPerPixel);
+    lstServersByCountry->setEditTriggers(QAbstractItemView::NoEditTriggers);
     QObject::connect(lstServersByCountry, &QListView::clicked, [this] {
         QModelIndexList indexes = this->lstServersByCountry->selectionModel()->selectedIndexes();
         tbConnectCountry->setEnabled(indexes.count() > 0);
@@ -261,7 +255,6 @@ void Kompass::setupUi()
     txtFilterCountry = new QLineEdit();
     txtFilterCountry->setEnabled(false);
     txtFilterCountry->setPlaceholderText(tr("txtFilter"));
-    txtFilterCountry->setStyleSheet("font-weight: normal;");
     QObject::connect(txtFilterCountry, &QLineEdit::textChanged, [this] {
         QString filter = this->txtFilterCountry->text().trimmed().toLower();
         if (filter.length() == 0)
@@ -299,7 +292,7 @@ void Kompass::setupUi()
         mnCountries->setStyleSheet("font-weight: normal; color: " + this->ui->palette().highlight().color().name() + "; background: " + this->ui->palette().light().color().name() + ";");
         stackMain->setCurrentIndex(0);
         tbConnectCountry->setChecked(true);
-        toggleVpn(QStringList() << "connect" << country, tbConnectCountry->isChecked());
+        toggleVpn(QStringList() << "connect" << country, tbConnectCountry->isChecked(), CONNECTION_TRIGGER_COUNTRY);
     });
     QHBoxLayout *layoutConnectCountry = new QHBoxLayout();
     layoutConnectCountry->setContentsMargins(0, 0, 0, 50);
@@ -316,6 +309,172 @@ void Kompass::setupUi()
 
     QWidget *wxCountries = new QWidget();
     wxCountries->setLayout(layoutCountries);
+
+    /**
+     * -------------------------------------------
+     * create servers widget
+     */
+
+    SectionTitle *titleConnnectionServerDetails = new SectionTitle();
+    titleConnnectionServerDetails->setTitle(tr("titleConnnectionServerDetails"));
+
+    titleConnnectionServerList = new SectionTitle();
+    titleConnnectionServerList->setTitle(tr("titleConnnectionServerList"));
+
+    QLabel *lblServerDetailsHost = new QLabel(tr("lblServerDetailsHost"));
+    lblServerDetailsHost->setStyleSheet("font-weight: bold;");
+    QLineEdit *txtServerDetailsHost = new QLineEdit();
+    txtServerDetailsHost->setReadOnly(true);
+
+    QLabel *lblServerDetailsCountry = new QLabel(tr("lblServerDetailsCountry"));
+    lblServerDetailsCountry->setStyleSheet("font-weight: bold;");
+    QLineEdit *txtServerDetailsCountry = new QLineEdit();
+    txtServerDetailsCountry->setReadOnly(true);
+
+    QLabel *lblServerDetailsCity = new QLabel(tr("lblServerDetailsCity"));
+    lblServerDetailsCity->setStyleSheet("font-weight: bold;");
+    QLineEdit *txtServerDetailsCity = new QLineEdit();
+    txtServerDetailsCity->setReadOnly(true);
+
+    QStringListModel *mdlServerDetailsTechnologies = new QStringListModel();
+    QLabel *lblServerDetailsTechnologies = new QLabel(tr("lblServerDetailsTechnologies"));
+    lblServerDetailsTechnologies->setStyleSheet("font-weight: bold;");
+    QListView *lstServerDetailsTechnologies = new QListView();
+    lstServerDetailsTechnologies->setMinimumHeight(80);
+    lstServerDetailsTechnologies->setMaximumHeight(80);
+    lstServerDetailsTechnologies->setModel(mdlServerDetailsTechnologies);
+    lstServerDetailsTechnologies->setFocusPolicy(Qt::NoFocus);
+    lstServerDetailsTechnologies->setEditTriggers(QAbstractItemView::NoEditTriggers);
+
+    QGridLayout *layoutServerDetails = new QGridLayout();
+    layoutServerDetails->addWidget(lblServerDetailsHost, 0, 0, 1, 1);
+    layoutServerDetails->addWidget(txtServerDetailsHost, 0, 1, 1, 1);
+    layoutServerDetails->addWidget(lblServerDetailsCity, 1, 0, 1, 1);
+    layoutServerDetails->addWidget(txtServerDetailsCity, 1, 1, 1, 1);
+    layoutServerDetails->addWidget(lblServerDetailsCountry, 2, 0, 1, 1);
+    layoutServerDetails->addWidget(txtServerDetailsCountry, 2, 1, 1, 1);
+    layoutServerDetails->addWidget(lblServerDetailsTechnologies, 3, 0, 1, 1);
+    layoutServerDetails->addWidget(lstServerDetailsTechnologies, 3, 1, 2, 1);
+    layoutServerDetails->addItem(new QSpacerItem(0, 30, QSizePolicy::MinimumExpanding, QSizePolicy::Fixed), 5, 0, 1, 2);
+    layoutServerDetails->setContentsMargins(0, 0, 0, 0);
+    layoutServerDetails->setColumnMinimumWidth(0, 130);
+
+    QWidget *wxServerDetails = new QWidget();
+    wxServerDetails->setLayout(layoutServerDetails);
+
+    mdlServers = new VPNServerModel();
+    vwServers = new QTableView();
+    QObject::connect(mdlServers, &QAbstractTableModel::dataChanged, this, [this] {
+        titleConnnectionServerList->setTitle(tr("titleConnnectionServerListCount").arg(mdlServers->rowCount()));
+        vwServers->resizeColumnsToContents();
+        svgSpinnerServerRefresh->setVisible(false);
+        pbRefreshServers->setVisible(true);
+    });
+
+    mdlServersProxy = new QSortFilterProxyModel();
+    mdlServersProxy->setSourceModel(mdlServers);
+    mdlServersProxy->setFilterCaseSensitivity(Qt::CaseInsensitive);
+    mdlServersProxy->setFilterKeyColumn(-1);
+    vwServers->setModel(mdlServersProxy);
+    vwServers->setSortingEnabled(true);
+    vwServers->sortByColumn(2, Qt::AscendingOrder);
+    vwServers->setSelectionBehavior(QAbstractItemView::SelectRows);
+    vwServers->setSelectionMode(QAbstractItemView::SingleSelection);
+    vwServers->setHorizontalScrollMode(QTableView::ScrollPerPixel);
+    vwServers->setVerticalScrollMode(QTableView::ScrollPerPixel);
+    QObject::connect(vwServers->selectionModel(), &QItemSelectionModel::selectionChanged, this, [this, txtServerDetailsHost, txtServerDetailsCity, txtServerDetailsCountry, mdlServerDetailsTechnologies] {
+        tbConnectServer->setEnabled(false);
+        txtServerDetailsHost->setText("");
+        txtServerDetailsCountry->setText("");
+        txtServerDetailsCity->setText("");
+        mdlServerDetailsTechnologies->setStringList(QStringList());
+
+        QItemSelection proxySelect = vwServers->selectionModel()->selection();
+        if (proxySelect.length() > 0)
+        {
+            QModelIndexList objIndexes = mdlServersProxy->mapSelectionToSource(proxySelect).indexes();
+            VPNServer vpnServer = mdlServers->getServer(objIndexes.at(0).row());
+
+            txtServerDetailsHost->setText(vpnServer.getHost());
+            txtServerDetailsCountry->setText(vpnServer.getCountry());
+            txtServerDetailsCity->setText(vpnServer.getCity());
+            mdlServerDetailsTechnologies->setStringList(vpnServer.getTechnologies());
+            tbConnectServer->setEnabled(true);
+        }
+    });
+
+    svgSpinnerServerRefresh = new QSvgWidget();
+    svgSpinnerServerRefresh->load(QString(":/img/spinner.svg"));
+    svgSpinnerServerRefresh->setFixedWidth(18);
+    svgSpinnerServerRefresh->setFixedHeight(18);
+    svgSpinnerServerRefresh->setGeometry(0, 0, 18, 18);
+    svgSpinnerServerRefresh->setStyleSheet("background: transparent;");
+    svgSpinnerServerRefresh->setVisible(true);
+
+    pbRefreshServers = new QPushButton();
+    pbRefreshServers->setIcon(QIcon::fromTheme("view-refresh-symbolic"));
+    pbRefreshServers->setFlat(true);
+    pbRefreshServers->setVisible(false);
+    QObject::connect(pbRefreshServers, &QPushButton::clicked, this, [this] {
+        svgSpinnerServerRefresh->setVisible(true);
+        pbRefreshServers->setVisible(false);
+        titleConnnectionServerList->setTitle(tr("titleConnnectionServerList"));
+        mdlServers->reload();
+    });
+
+    QList<QWidget*> *serverTitleControls = new QList<QWidget*>();
+    serverTitleControls->append(svgSpinnerServerRefresh);
+    serverTitleControls->append(pbRefreshServers);
+    titleConnnectionServerList->addControls(*serverTitleControls);
+
+    txtFilterServer = new QLineEdit();
+    txtFilterServer->setPlaceholderText(tr("txtFilter"));
+    txtFilterServer->setEnabled(false);
+    QObject::connect(txtFilterServer, &QLineEdit::textChanged, [this] {
+        QString filter = txtFilterServer->text().trimmed().toLower();
+        mdlServersProxy->setFilterFixedString(filter);
+    });
+
+    QLabel *lblConnectServer = new QLabel(tr("lblConnectServer"));
+    lblConnectServer->setStyleSheet("font-size: 22px; font-weight: bold; color: " + lblStatus->palette().highlight().color().name() + ";");
+    tbConnectServer = new ToggleButton(16, 20, true);
+    tbConnectServer->overrideTextColor(true, QColor::fromRgb(180, 239, 180));
+    tbConnectServer->overrideTrackColor(true, QColor::fromRgb(180, 239, 180));
+    tbConnectServer->overrideThumbColor(true, QColor::fromRgb(58, 206, 58));
+    tbConnectServer->overrideTextColor(false, QColor::fromRgb(236, 180, 180));
+    tbConnectServer->overrideTrackColor(false, QColor::fromRgb(236, 180, 180));
+    tbConnectServer->overrideThumbColor(false, QColor::fromRgb(206, 58, 58));
+    tbConnectServer->overrideOpacity(1);
+    tbConnectServer->setEnabled(false);
+    QObject::connect(tbConnectServer, &ToggleButton::clicked, [this]() {
+        QItemSelection proxySelect = vwServers->selectionModel()->selection();
+        QModelIndexList objIndexes = mdlServersProxy->mapSelectionToSource(proxySelect).indexes();
+        VPNServer vpnServer = mdlServers->getServer(objIndexes.at(0).row());
+        QString server = vpnServer.getHost().left(vpnServer.getHost().indexOf("."));
+        mnStatus->setStyleSheet("font-weight: normal; color: " + this->ui->palette().light().color().name() + "; background: " + this->ui->palette().highlight().color().name() + ";");
+        mnServers->setStyleSheet("font-weight: normal; color: " + this->ui->palette().highlight().color().name() + "; background: " + this->ui->palette().light().color().name() + ";");
+        stackMain->setCurrentIndex(0);
+        tbConnectServer->setChecked(true);
+        toggleVpn(QStringList() << "connect" << server, tbConnectServer->isChecked(), CONNECTION_TRIGGER_SERVER);
+    });
+    QHBoxLayout *layoutConnectServer = new QHBoxLayout();
+    layoutConnectServer->setContentsMargins(0, 0, 0, 50);
+    layoutConnectServer->addWidget(lblConnectServer);
+    layoutConnectServer->addStretch(1);
+    layoutConnectServer->addWidget(tbConnectServer);
+
+    QVBoxLayout *layoutServers = new QVBoxLayout();
+    layoutServers->setContentsMargins(0, 0, 0, 0);
+    layoutServers->addItem(layoutConnectServer);
+    layoutServers->addWidget(titleConnnectionServerDetails);
+    layoutServers->addWidget(wxServerDetails);
+    layoutServers->addWidget(titleConnnectionServerList);
+    layoutServers->addWidget(vwServers);
+    layoutServers->addWidget(txtFilterServer);
+    layoutServers->setStretch(4, 1);
+
+    QWidget *wxServers = new QWidget();
+    wxServers->setLayout(layoutServers);
 
     /**
      * -------------------------------------------
@@ -352,6 +511,7 @@ void Kompass::setupUi()
         }
         updatingStatus = true;
         Settings *dlgSettings = new Settings();
+
         dlgSettings->setAttribute(Qt::WA_DeleteOnClose);
         dlgSettings->activateWindow();
         dlgSettings->raise();
@@ -359,6 +519,13 @@ void Kompass::setupUi()
         ui->activateWindow();
         ui->raise();
 
+        // reload server types
+        svgSpinnerServerRefresh->setVisible(true);
+        pbRefreshServers->setVisible(false);
+        titleConnnectionServerList->setTitle(tr("titleConnnectionServerList"));
+        mdlServers->reload();
+
+        // reload lists
         setupDataTypes();
         setupDataCountries();
         updatingStatus = false;
@@ -391,6 +558,7 @@ void Kompass::setupUi()
     stackMain->addWidget(wxStatus);
     stackMain->addWidget(wxTypes);
     stackMain->addWidget(wxCountries);
+    stackMain->addWidget(wxServers);
 
     /**
      * -------------------------------------------
@@ -406,6 +574,7 @@ void Kompass::setupUi()
         mnStatus->setStyleSheet("font-weight: normal; color: " + this->ui->palette().light().color().name() + "; background: " + this->ui->palette().highlight().color().name() + ";");
         mnTypes->setStyleSheet("font-weight: normal; color: " + this->ui->palette().highlight().color().name() + "; background: " + this->ui->palette().light().color().name() + ";");
         mnCountries->setStyleSheet("font-weight: normal; color: " + this->ui->palette().highlight().color().name() + "; background: " + this->ui->palette().light().color().name() + ";");
+        mnServers->setStyleSheet("font-weight: normal; color: " + this->ui->palette().highlight().color().name() + "; background: " + this->ui->palette().light().color().name() + ";");
         stackMain->setCurrentIndex(0);
     });
 
@@ -418,6 +587,7 @@ void Kompass::setupUi()
         mnStatus->setStyleSheet("font-weight: normal; color: " + this->ui->palette().highlight().color().name() + "; background: " + this->ui->palette().light().color().name() + ";");
         mnTypes->setStyleSheet("font-weight: normal; color: " + this->ui->palette().light().color().name() + "; background: " + this->ui->palette().highlight().color().name() + ";");
         mnCountries->setStyleSheet("font-weight: normal; color: " + this->ui->palette().highlight().color().name() + "; background: " + this->ui->palette().light().color().name() + ";");
+        mnServers->setStyleSheet("font-weight: normal; color: " + this->ui->palette().highlight().color().name() + "; background: " + this->ui->palette().light().color().name() + ";");
         stackMain->setCurrentIndex(1);
     });
 
@@ -430,7 +600,21 @@ void Kompass::setupUi()
         mnStatus->setStyleSheet("font-weight: normal; color: " + this->ui->palette().highlight().color().name() + "; background: " + this->ui->palette().light().color().name() + ";");
         mnTypes->setStyleSheet("font-weight: normal; color: " + this->ui->palette().highlight().color().name() + "; background: " + this->ui->palette().light().color().name() + ";");
         mnCountries->setStyleSheet("font-weight: normal; color: " + this->ui->palette().light().color().name() + "; background: " + this->ui->palette().highlight().color().name() + ";");
+        mnServers->setStyleSheet("font-weight: normal; color: " + this->ui->palette().highlight().color().name() + "; background: " + this->ui->palette().light().color().name() + ";");
         stackMain->setCurrentIndex(2);
+    });
+
+    mnServers = new ClickableLabel();
+    mnServers->setText(tr("mnServers"));
+    mnServers->setContentsMargins(20, 10, 0, 10);
+    mnServers->setAutoFillBackground(true);
+    mnServers->setStyleSheet("font-weight: normal; color: " + this->ui->palette().highlight().color().name() + "; background: " + this->ui->palette().light().color().name() + ";");
+    QObject::connect(mnServers, &ClickableLabel::clicked, [this]() {
+        mnStatus->setStyleSheet("font-weight: normal; color: " + this->ui->palette().highlight().color().name() + "; background: " + this->ui->palette().light().color().name() + ";");
+        mnTypes->setStyleSheet("font-weight: normal; color: " + this->ui->palette().highlight().color().name() + "; background: " + this->ui->palette().light().color().name() + ";");
+        mnCountries->setStyleSheet("font-weight: normal; color: " + this->ui->palette().highlight().color().name() + "; background: " + this->ui->palette().light().color().name() + ";");
+        mnServers->setStyleSheet("font-weight: normal; color: " + this->ui->palette().light().color().name() + "; background: " + this->ui->palette().highlight().color().name() + ";");
+        stackMain->setCurrentIndex(3);
     });
 
     QVBoxLayout *layoutMenu = new QVBoxLayout();
@@ -438,6 +622,7 @@ void Kompass::setupUi()
     layoutMenu->addWidget(mnStatus);
     layoutMenu->addWidget(mnTypes);
     layoutMenu->addWidget(mnCountries);
+    layoutMenu->addWidget(mnServers);
     layoutMenu->addStretch(1);
     layoutMenu->addItem(layoutButtons);
 
@@ -489,13 +674,13 @@ void Kompass::setupTray()
     // create connect menu item
     actionConnect = new QAction(tr("trayActionConnect"), trayIcon);
     QObject::connect(actionConnect, &QAction::triggered, [this]() {
-        toggleVpn(QStringList() << "connect", true);
+        toggleVpn(QStringList() << "connect", true, CONNECTION_TRIGGER_FASTEST);
     });
 
     // create connect menu item
     actionDisconnect = new QAction(tr("trayActionDisconnect"), trayIcon);
     QObject::connect(actionDisconnect, &QAction::triggered, [this]() {
-        toggleVpn(QStringList(), false);
+        toggleVpn(QStringList(), false, CONNECTION_TRIGGER_FASTEST);
     });
 
     // create show menu item
@@ -691,25 +876,39 @@ void Kompass::setupStatusMonitor()
  * @brief Kompass::toggleVpn
  * @param commands
  */
-void Kompass::toggleVpn(QStringList commands, bool connect)
+void Kompass::toggleVpn(QStringList commands, bool connect, int trigger)
 {
 
     updateUi(Kompass::STATUS_DISABLED);
     svgSpinner->setVisible(true);
 
+    ConnectionResult *cnResult = new ConnectionResult();
     if (connect)
     {
         updateUi(Kompass::STATUS_CONNECTING);
-        QThread *thread = QThread::create([this, commands]{
-            ConnectionResult *cnResult = connectVpn(commands);
+        QThread *thread = QThread::create([this, commands, cnResult] {
+            ConnectionResult *cnnct = connectVpn(commands);
+            cnResult->setSuccessful(cnnct->isSuccessful());
+            cnResult->setResult(cnnct->getResult());
+        });
+        QObject::connect(thread, &QThread::finished, this, [this, cnResult, trigger] {
             if (!cnResult->isSuccessful() && cnResult->getResult().trimmed().length() > 0)
             {
                 updateUi(Kompass::STATUS_DISCONNECTED);
+                QString err = cnResult->getResult().trimmed();
+                if (trigger == CONNECTION_TRIGGER_SERVER)
+                {
+                    err = err.prepend(tr("msgErrorConnectingByServer"));
+                }
+                else
+                {
+                    err = err.prepend(tr("msgErrorConnecting"));
+                }
 
                 QMessageBox msg = QMessageBox();
                 msg.setWindowIcon(QIcon::fromTheme("compass"));
                 msg.setWindowTitle(tr("appTitle"));
-                msg.setText(tr("msgErrorConnecting") + cnResult->getResult().trimmed());
+                msg.setText(err);
                 msg.setIcon(QMessageBox::Warning);
                 msg.setDefaultButton(QMessageBox::Ok);
                 msg.setStandardButtons(QMessageBox::Ok);
@@ -733,8 +932,12 @@ void Kompass::toggleVpn(QStringList commands, bool connect)
     else
     {
         updateUi(Kompass::STATUS_DISCONNECTING);
-        QThread *thread = QThread::create([this, commands]{
-            ConnectionResult *cnResult = disconnectVpn();
+        QThread *thread = QThread::create([this, commands, cnResult]{
+            ConnectionResult *dscnnct = disconnectVpn();
+            cnResult->setSuccessful(dscnnct->isSuccessful());
+            cnResult->setResult(dscnnct->getResult());
+        });
+        QObject::connect(thread, &QThread::finished, this, [this, cnResult] {
             if (!cnResult->isSuccessful() && cnResult->getResult().trimmed().length() > 0)
             {
                 updateUi(Kompass::STATUS_CONNECTED);
@@ -869,6 +1072,7 @@ void Kompass::updateUi(int status, QString vpnDetails)
     // get list selection
     QModelIndexList selectedTypesIndex = lstServersByType->selectionModel()->selectedIndexes();
     QModelIndexList selectedCountriesIndex = lstServersByCountry->selectionModel()->selectedIndexes();
+    QModelIndexList selectedServersIndex = vwServers->selectionModel()->selectedIndexes();
 
     // init status values
     QMap<QString, QString> *vpnStatus = new QMap<QString, QString>();
@@ -997,10 +1201,13 @@ void Kompass::updateUi(int status, QString vpnDetails)
             actionDisconnect->setEnabled(false);
             tbConnectType->setEnabled(false);
             tbConnectCountry->setEnabled(false);
+            tbConnectServer->setEnabled(false);
             lstServersByType->setEnabled(false);
             lstServersByCountry->setEnabled(false);
+            vwServers->setEnabled(false);
             txtFilterType->setEnabled(false);
             txtFilterCountry->setEnabled(false);
+            txtFilterServer->setEnabled(false);
             pbSettings->setEnabled(false);
             break;
         case STATUS_DISCONNECTED:;
@@ -1022,12 +1229,16 @@ void Kompass::updateUi(int status, QString vpnDetails)
             txtStatusUptime->setText("--");
             txtFilterType->setEnabled(true);
             txtFilterCountry->setEnabled(true);
+            txtFilterServer->setEnabled(true);
             lstServersByType->setEnabled(true);
             lstServersByCountry->setEnabled(true);
+            vwServers->setEnabled(true);
             tbConnectType->setChecked(false);
             tbConnectType->setEnabled(selectedTypesIndex.length() > 0);
             tbConnectCountry->setChecked(false);
             tbConnectCountry->setEnabled(selectedCountriesIndex.length() > 0);
+            tbConnectServer->setChecked(false);
+            tbConnectServer->setEnabled(selectedServersIndex.length() > 0);
             actionConnect->setEnabled(true);
             actionDisconnect->setEnabled(false);
             pbSettings->setEnabled(true);
@@ -1070,10 +1281,12 @@ void Kompass::updateUi(int status, QString vpnDetails)
             actionConnect->setEnabled(false);
             tbConnectType->setEnabled(false);
             tbConnectCountry->setEnabled(false);
+            tbConnectServer->setEnabled(false);
             lstServersByType->setEnabled(false);
             lstServersByCountry->setEnabled(false);
             txtFilterType->setEnabled(false);
             txtFilterCountry->setEnabled(false);
+            txtFilterServer->setEnabled(false);
             pbSettings->setEnabled(true);
             svgSpinner->setVisible(false);
             break;
@@ -1083,10 +1296,13 @@ void Kompass::updateUi(int status, QString vpnDetails)
             actionDisconnect->setEnabled(false);
             tbConnectType->setEnabled(false);
             tbConnectCountry->setEnabled(false);
+            tbConnectServer->setEnabled(false);
             lstServersByType->setEnabled(false);
             lstServersByCountry->setEnabled(false);
+            vwServers->setEnabled(false);
             txtFilterType->setEnabled(false);
             txtFilterCountry->setEnabled(false);
+            txtFilterServer->setEnabled(false);
             pbSettings->setEnabled(false);
             break;
     }

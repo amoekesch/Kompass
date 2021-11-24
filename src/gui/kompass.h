@@ -13,6 +13,7 @@
 #include <QMessageBox>
 #include <QProcess>
 #include <QPushButton>
+#include <QSortFilterProxyModel>
 #include <QStackedWidget>
 #include <QStringListModel>
 #include <QSystemTrayIcon>
@@ -20,16 +21,15 @@
 #include <QWidgetAction>
 #include <QSvgRenderer>
 #include <QSvgWidget>
+#include <QTableView>
 #include "clickablelabel.h"
 #include "kompasswindow.h"
 #include "sectiontitle.h"
 #include "settings.h"
 #include "togglebutton.h"
 #include "../data/connectionresult.h"
-
-QT_BEGIN_NAMESPACE
-    namespace Ui { class Kompass;}
-QT_END_NAMESPACE
+#include "../data/vpnserver.h"
+#include "../data/vpnservermodel.h"
 
 class Kompass : public QObject
 {
@@ -42,11 +42,17 @@ class Kompass : public QObject
         // application status constants
         static const int EXIT_CODE_NORMAL = 0;
         static const int EXIT_CODE_NOT_LOGGED_IN = 1;
+
         static const int STATUS_DISABLED = 10;
         static const int STATUS_CONNECTED = 11;
         static const int STATUS_DISCONNECTED = 12;
         static const int STATUS_CONNECTING = 13;
         static const int STATUS_DISCONNECTING = 14;
+
+        static const int CONNECTION_TRIGGER_FASTEST = 0;
+        static const int CONNECTION_TRIGGER_TYPE = 1;
+        static const int CONNECTION_TRIGGER_COUNTRY = 2;
+        static const int CONNECTION_TRIGGER_SERVER = 3;
 
         // status variables
         int currentStatus = -1;
@@ -55,15 +61,19 @@ class Kompass : public QObject
         // ui components
         KompassWindow *ui;
         QSvgWidget *svgSpinner;
+        QSvgWidget *svgSpinnerServerRefresh;
         QStackedWidget *stackMain;
         ClickableLabel *mnStatus;
         ClickableLabel *mnTypes;
         ClickableLabel *mnCountries;
+        ClickableLabel *mnServers;
         QListView *lstServersByType;
-        QListView *lstServersByCountry;;
+        QListView *lstServersByCountry;
+        QTableView *vwServers;
         ToggleButton *tbStatus;
         ToggleButton *tbConnectType;
         ToggleButton *tbConnectCountry;
+        ToggleButton *tbConnectServer;
         QLineEdit *txtStatusServer;
         QLineEdit *txtStatusCity;
         QLineEdit *txtStatusCountry;
@@ -73,11 +83,13 @@ class Kompass : public QObject
         QLineEdit *txtStatusUptime;
         QLineEdit *txtFilterType;
         QLineEdit *txtFilterCountry;
+        QLineEdit *txtFilterServer;
         QLineEdit *txtUsername;
         QLineEdit *txtLicense;
         QPushButton *pbQuit;
         QPushButton *pbMinimize;
         QPushButton *pbSettings;
+        QPushButton *pbRefreshServers;
 
         // tray menu
         QSystemTrayIcon *trayIcon;
@@ -90,6 +102,8 @@ class Kompass : public QObject
         QAction *mnStatusUptime;
 
         // data models
+        VPNServerModel *mdlServers;
+        QSortFilterProxyModel *mdlServersProxy;
         QVector<QString> *serverListByType;
         QStringListModel *serverListByTypeModel;
         QVector<QString> *serverListByCountry;
@@ -103,7 +117,7 @@ class Kompass : public QObject
         void setupDataTypes();
         void setupDataCountries();
         void setupStatusMonitor();
-        void toggleVpn(QStringList commands, bool connect);
+        void toggleVpn(QStringList commands, bool connect, int trigger);
         ConnectionResult* connectVpn(QStringList commands);
         ConnectionResult* disconnectVpn();
         void updateUi(int status, QString vpnStatus = nullptr);

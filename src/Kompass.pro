@@ -1,4 +1,4 @@
-QT += core gui svg svgwidgets
+QT += core gui svg svgwidgets network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -10,6 +10,8 @@ CONFIG += c++11
 
 SOURCES += \
     data/connectionresult.cpp \
+    data/vpnserver.cpp \
+    data/vpnservermodel.cpp \
     gui/clickablelabel.cpp \
     gui/kompass.cpp \
     gui/kompasswindow.cpp \
@@ -21,6 +23,8 @@ SOURCES += \
 
 HEADERS += \
     data/connectionresult.h \
+    data/vpnserver.h \
+    data/vpnservermodel.h \
     gui/clickablelabel.h \
     gui/kompass.h \
     gui/kompasswindow.h \
