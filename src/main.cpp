@@ -3,8 +3,10 @@
 #include <QApplication>
 #include <QFontDatabase>
 #include <QLocale>
+#include <QMessageBox>
 #include <QTranslator>
-#include <launchverification.h>
+#include "launchverification.h"
+#include "singleapplication.h"
 
 /**
  * THe main method to launch Kompass
@@ -15,7 +17,9 @@
  */
 int main(int argc, char *argv[])
 {
+    // create the application
     QApplication a(argc, argv);
+
 
     // add translation support
     QTranslator translator;
@@ -27,6 +31,26 @@ int main(int argc, char *argv[])
             break;
         }
     }
+
+    // check for running instance
+    SingleApplication single("KOMPASS-APPLICATION" );
+    if (!single.test())
+    {
+        translator.tr("");
+        QMessageBox msg = QMessageBox();
+        msg.setWindowIcon(QIcon::fromTheme("compass"));
+        msg.setWindowTitle(QObject::tr("appTitle"));
+        msg.setText(QObject::tr("msgErrorMultipleInstances"));
+        msg.setIcon(QMessageBox::Information);
+        msg.setDefaultButton(QMessageBox::Ok);
+        msg.setStandardButtons(QMessageBox::Ok);
+        msg.setWindowModality(Qt::WindowModality::ApplicationModal);
+        msg.activateWindow();
+        msg.show();
+        msg.exec();
+        return 0;
+    }
+
 
     // add application font
     QFontDatabase::addApplicationFont(":/font/FontAwesome.otf");

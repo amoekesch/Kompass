@@ -2,6 +2,17 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="en_US">
     <context>
+        <name>QObject</name>
+        <message>
+            <source>appTitle</source>
+            <translation>Kompass</translation>
+        </message>
+        <message>
+            <source>msgErrorMultipleInstances</source>
+            <translation>Another instance of Kompass is already running.&lt;br&gt;This instance will shut down.</translation>
+        </message>
+    </context>
+    <context>
         <name>Kompass</name>
         <message>
             <source>appTitle</source>

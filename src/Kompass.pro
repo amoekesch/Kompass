@@ -19,7 +19,8 @@ SOURCES += \
     gui/settings.cpp \
     gui/togglebutton.cpp \
     launchverification.cpp \
-    main.cpp
+    main.cpp \
+    singleapplication.cpp
 
 HEADERS += \
     data/connectionresult.h \
@@ -31,7 +32,8 @@ HEADERS += \
     gui/sectiontitle.h \
     gui/settings.h \
     gui/togglebutton.h \
-    launchverification.h
+    launchverification.h \
+    singleapplication.h
 
 FORMS +=
 
