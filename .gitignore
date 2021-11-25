@@ -54,5 +54,8 @@ compile_commands.json
 # VSCode Settings
 .vscode
 
+# macOS
+.DS_Store
+
 # Local TODO file
 TODO.md
