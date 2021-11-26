@@ -208,9 +208,7 @@ void Kompass::setupUi()
     QObject::connect(tbConnectType, &ToggleButton::clicked, [this]() {
         QString type = this->lstServersByType->currentIndex().data().toString();
         type = type.replace(" ", "_");
-        mnStatus->setStyleSheet("font-weight: normal; color: " + this->ui->palette().light().color().name() + "; background: " + this->ui->palette().highlight().color().name() + ";");
-        mnTypes->setStyleSheet("font-weight: normal; color: " + this->ui->palette().highlight().color().name() + "; background: " + this->ui->palette().light().color().name() + ";");
-        stackMain->setCurrentIndex(0);
+        menu->select(0);
         tbConnectType->setChecked(true);
         toggleVpn(QStringList() << "connect" << type, tbConnectType->isChecked(), CONNECTION_TRIGGER_TYPE);
     });
@@ -288,9 +286,7 @@ void Kompass::setupUi()
     QObject::connect(tbConnectCountry, &ToggleButton::clicked, [this]() {
         QString country = this->lstServersByCountry->currentIndex().data().toString();
         country = country.replace(" ", "_");
-        mnStatus->setStyleSheet("font-weight: normal; color: " + this->ui->palette().light().color().name() + "; background: " + this->ui->palette().highlight().color().name() + ";");
-        mnCountries->setStyleSheet("font-weight: normal; color: " + this->ui->palette().highlight().color().name() + "; background: " + this->ui->palette().light().color().name() + ";");
-        stackMain->setCurrentIndex(0);
+        menu->select(0);
         tbConnectCountry->setChecked(true);
         toggleVpn(QStringList() << "connect" << country, tbConnectCountry->isChecked(), CONNECTION_TRIGGER_COUNTRY);
     });
@@ -451,9 +447,7 @@ void Kompass::setupUi()
         QModelIndexList objIndexes = mdlServersProxy->mapSelectionToSource(proxySelect).indexes();
         VPNServer vpnServer = mdlServers->getServer(objIndexes.at(0).row());
         QString server = vpnServer.getHost().left(vpnServer.getHost().indexOf("."));
-        mnStatus->setStyleSheet("font-weight: normal; color: " + this->ui->palette().light().color().name() + "; background: " + this->ui->palette().highlight().color().name() + ";");
-        mnServers->setStyleSheet("font-weight: normal; color: " + this->ui->palette().highlight().color().name() + "; background: " + this->ui->palette().light().color().name() + ";");
-        stackMain->setCurrentIndex(0);
+        menu->select(0);
         tbConnectServer->setChecked(true);
         toggleVpn(QStringList() << "connect" << server, tbConnectServer->isChecked(), CONNECTION_TRIGGER_SERVER);
     });
@@ -560,78 +554,25 @@ void Kompass::setupUi()
     stackMain->addWidget(wxCountries);
     stackMain->addWidget(wxServers);
 
-    /**
-     * -------------------------------------------
-     *  add all menu elements
-     */
-
-    mnStatus = new ClickableLabel();
-    mnStatus->setText(tr("mnStatus"));
-    mnStatus->setContentsMargins(20, 10, 0, 10);
-    mnStatus->setAutoFillBackground(true);
-    mnStatus->setStyleSheet("font-weight: normal; color: " + this->ui->palette().light().color().name() + "; background: " + this->ui->palette().highlight().color().name() + ";");
-    QObject::connect(mnStatus, &ClickableLabel::clicked, [this]() {
-        mnStatus->setStyleSheet("font-weight: normal; color: " + this->ui->palette().light().color().name() + "; background: " + this->ui->palette().highlight().color().name() + ";");
-        mnTypes->setStyleSheet("font-weight: normal; color: " + this->ui->palette().highlight().color().name() + "; background: " + this->ui->palette().light().color().name() + ";");
-        mnCountries->setStyleSheet("font-weight: normal; color: " + this->ui->palette().highlight().color().name() + "; background: " + this->ui->palette().light().color().name() + ";");
-        mnServers->setStyleSheet("font-weight: normal; color: " + this->ui->palette().highlight().color().name() + "; background: " + this->ui->palette().light().color().name() + ";");
-        stackMain->setCurrentIndex(0);
-    });
-
-    mnTypes = new ClickableLabel();
-    mnTypes->setText(tr("mnTypes"));
-    mnTypes->setContentsMargins(20, 10, 0, 10);
-    mnTypes->setAutoFillBackground(true);
-    mnTypes->setStyleSheet("font-weight: normal; color: " + this->ui->palette().highlight().color().name() + "; background: " + this->ui->palette().light().color().name() + ";");
-    QObject::connect(mnTypes, &ClickableLabel::clicked, [this]() {
-        mnStatus->setStyleSheet("font-weight: normal; color: " + this->ui->palette().highlight().color().name() + "; background: " + this->ui->palette().light().color().name() + ";");
-        mnTypes->setStyleSheet("font-weight: normal; color: " + this->ui->palette().light().color().name() + "; background: " + this->ui->palette().highlight().color().name() + ";");
-        mnCountries->setStyleSheet("font-weight: normal; color: " + this->ui->palette().highlight().color().name() + "; background: " + this->ui->palette().light().color().name() + ";");
-        mnServers->setStyleSheet("font-weight: normal; color: " + this->ui->palette().highlight().color().name() + "; background: " + this->ui->palette().light().color().name() + ";");
-        stackMain->setCurrentIndex(1);
-    });
-
-    mnCountries = new ClickableLabel();
-    mnCountries->setText(tr("mnCountries"));
-    mnCountries->setContentsMargins(20, 10, 0, 10);
-    mnCountries->setAutoFillBackground(true);
-    mnCountries->setStyleSheet("font-weight: normal; color: " + this->ui->palette().highlight().color().name() + "; background: " + this->ui->palette().light().color().name() + ";");
-    QObject::connect(mnCountries, &ClickableLabel::clicked, [this]() {
-        mnStatus->setStyleSheet("font-weight: normal; color: " + this->ui->palette().highlight().color().name() + "; background: " + this->ui->palette().light().color().name() + ";");
-        mnTypes->setStyleSheet("font-weight: normal; color: " + this->ui->palette().highlight().color().name() + "; background: " + this->ui->palette().light().color().name() + ";");
-        mnCountries->setStyleSheet("font-weight: normal; color: " + this->ui->palette().light().color().name() + "; background: " + this->ui->palette().highlight().color().name() + ";");
-        mnServers->setStyleSheet("font-weight: normal; color: " + this->ui->palette().highlight().color().name() + "; background: " + this->ui->palette().light().color().name() + ";");
-        stackMain->setCurrentIndex(2);
-    });
-
-    mnServers = new ClickableLabel();
-    mnServers->setText(tr("mnServers"));
-    mnServers->setContentsMargins(20, 10, 0, 10);
-    mnServers->setAutoFillBackground(true);
-    mnServers->setStyleSheet("font-weight: normal; color: " + this->ui->palette().highlight().color().name() + "; background: " + this->ui->palette().light().color().name() + ";");
-    QObject::connect(mnServers, &ClickableLabel::clicked, [this]() {
-        mnStatus->setStyleSheet("font-weight: normal; color: " + this->ui->palette().highlight().color().name() + "; background: " + this->ui->palette().light().color().name() + ";");
-        mnTypes->setStyleSheet("font-weight: normal; color: " + this->ui->palette().highlight().color().name() + "; background: " + this->ui->palette().light().color().name() + ";");
-        mnCountries->setStyleSheet("font-weight: normal; color: " + this->ui->palette().highlight().color().name() + "; background: " + this->ui->palette().light().color().name() + ";");
-        mnServers->setStyleSheet("font-weight: normal; color: " + this->ui->palette().light().color().name() + "; background: " + this->ui->palette().highlight().color().name() + ";");
-        stackMain->setCurrentIndex(3);
-    });
+    menu = new KompassMenu(stackMain);
+    menu->appendMenuItem("\uf023", tr("mnStatus"), 0);
+    menu->appendMenuItem("\uf03a", tr("mnTypes"), 1);
+    menu->appendMenuItem("\uf024", tr("mnCountries"), 2);
+    menu->appendMenuItem("\uf233", tr("mnServers"), 3);
+    menu->select(0);
 
     QVBoxLayout *layoutMenu = new QVBoxLayout();
-    layoutMenu->setContentsMargins(0, 25, 0, 20);
-    layoutMenu->addWidget(mnStatus);
-    layoutMenu->addWidget(mnTypes);
-    layoutMenu->addWidget(mnCountries);
-    layoutMenu->addWidget(mnServers);
+    layoutMenu->setContentsMargins(0, 28, 0, 20);
+    layoutMenu->addWidget(menu);
     layoutMenu->addStretch(1);
     layoutMenu->addItem(layoutButtons);
 
-    QWidget *wxMenu = new QWidget();
-    wxMenu->setMinimumWidth(200);
-    wxMenu->setMaximumWidth(200);
-    wxMenu->setAutoFillBackground(true);
-    wxMenu->setStyleSheet("background: " + this->ui->palette().light().color().name() + ";");
-    wxMenu->setLayout(layoutMenu);
+    QWidget *wxMenuWrapper = new QWidget();
+    wxMenuWrapper->setMinimumWidth(200);
+    wxMenuWrapper->setMaximumWidth(200);
+    wxMenuWrapper->setAutoFillBackground(true);
+    wxMenuWrapper->setStyleSheet("background: " + this->ui->palette().light().color().name() + ";");
+    wxMenuWrapper->setLayout(layoutMenu);
 
     /**
      * -------------------------------------------
@@ -640,7 +581,7 @@ void Kompass::setupUi()
 
     QHBoxLayout *layoutCentral = new QHBoxLayout();
     layoutCentral->setContentsMargins(0, 0, 0, 0);
-    layoutCentral->addWidget(wxMenu);
+    layoutCentral->addWidget(wxMenuWrapper);
     layoutCentral->addSpacing(20);
     layoutCentral->addWidget(stackMain);
 
@@ -896,6 +837,8 @@ void Kompass::toggleVpn(QStringList commands, bool connect, int trigger)
             {
                 updateUi(Kompass::STATUS_DISCONNECTED);
                 QString err = cnResult->getResult().trimmed();
+                err = err.replace(QRegularExpression("[\\]|[\|]|[/]|[-]"), QString());
+
                 if (trigger == CONNECTION_TRIGGER_SERVER)
                 {
                     err = err.prepend(tr("msgErrorConnectingByServer"));

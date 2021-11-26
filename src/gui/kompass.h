@@ -22,7 +22,7 @@
 #include <QSvgRenderer>
 #include <QSvgWidget>
 #include <QTableView>
-#include "clickablelabel.h"
+#include "kompassmenu.h"
 #include "kompasswindow.h"
 #include "sectiontitle.h"
 #include "settings.h"
@@ -60,13 +60,10 @@ class Kompass : public QObject
 
         // ui components
         KompassWindow *ui;
+        KompassMenu *menu;
         QSvgWidget *svgSpinner;
         QSvgWidget *svgSpinnerServerRefresh;
         QStackedWidget *stackMain;
-        ClickableLabel *mnStatus;
-        ClickableLabel *mnTypes;
-        ClickableLabel *mnCountries;
-        ClickableLabel *mnServers;
         QListView *lstServersByType;
         QListView *lstServersByCountry;
         QTableView *vwServers;

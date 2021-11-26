@@ -12,8 +12,9 @@ SOURCES += \
     data/connectionresult.cpp \
     data/vpnserver.cpp \
     data/vpnservermodel.cpp \
-    gui/clickablelabel.cpp \
+    gui/clickablewidget.cpp \
     gui/kompass.cpp \
+    gui/kompassmenu.cpp \
     gui/kompasswindow.cpp \
     gui/sectiontitle.cpp \
     gui/settings.cpp \
@@ -26,8 +27,9 @@ HEADERS += \
     data/connectionresult.h \
     data/vpnserver.h \
     data/vpnservermodel.h \
-    gui/clickablelabel.h \
+    gui/clickablewidget.h \
     gui/kompass.h \
+    gui/kompassmenu.h \
     gui/kompasswindow.h \
     gui/sectiontitle.h \
     gui/settings.h \
