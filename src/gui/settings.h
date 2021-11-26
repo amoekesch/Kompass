@@ -13,7 +13,7 @@
 #include <QScrollArea>
 #include <QStackedWidget>
 #include <QVBoxLayout>
-#include "clickablelabel.h"
+#include "kompassmenu.h"
 #include "togglebutton.h"
 
 class Settings : public QDialog
@@ -25,11 +25,7 @@ class Settings : public QDialog
 
     private:
         QStackedWidget *stackSettings;
-        ClickableLabel *mnKillswitch;
-        ClickableLabel *mnCybersec;
-        ClickableLabel *mnFirewall;
-        ClickableLabel *mnConnection;
-        ClickableLabel *mnNotify;
+        KompassMenu *menu;
         QComboBox *cmbTechnology;
         QComboBox *cmbProtocol;
         ToggleButton *cbFirewall;

@@ -52,7 +52,7 @@ int main(int argc, char *argv[])
     }
 
 
-    // add application font
+    // add icon fonts
     QFontDatabase::addApplicationFont(":/font/FontAwesome.otf");
 
     // start launch verification sequence

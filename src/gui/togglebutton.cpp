@@ -125,6 +125,7 @@ void ToggleButton::paintEvent(QPaintEvent *)
 
     QFont font = QFont();
     font.setFamily("FontAwesome");
+
     font.setPixelSize(.8 * mThumbRadius);
     p.setFont(font);
 

@@ -555,8 +555,8 @@ void Kompass::setupUi()
     stackMain->addWidget(wxServers);
 
     menu = new KompassMenu(stackMain);
-    menu->appendMenuItem("\uf023", tr("mnStatus"), 0);
-    menu->appendMenuItem("\uf03a", tr("mnTypes"), 1);
+    menu->appendMenuItem("\uf0e4", tr("mnStatus"), 0);
+    menu->appendMenuItem("\uf07c", tr("mnTypes"), 1);
     menu->appendMenuItem("\uf024", tr("mnCountries"), 2);
     menu->appendMenuItem("\uf233", tr("mnServers"), 3);
     menu->select(0);

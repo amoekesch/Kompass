@@ -246,20 +246,6 @@ void Settings::setupUi()
     QWidget *wConnection = new QWidget();
     wConnection->setLayout(layoutConnection);
 
-    mnConnection = new ClickableLabel();
-    mnConnection->setText(tr("mnConnection"));
-    mnConnection->setContentsMargins(20, 10, 0, 10);
-    mnConnection->setAutoFillBackground(true);
-    mnConnection->setStyleSheet("font-weight: normal; color: " + this->palette().light().color().name() + "; background: " + this->palette().highlight().color().name() + ";");
-    QObject::connect(mnConnection, &ClickableLabel::clicked, [this]() {
-        mnConnection->setStyleSheet("font-weight: normal; color: " + this->palette().light().color().name() + "; background: " + this->palette().highlight().color().name() + ";");
-        mnKillswitch->setStyleSheet("font-weight: normal; color: " + this->palette().highlight().color().name() + "; background: " + this->palette().light().color().name() + ";");
-        mnCybersec->setStyleSheet("font-weight: normal; color: " + this->palette().highlight().color().name() + "; background: " + this->palette().light().color().name() + ";");
-        mnFirewall->setStyleSheet("font-weight: normal; color: " + this->palette().highlight().color().name() + "; background: " + this->palette().light().color().name() + ";");
-        mnNotify->setStyleSheet("font-weight: normal; color: " + this->palette().highlight().color().name() + "; background: " + this->palette().light().color().name() + ";");
-        stackSettings->setCurrentIndex(0);
-    });
-
     /**
      * -------------------------------------------
      *  Settings: Kill Switch
@@ -284,20 +270,6 @@ void Settings::setupUi()
 
     QWidget *wKillswitch = new QWidget();
     wKillswitch->setLayout(layoutKillswitch);
-
-    mnKillswitch = new ClickableLabel();
-    mnKillswitch->setText(tr("mnKillswitch"));
-    mnKillswitch->setContentsMargins(20, 10, 0, 10);
-    mnKillswitch->setAutoFillBackground(true);
-    mnKillswitch->setStyleSheet("font-weight: normal; color: " + this->palette().highlight().color().name() + "; background: " + this->palette().light().color().name() + ";");
-    QObject::connect(mnKillswitch, &ClickableLabel::clicked, [this]() {
-        mnConnection->setStyleSheet("font-weight: normal; color: " + this->palette().highlight().color().name() + "; background: " + this->palette().light().color().name() + ";");
-        mnKillswitch->setStyleSheet("font-weight: normal; color: " + this->palette().light().color().name() + "; background: " + this->palette().highlight().color().name() + ";");
-        mnCybersec->setStyleSheet("font-weight: normal; color: " + this->palette().highlight().color().name() + "; background: " + this->palette().light().color().name() + ";");
-        mnFirewall->setStyleSheet("font-weight: normal; color: " + this->palette().highlight().color().name() + "; background: " + this->palette().light().color().name() + ";");
-        mnNotify->setStyleSheet("font-weight: normal; color: " + this->palette().highlight().color().name() + "; background: " + this->palette().light().color().name() + ";");
-        stackSettings->setCurrentIndex(1);
-    });
 
     /**
      * -------------------------------------------
@@ -324,20 +296,6 @@ void Settings::setupUi()
     QWidget *wCybersec = new QWidget();
     wCybersec->setLayout(layoutCybersec);
 
-    mnCybersec = new ClickableLabel();
-    mnCybersec->setText(tr("mnCybersec"));
-    mnCybersec->setContentsMargins(20, 10, 0, 10);
-    mnCybersec->setAutoFillBackground(true);
-    mnCybersec->setStyleSheet("font-weight: normal; color: " + this->palette().highlight().color().name() + "; background: " + this->palette().light().color().name() + ";");
-    QObject::connect(mnCybersec, &ClickableLabel::clicked, [this]() {
-        mnConnection->setStyleSheet("font-weight: normal; color: " + this->palette().highlight().color().name() + "; background: " + this->palette().light().color().name() + ";");
-        mnKillswitch->setStyleSheet("font-weight: normal; color: " + this->palette().highlight().color().name() + "; background: " + this->palette().light().color().name() + ";");
-        mnCybersec->setStyleSheet("font-weight: normal; color: " + this->palette().light().color().name() + "; background: " + this->palette().highlight().color().name() + ";");
-        mnFirewall->setStyleSheet("font-weight: normal; color: " + this->palette().highlight().color().name() + "; background: " + this->palette().light().color().name() + ";");
-        mnNotify->setStyleSheet("font-weight: normal; color: " + this->palette().highlight().color().name() + "; background: " + this->palette().light().color().name() + ";");
-        stackSettings->setCurrentIndex(2);
-    });
-
     /**
      * -------------------------------------------
      *  Settings: Firewall
@@ -362,20 +320,6 @@ void Settings::setupUi()
 
     QWidget *wFirewall = new QWidget();
     wFirewall->setLayout(layoutFirewall);
-
-    mnFirewall = new ClickableLabel();
-    mnFirewall->setText(tr("mnFirewall"));
-    mnFirewall->setContentsMargins(20, 10, 0, 10);
-    mnFirewall->setAutoFillBackground(true);
-    mnFirewall->setStyleSheet("font-weight: normal; color: " + this->palette().highlight().color().name() + "; background: " + this->palette().light().color().name() + ";");
-    QObject::connect(mnFirewall, &ClickableLabel::clicked, [this]() {
-        mnConnection->setStyleSheet("font-weight: normal; color: " + this->palette().highlight().color().name() + "; background: " + this->palette().light().color().name() + ";");
-        mnKillswitch->setStyleSheet("font-weight: normal; color: " + this->palette().highlight().color().name() + "; background: " + this->palette().light().color().name() + ";");
-        mnCybersec->setStyleSheet("font-weight: normal; color: " + this->palette().highlight().color().name() + "; background: " + this->palette().light().color().name() + ";");
-        mnFirewall->setStyleSheet("font-weight: normal; color: " + this->palette().light().color().name() + "; background: " + this->palette().highlight().color().name() + ";");
-        mnNotify->setStyleSheet("font-weight: normal; color: " + this->palette().highlight().color().name() + "; background: " + this->palette().light().color().name() + ";");
-        stackSettings->setCurrentIndex(3);
-    });
 
     /**
      * -------------------------------------------
@@ -402,20 +346,6 @@ void Settings::setupUi()
     QWidget *wNotify = new QWidget();
     wNotify->setLayout(layoutNotify);
 
-    mnNotify = new ClickableLabel();
-    mnNotify->setText(tr("mnNotify"));
-    mnNotify->setContentsMargins(20, 10, 0, 10);
-    mnNotify->setAutoFillBackground(true);
-    mnNotify->setStyleSheet("font-weight: normal; color: " + this->palette().highlight().color().name() + "; background: " + this->palette().light().color().name() + ";");
-    QObject::connect(mnNotify, &ClickableLabel::clicked, [this]() {
-        mnConnection->setStyleSheet("font-weight: normal; color: " + this->palette().highlight().color().name() + "; background: " + this->palette().light().color().name() + ";");
-        mnKillswitch->setStyleSheet("font-weight: normal; color: " + this->palette().highlight().color().name() + "; background: " + this->palette().light().color().name() + ";");
-        mnCybersec->setStyleSheet("font-weight: normal; color: " + this->palette().highlight().color().name() + "; background: " + this->palette().light().color().name() + ";");
-        mnFirewall->setStyleSheet("font-weight: normal; color: " + this->palette().highlight().color().name() + "; background: " + this->palette().light().color().name() + ";");
-        mnNotify->setStyleSheet("font-weight: normal; color: " + this->palette().light().color().name() + "; background: " + this->palette().highlight().color().name() + ";");
-        stackSettings->setCurrentIndex(4);
-    });
-
     /**
      * -------------------------------------------
      *  add setting detal panels into stack
@@ -431,23 +361,27 @@ void Settings::setupUi()
 
     /**
      * -------------------------------------------
-     *  create the menu to switch active stack item
+     *  create settings menu
      */
+    menu = new KompassMenu(stackSettings);
+    menu->appendMenuItem("\uf0c1", tr("mnConnection"), 0);
+    menu->appendMenuItem("\uf1e2", tr("mnKillswitch"), 1);
+    menu->appendMenuItem("\uf132", tr("mnCybersec"), 2);
+    menu->appendMenuItem("\uf06d", tr("mnFirewall"), 3);
+    menu->appendMenuItem("\uf0a1", tr("mnNotify"), 4);
+    menu->select(0);
 
     QVBoxLayout *layoutMenu = new QVBoxLayout();
-    layoutMenu->setContentsMargins(0, 25, 0, 0);
-    layoutMenu->addWidget(mnConnection);
-    layoutMenu->addWidget(mnKillswitch);
-    layoutMenu->addWidget(mnCybersec);
-    layoutMenu->addWidget(mnFirewall);
-    layoutMenu->addWidget(mnNotify);
+    layoutMenu->setContentsMargins(0, 28, 0, 20);
+    layoutMenu->addWidget(menu);
     layoutMenu->addStretch(1);
-    QWidget *wxMenu = new QWidget();
-    wxMenu->setMinimumWidth(200);
-    wxMenu->setMaximumWidth(200);
-    wxMenu->setAutoFillBackground(true);
-    wxMenu->setStyleSheet("background: " + this->palette().light().color().name() + ";");
-    wxMenu->setLayout(layoutMenu);
+
+    QWidget *wxMenuWrapper = new QWidget();
+    wxMenuWrapper->setMinimumWidth(200);
+    wxMenuWrapper->setMaximumWidth(200);
+    wxMenuWrapper->setAutoFillBackground(true);
+    wxMenuWrapper->setStyleSheet("background: " + this->palette().light().color().name() + ";");
+    wxMenuWrapper->setLayout(layoutMenu);
 
     /**
      * -------------------------------------------
@@ -475,7 +409,7 @@ void Settings::setupUi()
 
     QGridLayout *layoutMain = new QGridLayout();
     layoutMain->setContentsMargins(0, 0, 0, 0);
-    layoutMain->addWidget(wxMenu, 0, 0, 3, 1);
+    layoutMain->addWidget(wxMenuWrapper, 0, 0, 3, 1);
     layoutMain->addWidget(stackSettings, 0, 1, 1, 1);
     layoutMain->addItem(layoutDialogControls, 2, 1, 1, 1);
     layoutMain->rowStretch(2);
