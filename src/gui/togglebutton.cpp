@@ -40,8 +40,8 @@ ToggleButton::ToggleButton(int trackRadius, int thumbRadius, bool showIcons, QWi
     // display the icons on the knob
     if (showIcons)
     {
-        mThumbText.insert(true, QChar(0x2713));
-        mThumbText.insert(false, QChar(0x2715));
+        mThumbText.insert(true, QChar(0xf00c));
+        mThumbText.insert(false, QChar(0xf00d));
     }
     else
     {
@@ -122,7 +122,9 @@ void ToggleButton::paintEvent(QPaintEvent *)
 
     p.setPen(textColor);
     p.setOpacity(textOpacity);
-    QFont font = p.font();
+
+    QFont font = QFont();
+    font.setFamily("FontAwesome");
     font.setPixelSize(.8 * mThumbRadius);
     p.setFont(font);
 
