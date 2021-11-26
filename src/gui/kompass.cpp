@@ -376,6 +376,7 @@ void Kompass::setupUi()
     vwServers->setSelectionMode(QAbstractItemView::SingleSelection);
     vwServers->setHorizontalScrollMode(QTableView::ScrollPerPixel);
     vwServers->setVerticalScrollMode(QTableView::ScrollPerPixel);
+    vwServers->verticalHeader()->hide();
     QObject::connect(vwServers->selectionModel(), &QItemSelectionModel::selectionChanged, this, [this, txtServerDetailsHost, txtServerDetailsCity, txtServerDetailsCountry, mdlServerDetailsTechnologies] {
         tbConnectServer->setEnabled(false);
         txtServerDetailsHost->setText("");

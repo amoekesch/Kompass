@@ -4,6 +4,7 @@
 #include <QAction>
 #include <QErrorMessage>
 #include <QGridLayout>
+#include <QHeaderView>
 #include <QLabel>
 #include <QLine>
 #include <QLineEdit>
