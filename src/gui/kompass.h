@@ -118,7 +118,7 @@ class Kompass : public QObject
         void toggleVpn(QStringList commands, bool connect, int trigger);
         ConnectionResult* connectVpn(QStringList commands);
         ConnectionResult* disconnectVpn();
-        void updateUi(int status, QString vpnStatus = nullptr);
+        void updateUi(int status, int trigger, QString vpnStatus = nullptr);
         void showUi();
         void hideUi();
         void quit(int exitCode);

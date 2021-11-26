@@ -209,7 +209,6 @@ void Kompass::setupUi()
         QString type = this->lstServersByType->currentIndex().data().toString();
         type = type.replace(" ", "_");
         menu->select(0);
-        tbConnectType->setChecked(true);
         toggleVpn(QStringList() << "connect" << type, tbConnectType->isChecked(), CONNECTION_TRIGGER_TYPE);
     });
 
@@ -287,7 +286,6 @@ void Kompass::setupUi()
         QString country = this->lstServersByCountry->currentIndex().data().toString();
         country = country.replace(" ", "_");
         menu->select(0);
-        tbConnectCountry->setChecked(true);
         toggleVpn(QStringList() << "connect" << country, tbConnectCountry->isChecked(), CONNECTION_TRIGGER_COUNTRY);
     });
     QHBoxLayout *layoutConnectCountry = new QHBoxLayout();
@@ -448,7 +446,6 @@ void Kompass::setupUi()
         VPNServer vpnServer = mdlServers->getServer(objIndexes.at(0).row());
         QString server = vpnServer.getHost().left(vpnServer.getHost().indexOf("."));
         menu->select(0);
-        tbConnectServer->setChecked(true);
         toggleVpn(QStringList() << "connect" << server, tbConnectServer->isChecked(), CONNECTION_TRIGGER_SERVER);
     });
     QHBoxLayout *layoutConnectServer = new QHBoxLayout();
@@ -803,11 +800,11 @@ void Kompass::setupStatusMonitor()
         QString output = command->readAllStandardOutput();
         if (output.toLower().contains("disconnected"))
         {
-            updateUi(STATUS_DISCONNECTED, nullptr);
+            updateUi(STATUS_DISCONNECTED, -1, nullptr);
         }
         else if (output.toLower().contains("connected"))
         {
-            updateUi(STATUS_CONNECTED, output);
+            updateUi(STATUS_CONNECTED, -1, output);
         }
     });
 }
@@ -820,13 +817,13 @@ void Kompass::setupStatusMonitor()
 void Kompass::toggleVpn(QStringList commands, bool connect, int trigger)
 {
 
-    updateUi(Kompass::STATUS_DISABLED);
+    updateUi(Kompass::STATUS_DISABLED, trigger);
     svgSpinner->setVisible(true);
 
     ConnectionResult *cnResult = new ConnectionResult();
     if (connect)
     {
-        updateUi(Kompass::STATUS_CONNECTING);
+        updateUi(Kompass::STATUS_CONNECTING, trigger);
         QThread *thread = QThread::create([this, commands, cnResult] {
             ConnectionResult *cnnct = connectVpn(commands);
             cnResult->setSuccessful(cnnct->isSuccessful());
@@ -835,7 +832,9 @@ void Kompass::toggleVpn(QStringList commands, bool connect, int trigger)
         QObject::connect(thread, &QThread::finished, this, [this, cnResult, trigger] {
             if (!cnResult->isSuccessful() && cnResult->getResult().trimmed().length() > 0)
             {
-                updateUi(Kompass::STATUS_DISCONNECTED);
+                updateUi(Kompass::STATUS_DISCONNECTED, trigger);
+                menu->select(trigger);
+
                 QString err = cnResult->getResult().trimmed();
                 err = err.replace(QRegularExpression("[\\]|[\|]|[/]|[-]"), QString());
 
@@ -863,27 +862,27 @@ void Kompass::toggleVpn(QStringList commands, bool connect, int trigger)
             else if (!cnResult->isSuccessful())
             {
                 // should never happen
-                updateUi(Kompass::STATUS_DISCONNECTED);
+                updateUi(Kompass::STATUS_DISCONNECTED, trigger);
             }
             else
             {
-                updateUi(Kompass::STATUS_CONNECTED);
+                updateUi(Kompass::STATUS_CONNECTED, trigger);
             }
         });
         thread->start();
     }
     else
     {
-        updateUi(Kompass::STATUS_DISCONNECTING);
+        updateUi(Kompass::STATUS_DISCONNECTING, trigger);
         QThread *thread = QThread::create([this, commands, cnResult]{
             ConnectionResult *dscnnct = disconnectVpn();
             cnResult->setSuccessful(dscnnct->isSuccessful());
             cnResult->setResult(dscnnct->getResult());
         });
-        QObject::connect(thread, &QThread::finished, this, [this, cnResult] {
+        QObject::connect(thread, &QThread::finished, this, [this, cnResult, trigger] {
             if (!cnResult->isSuccessful() && cnResult->getResult().trimmed().length() > 0)
             {
-                updateUi(Kompass::STATUS_CONNECTED);
+                updateUi(Kompass::STATUS_CONNECTED, trigger);
 
                 QMessageBox msg = QMessageBox();
                 msg.setWindowIcon(QIcon::fromTheme("compass"));
@@ -900,11 +899,11 @@ void Kompass::toggleVpn(QStringList commands, bool connect, int trigger)
             else if (!cnResult->isSuccessful())
             {
                 // should never happen
-                updateUi(Kompass::STATUS_CONNECTED);
+                updateUi(Kompass::STATUS_CONNECTED, trigger);
             }
             else
             {
-                updateUi(Kompass::STATUS_DISCONNECTED);
+                updateUi(Kompass::STATUS_DISCONNECTED, trigger);
             }
         });
         thread->start();
@@ -1004,7 +1003,7 @@ ConnectionResult* Kompass::disconnectVpn()
  * @param status
  * @param vpnDetails
  */
-void Kompass::updateUi(int status, QString vpnDetails)
+void Kompass::updateUi(int status, int trigger, QString vpnDetails)
 {
     updatingStatus = true;
 
@@ -1064,7 +1063,7 @@ void Kompass::updateUi(int status, QString vpnDetails)
                 int min = 0;
                 int sec = 0;
 
-                if (uptime.toLower().contains("day"))
+                if (uptime.contains("day", Qt::CaseInsensitive))
                 {
                     QString d = uptime.left(uptime.toLower().indexOf("day") - 1);
                     d = d.mid(d.lastIndexOf(" "));
@@ -1072,7 +1071,7 @@ void Kompass::updateUi(int status, QString vpnDetails)
                     hrs += 24 * d.toInt();
                 }
 
-                if (uptime.toLower().contains("hour"))
+                if (uptime.contains("hour", Qt::CaseInsensitive))
                 {
                      QString h = uptime.left(uptime.toLower().indexOf("hour") - 1);
                      h = h.mid(h.lastIndexOf(" "));
@@ -1080,7 +1079,7 @@ void Kompass::updateUi(int status, QString vpnDetails)
                      hrs += h.toInt();
                 }
 
-                if (uptime.toLower().contains("minute"))
+                if (uptime.contains("minute", Qt::CaseInsensitive))
                 {
                     QString m = uptime.left(uptime.toLower().indexOf("minute") - 1);
                     m = m.mid(m.lastIndexOf(" "));
@@ -1088,7 +1087,7 @@ void Kompass::updateUi(int status, QString vpnDetails)
                     min += m.toInt();
                 }
 
-                if (uptime.toLower().contains("second"))
+                if (uptime.contains("second", Qt::CaseInsensitive))
                 {
                     QString s = uptime.left(uptime.toLower().indexOf("second") - 1);
                     s = s.mid(s.lastIndexOf(" "));
@@ -1133,6 +1132,12 @@ void Kompass::updateUi(int status, QString vpnDetails)
             mnStatusDownloaded->setText("--");
             tbStatus->setChecked(false);
             tbStatus->setEnabled(false);
+            tbConnectType->setChecked(false);
+            tbConnectType->setEnabled(false);
+            tbConnectCountry->setChecked(false);
+            tbConnectCountry->setEnabled(false);
+            tbConnectServer->setChecked(false);
+            tbConnectServer->setEnabled(false);
             txtStatusServer->setText("--");
             txtStatusCity->setText("--");
             txtStatusCountry->setText("--");
@@ -1142,9 +1147,6 @@ void Kompass::updateUi(int status, QString vpnDetails)
             txtStatusUptime->setText("--");
             actionConnect->setEnabled(false);
             actionDisconnect->setEnabled(false);
-            tbConnectType->setEnabled(false);
-            tbConnectCountry->setEnabled(false);
-            tbConnectServer->setEnabled(false);
             lstServersByType->setEnabled(false);
             lstServersByCountry->setEnabled(false);
             vwServers->setEnabled(false);
@@ -1192,6 +1194,15 @@ void Kompass::updateUi(int status, QString vpnDetails)
             mnStatusConnection->setText(tr("statusConnected"));
             tbStatus->setChecked(true);
             tbStatus->setEnabled(true);
+            if (trigger != -1)
+            {
+                tbConnectType->setEnabled(trigger == CONNECTION_TRIGGER_TYPE);
+                tbConnectType->setChecked(trigger == CONNECTION_TRIGGER_TYPE);
+                tbConnectCountry->setEnabled(trigger == CONNECTION_TRIGGER_COUNTRY);
+                tbConnectCountry->setChecked(trigger == CONNECTION_TRIGGER_COUNTRY);
+                tbConnectServer->setEnabled(trigger == CONNECTION_TRIGGER_SERVER);
+                tbConnectServer->setChecked(trigger == CONNECTION_TRIGGER_SERVER);
+            }
             if (vpnStatus->value("server").length() > 0) {
                 txtStatusServer->setText(vpnStatus->value("server"));
             }
@@ -1222,9 +1233,6 @@ void Kompass::updateUi(int status, QString vpnDetails)
             }
             actionDisconnect->setEnabled(true);
             actionConnect->setEnabled(false);
-            tbConnectType->setEnabled(false);
-            tbConnectCountry->setEnabled(false);
-            tbConnectServer->setEnabled(false);
             lstServersByType->setEnabled(false);
             lstServersByCountry->setEnabled(false);
             txtFilterType->setEnabled(false);
