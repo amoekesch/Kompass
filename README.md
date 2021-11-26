@@ -48,5 +48,5 @@ To update your NordVPN settings, use the *Settings* button in the main applicati
 ## Dependencies
 Kompass is written in C++/QT for the KDE Plasma desktop environment and relies heavily on the NordVPN CLI. Here is its full list of dependencies:
 * [KDE](https://kde.org/)
-* [QT](https://www.qt.io/) (v4.0+)
+* [QT](https://www.qt.io/) (v5.0+)
 * [NordVPN CLI](https://nordvpn.com/download/linux/) (v3.12.0+)
