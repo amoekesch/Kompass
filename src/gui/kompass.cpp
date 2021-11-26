@@ -358,6 +358,8 @@ void Kompass::setupUi()
 
     mdlServers = new VPNServerModel();
     vwServers = new QTableView();
+    vwServers->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    vwServers->horizontalHeader()->setStretchLastSection(true);
     QObject::connect(mdlServers, &QAbstractTableModel::dataChanged, this, [this] {
         titleConnnectionServerList->setTitle(tr("titleConnnectionServerListCount").arg(mdlServers->rowCount()));
         vwServers->resizeColumnsToContents();
@@ -369,6 +371,7 @@ void Kompass::setupUi()
     mdlServersProxy->setSourceModel(mdlServers);
     mdlServersProxy->setFilterCaseSensitivity(Qt::CaseInsensitive);
     mdlServersProxy->setFilterKeyColumn(-1);
+
     vwServers->setModel(mdlServersProxy);
     vwServers->setSortingEnabled(true);
     vwServers->sortByColumn(2, Qt::AscendingOrder);
