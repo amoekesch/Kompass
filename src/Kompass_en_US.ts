@@ -28,7 +28,7 @@
         </message>
         <message>
             <source>mnTypes</source>
-            <translation>Connect Server Type</translation>
+            <translation>Connect to Group</translation>
         </message>
         <message>
             <source>mnCountries</source>
@@ -100,11 +100,11 @@
         </message>
         <message>
             <source>titleConnnectionType</source>
-            <translation>Available Server Types</translation>
+            <translation>Available Server Groups</translation>
         </message>
         <message>
             <source>lblConnectType</source>
-            <translation>Connect Server Type</translation>
+            <translation>Connect to Group</translation>
         </message>
         <message>
             <source>titleConnnectionCountry</source>
