@@ -409,9 +409,16 @@ void Kompass::setupUi()
     svgSpinnerServerRefresh->setStyleSheet("background: transparent;");
     svgSpinnerServerRefresh->setVisible(true);
 
+    QFont faButtonRefresh = QFont();
+    faButtonRefresh.setFamily("FontAwesome");
+    faButtonRefresh.setPixelSize(16);
+
     pbRefreshServers = new QPushButton();
-    pbRefreshServers->setIcon(QIcon::fromTheme("view-refresh-symbolic"));
+    pbRefreshServers->setFont(faButtonRefresh);
+    pbRefreshServers->setText("\uf021");
     pbRefreshServers->setFlat(true);
+    pbRefreshServers->setMinimumWidth(20);
+    pbRefreshServers->setMaximumWidth(20);
     pbRefreshServers->setVisible(false);
     QObject::connect(pbRefreshServers, &QPushButton::clicked, this, [this] {
         svgSpinnerServerRefresh->setVisible(true);
@@ -478,7 +485,7 @@ void Kompass::setupUi()
 
     QFont faButtonControls = QFont();
     faButtonControls.setFamily("FontAwesome");
-    faButtonControls.setPixelSize(16);
+    faButtonControls.setPixelSize(15);
 
     pbQuit = new QPushButton();
     pbQuit->setToolTip(tr("pbQuitToolTip"));
@@ -651,26 +658,26 @@ void Kompass::setupTray()
     });
 
     mnStatusConnection = new QWidgetAction(this);
-    mnStatusConnection->setIcon(QIcon::fromTheme("network-vpn-disconnected-symbolic"));
     mnStatusConnection->setText(tr("statusDisconnected"));
+    mnStatusConnection->setIcon(iconDisconnected);
     mnStatusConnection->setEnabled(false);
     mnStatusConnection->setVisible(true);
 
     mnStatusUploaded = new QWidgetAction(this);
     mnStatusUploaded->setText("--");
-    mnStatusUploaded->setIcon(QIcon::fromTheme("draw-arrow-up"));
+    mnStatusUploaded->setIcon(QIcon(":/img/arrow-up.png"));
     mnStatusUploaded->setEnabled(false);
     mnStatusUploaded->setVisible(false);
 
     mnStatusDownloaded = new QWidgetAction(this);
     mnStatusDownloaded->setText("--");
-    mnStatusDownloaded->setIcon(QIcon::fromTheme("draw-arrow-down"));
+    mnStatusDownloaded->setIcon(QIcon(":/img/arrow-down.png"));
     mnStatusDownloaded->setEnabled(false);
     mnStatusDownloaded->setVisible(false);
 
     mnStatusUptime = new QWidgetAction(this);
     mnStatusUptime->setText("--");
-    mnStatusUptime->setIcon(QIcon::fromTheme("clock-applet-symbolic"));
+    mnStatusUptime->setIcon(QIcon(":/img/clock.png"));
     mnStatusUptime->setEnabled(false);
     mnStatusUptime->setVisible(false);
 
@@ -865,7 +872,7 @@ void Kompass::toggleVpn(QStringList commands, bool connect, int trigger)
                 }
 
                 QMessageBox msg = QMessageBox();
-                msg.setWindowIcon(QIcon::fromTheme("compass"));
+                msg.setWindowIcon(QIcon(":/img/kompass.png"));
                 msg.setWindowTitle(tr("appTitle"));
                 msg.setText(err);
                 msg.setIcon(QMessageBox::Warning);
@@ -902,7 +909,7 @@ void Kompass::toggleVpn(QStringList commands, bool connect, int trigger)
                 updateUi(Kompass::STATUS_CONNECTED, trigger);
 
                 QMessageBox msg = QMessageBox();
-                msg.setWindowIcon(QIcon::fromTheme("compass"));
+                msg.setWindowIcon(QIcon(":/img/kompass.png"));
                 msg.setWindowTitle(tr("appTitle"));
                 msg.setText(tr("msgErrorDisconnecting") + cnResult->getResult().trimmed());
                 msg.setIcon(QMessageBox::Warning);
@@ -1144,7 +1151,7 @@ void Kompass::updateUi(int status, int trigger, QString vpnDetails)
             mnStatusUploaded->setVisible(false);
             mnStatusDownloaded->setVisible(false);
             mnStatusUptime->setVisible(false);
-            mnStatusConnection->setIcon(QIcon::fromTheme("network-vpn-disconnected-symbolic"));
+            mnStatusConnection->setIcon(iconDisconnected);
             mnStatusConnection->setText(tr("statusConnecting"));
             mnStatusUploaded->setText("--");
             mnStatusDownloaded->setText("--");
@@ -1178,7 +1185,7 @@ void Kompass::updateUi(int status, int trigger, QString vpnDetails)
             mnStatusUploaded->setVisible(false);
             mnStatusDownloaded->setVisible(false);
             mnStatusUptime->setVisible(false);
-            mnStatusConnection->setIcon(QIcon::fromTheme("network-vpn-disconnected-symbolic"));
+            mnStatusConnection->setIcon(iconDisconnected);
             mnStatusConnection->setText(tr("statusDisconnected"));
             mnStatusUploaded->setText("--");
             mnStatusDownloaded->setText("--");
@@ -1210,7 +1217,7 @@ void Kompass::updateUi(int status, int trigger, QString vpnDetails)
             break;
         case STATUS_CONNECTED:
             trayIcon->setIcon(iconConnected);
-            mnStatusConnection->setIcon(QIcon::fromTheme("network-vpn-symbolic"));
+            mnStatusConnection->setIcon(iconConnected);
             mnStatusConnection->setText(tr("statusConnected"));
             tbStatus->setChecked(true);
             tbStatus->setEnabled(true);

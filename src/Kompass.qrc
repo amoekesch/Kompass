@@ -4,5 +4,10 @@
         <file>font/FontAwesome.otf</file>
         <file>img/vpn-connected.png</file>
         <file>img/vpn-disconnected.png</file>
+        <file>img/clock.png</file>
+        <file>img/arrow-down.png</file>
+        <file>img/arrow-up.png</file>
+        <file>img/kompass.png</file>
+        <file>img/close.png</file>
     </qresource>
 </RCC>

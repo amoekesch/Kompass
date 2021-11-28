@@ -18,7 +18,7 @@ void Settings::setupUi()
      */
 
     this->setWindowTitle(tr("dialogTitle"));
-    this->setWindowIcon(QIcon::fromTheme("compass"));
+    this->setWindowIcon(QIcon(":/img/kompass.png"));
     this->setContentsMargins(0, 0, 0, 0);
     this->setMinimumSize(800, 494);
     this->setMaximumSize(800, 494);
@@ -390,7 +390,7 @@ void Settings::setupUi()
 
     QPushButton *pbClose = new QPushButton();
     pbClose->setText(tr("pbClose"));
-    pbClose->setIcon(QIcon::fromTheme("button_cancel"));
+    pbClose->setIcon(QIcon(":/img/close.png"));
     pbClose->setMinimumWidth(140);
     QObject::connect(pbClose, &QPushButton::clicked, [this]()
     {
@@ -574,7 +574,7 @@ void Settings::displaySuccess()
     QMessageBox *msg = new QMessageBox(this);
     msg->setWindowTitle(tr("dlgSuccessTitle"));
     msg->setWindowModality(Qt::WindowModality::ApplicationModal);
-    msg->setWindowIcon(QIcon::fromTheme("compass"));
+    msg->setWindowIcon(QIcon(":/img/kompass.png"));
     msg->setIcon(QMessageBox::Information);
     msg->setDefaultButton(QMessageBox::Ok);
     msg->setStandardButtons(QMessageBox::Ok);
@@ -592,7 +592,7 @@ void Settings::displayError(QString message)
     QMessageBox *msg = new QMessageBox(this);
     msg->setWindowTitle(tr("dlgErrorTitle"));
     msg->setWindowModality(Qt::WindowModality::ApplicationModal);
-    msg->setWindowIcon(QIcon::fromTheme("compass"));
+    msg->setWindowIcon(QIcon(":/img/kompass.png"));
     msg->setIcon(QMessageBox::Warning);
     msg->setDefaultButton(QMessageBox::Ok);
     msg->setStandardButtons(QMessageBox::Ok);

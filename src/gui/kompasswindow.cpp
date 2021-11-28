@@ -2,7 +2,7 @@
 
 KompassWindow::KompassWindow(QWidget *parent) : QMainWindow(parent)
 {
-    this->setWindowIcon(QIcon::fromTheme("compass"));
+    this->setWindowIcon(QIcon(":/img/kompass.png"));
     this->setMinimumSize(1000, 680);
     this->resize(1000, 680);
 }

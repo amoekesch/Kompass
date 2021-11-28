@@ -17,7 +17,7 @@ void LaunchVerification::verifyBinary()
     }
 
     QMessageBox msg = QMessageBox();
-    msg.setWindowIcon(QIcon::fromTheme("compass"));
+    msg.setWindowIcon(QIcon(":/img/kompass.png"));
     msg.setWindowTitle(tr("appTitle"));
     msg.setText(tr("msgErrorNoBinary"));
     msg.setIcon(QMessageBox::Information);
@@ -50,7 +50,7 @@ void LaunchVerification::verifyVersion()
     }
 
     QMessageBox msg = QMessageBox();
-    msg.setWindowIcon(QIcon::fromTheme("compass"));
+    msg.setWindowIcon(QIcon(":/img/kompass.png"));
     msg.setWindowTitle(tr("appTitle"));
     msg.setText(tr("msgErrorWrongBinaryVersion"));
     msg.setIcon(QMessageBox::Information);
@@ -79,7 +79,7 @@ void LaunchVerification::verifyAccount()
     else if (output != nullptr && output.length() > 0 && output.toLower().contains("service") && !output.contains("Active"))
     {
         QMessageBox msg = QMessageBox();
-        msg.setWindowIcon(QIcon::fromTheme("compass"));
+        msg.setWindowIcon(QIcon(":/img/kompass.png"));
         msg.setWindowTitle(tr("appTitle"));
         msg.setText(tr("msgErrorExpiredAccount"));
         msg.setIcon(QMessageBox::Information);
@@ -104,7 +104,7 @@ void LaunchVerification::verifyAccount()
             QString url = outputLogin.mid(outputLogin.toLower().indexOf("https")).trimmed();
 
             QMessageBox msg = QMessageBox();
-            msg.setWindowIcon(QIcon::fromTheme("compass"));
+            msg.setWindowIcon(QIcon(":/img/kompass.png"));
             msg.setWindowTitle(tr("appTitle"));
             msg.setText(tr("msgErrorNotLoggedIn").arg(url));
             msg.setIcon(QMessageBox::Information);
@@ -121,7 +121,7 @@ void LaunchVerification::verifyAccount()
 
     // should never happen
     QMessageBox msg = QMessageBox();
-    msg.setWindowIcon(QIcon::fromTheme("compass"));
+    msg.setWindowIcon(QIcon(":/img/kompass.png"));
     msg.setWindowTitle(tr("appTitle"));
     msg.setText(tr("msgErrorInvalidAccount"));
     msg.setIcon(QMessageBox::Critical);
