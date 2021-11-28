@@ -55,6 +55,9 @@ class Kompass : public QObject
         static const int CONNECTION_TRIGGER_COUNTRY = 2;
         static const int CONNECTION_TRIGGER_SERVER = 3;
 
+        QIcon iconDisconnected = QIcon(":/img/vpn-disconnected.png");
+        QIcon iconConnected = QIcon(":/img/vpn-connected.png");
+
         // status variables
         int currentStatus = -1;
         bool updatingStatus = false;

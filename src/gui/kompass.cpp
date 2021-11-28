@@ -476,10 +476,17 @@ void Kompass::setupUi()
      *  Button Controls
      */
 
+    QFont faButtonControls = QFont();
+    faButtonControls.setFamily("FontAwesome");
+    faButtonControls.setPixelSize(16);
+
     pbQuit = new QPushButton();
     pbQuit->setToolTip(tr("pbQuitToolTip"));
     pbQuit->setFlat(true);
-    pbQuit->setIcon(QIcon::fromTheme("application-exit"));
+    pbQuit->setFont(faButtonControls);
+    pbQuit->setText("\uf011");
+    pbQuit->setMinimumWidth(20);
+    pbQuit->setMaximumWidth(20);
     QObject::connect(pbQuit, &QPushButton::clicked, [this]()
     {
         this->quit(EXIT_CODE_NORMAL);
@@ -488,7 +495,10 @@ void Kompass::setupUi()
     pbMinimize = new QPushButton();
     pbMinimize->setToolTip(tr("pbMinimizeToolTip"));
     pbMinimize->setFlat(true);
-    pbMinimize->setIcon(QIcon::fromTheme("system-tray-symbolic"));
+    pbMinimize->setFont(faButtonControls);
+    pbMinimize->setText("\uf2d1");
+    pbMinimize->setMinimumWidth(20);
+    pbMinimize->setMaximumWidth(20);
     QObject::connect(pbMinimize, &QPushButton::clicked, [this]()
     {
         this->hideUi();
@@ -497,7 +507,10 @@ void Kompass::setupUi()
     pbSettings = new QPushButton();
     pbSettings->setToolTip(tr("pbSettingsToolTip"));
     pbSettings->setFlat(true);
-    pbSettings->setIcon(QIcon::fromTheme("settings"));
+    pbSettings->setFont(faButtonControls);
+    pbSettings->setText("\uf013");
+    pbSettings->setMinimumWidth(20);
+    pbSettings->setMaximumWidth(20);
     QObject::connect(pbSettings, &QPushButton::clicked, [this]()
     {
         // show dialog
@@ -608,7 +621,7 @@ void Kompass::setupUi()
 void Kompass::setupTray()
 {
     // create tray icon and register listeners
-    trayIcon = new QSystemTrayIcon(QIcon::fromTheme("compass"), this);
+    trayIcon = new QSystemTrayIcon(iconDisconnected, this);
     QObject::connect(trayIcon, &QSystemTrayIcon::activated, [this]() {
         showUi();
     });
@@ -1127,6 +1140,7 @@ void Kompass::updateUi(int status, int trigger, QString vpnDetails)
         case STATUS_CONNECTING:
         case STATUS_DISCONNECTING:
             svgSpinner->setVisible(true);
+            trayIcon->setIcon(iconDisconnected);
             mnStatusUploaded->setVisible(false);
             mnStatusDownloaded->setVisible(false);
             mnStatusUptime->setVisible(false);
@@ -1159,7 +1173,8 @@ void Kompass::updateUi(int status, int trigger, QString vpnDetails)
             txtFilterServer->setEnabled(false);
             pbSettings->setEnabled(false);
             break;
-        case STATUS_DISCONNECTED:;
+        case STATUS_DISCONNECTED:
+            trayIcon->setIcon(iconDisconnected);
             mnStatusUploaded->setVisible(false);
             mnStatusDownloaded->setVisible(false);
             mnStatusUptime->setVisible(false);
@@ -1194,6 +1209,7 @@ void Kompass::updateUi(int status, int trigger, QString vpnDetails)
             svgSpinner->setVisible(false);
             break;
         case STATUS_CONNECTED:
+            trayIcon->setIcon(iconConnected);
             mnStatusConnection->setIcon(QIcon::fromTheme("network-vpn-symbolic"));
             mnStatusConnection->setText(tr("statusConnected"));
             tbStatus->setChecked(true);

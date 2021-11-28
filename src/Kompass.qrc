@@ -2,5 +2,7 @@
     <qresource prefix="/">
         <file>img/spinner.svg</file>
         <file>font/FontAwesome.otf</file>
+        <file>img/vpn-connected.png</file>
+        <file>img/vpn-disconnected.png</file>
     </qresource>
 </RCC>
