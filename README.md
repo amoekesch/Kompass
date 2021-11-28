@@ -46,9 +46,10 @@ To update your NordVPN settings, use the *Settings* button in the main applicati
 ## Gallery
 <a target="_blank" href="https://github.com/amoekesch/Kompass/raw/main/doc/kompass_disconnected.png"><img src="https://github.com/amoekesch/Kompass/raw/main/doc/kompass_disconnected.png" width="15%"></img></a> <a target="_blank" href="https://github.com/amoekesch/Kompass/raw/main/doc/kompass_connected.png"><img src="https://github.com/amoekesch/Kompass/raw/main/doc/kompass_connected.png" width="15%"></img></a> <a target="_blank" href="https://github.com/amoekesch/Kompass/raw/main/doc/kompass_servers_by_group.png"><img src="https://github.com/amoekesch/Kompass/raw/main/doc/kompass_servers_by_group.png" width="15%"></img></a> <a target="_blank" href="https://github.com/amoekesch/Kompass/raw/main/doc/kompass_servers_by_country.png"><img src="https://github.com/amoekesch/Kompass/raw/main/doc/kompass_servers_by_country.png" width="15%"></img></a> <a target="_blank" href="https://github.com/amoekesch/Kompass/raw/main/doc/kompass_servers_list.png"><img src="https://github.com/amoekesch/Kompass/raw/main/doc/kompass_servers_list.png" width="15%"></img></a> <a target="_blank" href="https://github.com/amoekesch/Kompass/raw/main/doc/kompass_settings.png"><img src="https://github.com/amoekesch/Kompass/raw/main/doc/kompass_settings.png" width="15%"></img></a>
 
-## Dependencies
+## Dependencies / Attribution
 Kompass is written in C++/QT for the KDE Plasma desktop environment and relies heavily on the NordVPN CLI. Here is its full list of dependencies:
 * [KDE](https://kde.org/)
 * [QT](https://www.qt.io/) (v5.0+)
 * [NordVPN CLI](https://nordvpn.com/download/linux/) (v3.12.0+)
 * [FontAwesome](https://fontawesome.com/v4.7/) (v4.7)
+* [Kompass Icon](https://www.flaticon.com/premium-icon/north_818708?term=compass&page=1&position=22&page=1&position=22&related_id=818708&origin=tag) by [Freepik](https://www.freepik.com) from [Flaticon](https://www.flaticon.com)
