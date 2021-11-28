@@ -32,142 +32,154 @@ void Settings::setupUi()
 
     cmbTechnology = new QComboBox();
     QObject::connect(cmbTechnology, &QComboBox::currentTextChanged, [this]() {
+        setEnabled(false);
         QString result = saveSettings(QStringList() << "set" << "technology" << cmbTechnology->currentText());
         if (result.length() > 0)
         {
+            result = result.prepend(tr("errorPrefixTechnology"));
             cmbTechnology->blockSignals(true);
-            cmbTechnology->setCurrentText(technology);
+            cmbTechnology->setCurrentIndex(cmbTechnology->findText(technology, Qt::MatchFlag::MatchFixedString));
             cmbTechnology->blockSignals(false);
-            displayError(result.prepend(tr("errorPrefixTechnology")));
         }
-        else
-        {
-            technology = cmbTechnology->currentText();
-            displaySuccess();
-            setupData();
-        }
+
+        setupData();
+        displayStatus(result);
+        setEnabled(true);
     });
     cmbProtocol = new QComboBox();
     QObject::connect(cmbProtocol, &QComboBox::currentTextChanged, [this]() {
+        setEnabled(false);
         QString result = saveSettings(QStringList() << "set" << "protocol" << cmbProtocol->currentText());
         if (result.length() > 0)
         {
+            result = result.prepend(tr("errorPrefixProtocol"));
             cmbProtocol->blockSignals(true);
-            cmbProtocol->setCurrentText(protocol);
+            cmbProtocol->setCurrentIndex(cmbProtocol->findText(protocol, Qt::MatchFlag::MatchFixedString));
             cmbProtocol->blockSignals(false);
-            displayError(result.prepend(tr("errorPrefixProtocol")));
         }
-        else
-        {
-            protocol = cmbProtocol->currentText();
-            displaySuccess();
-            setupData();
-        }
+
+        setupData();
+        displayStatus(result);
+        setEnabled(true);
     });
 
     cbFirewall = new ToggleButton(8, 10);
     QObject::connect(cbFirewall, &ToggleButton::clicked, [this]() {
+        setEnabled(false);
         QString result = saveSettings(QStringList() << "set" << "firewall" << ((cbFirewall->isChecked()) ? "enabled" : "disabled"));
         if (result.length() > 0)
         {
+            result = result.prepend(tr("errorPrefixFirewall"));
+            cbFirewall->blockSignals(true);
             cbFirewall->setChecked(!cbFirewall->isChecked());
-            displayError(result.prepend(tr("errorPrefixFirewall")));
+            cbFirewall->blockSignals(false);
         }
-        else
-        {
-            displaySuccess();
-            setupData();
-        }
+
+        setupData();
+        displayStatus(result);
+        setEnabled(true);
     });
 
     cbCybersec = new ToggleButton(8, 10);
     QObject::connect(cbCybersec, &ToggleButton::clicked, [this]() {
+        setEnabled(false);
         QString result = saveSettings(QStringList() << "set" << "cybersec" << ((cbCybersec->isChecked()) ? "enabled" : "disabled"));
         if (result.length() > 0)
         {
+            result = result.prepend(tr("errorPrefixCybersec"));
+            cbCybersec->blockSignals(true);
             cbCybersec->setChecked(!cbCybersec->isChecked());
-            displayError(result.prepend(tr("errorPrefixCybersec")));
+            cbCybersec->blockSignals(false);
         }
-        else
-        {
-            displaySuccess();
-            setupData();
-        }
+
+        setupData();
+        displayStatus(result);
+        setEnabled(true);
     });
 
     cbObfuscate = new ToggleButton(8, 10);
     QObject::connect(cbObfuscate, &ToggleButton::clicked, [this]() {
+        setEnabled(false);
         QString result = saveSettings(QStringList() << "set" << "obfuscate" << ((cbObfuscate->isChecked()) ? "enabled" : "disabled"));
         if (result.length() > 0)
         {
+            result = result.prepend(tr("errorPrefixObfuscate"));
+            cbObfuscate->blockSignals(true);
             cbObfuscate->setChecked(!cbObfuscate->isChecked());
-            displayError(result.prepend(tr("errorPrefixObfuscate")));
+            cbObfuscate->blockSignals(false);
         }
-        else
-        {
-            displaySuccess();
-            setupData();
-        }
+
+        setupData();
+        displayStatus(result);
+        setEnabled(true);
     });
 
     cbNotify = new ToggleButton(8, 10);
     QObject::connect(cbNotify, &ToggleButton::clicked, [this]() {
+        setEnabled(false);
         QString result = saveSettings(QStringList() << "set" << "notify" << ((cbNotify->isChecked()) ? "enabled" : "disabled"));
         if (result.length() > 0)
         {
+            result = result.prepend(tr("errorPrefixNotify"));
+            cbNotify->blockSignals(true);
             cbNotify->setChecked(!cbNotify->isChecked());
-            displayError(result.prepend(tr("errorPrefixNotify")));
+            cbNotify->blockSignals(false);
         }
-        else
-        {
-            displaySuccess();
-            setupData();
-        }
+
+        setupData();
+        displayStatus(result);
+        setEnabled(true);
     });
 
     cbAutoconnect = new ToggleButton(8, 10);
     QObject::connect(cbAutoconnect, &ToggleButton::clicked, [this]() {
+        setEnabled(false);
         QString result = saveSettings(QStringList() << "set" << "autoconnect" << ((cbAutoconnect->isChecked()) ? "enabled" : "disabled"));
         if (result.length() > 0)
         {
+            result = result.prepend(tr("errorPrefixAutoconnect"));
+            cbAutoconnect->blockSignals(true);
             cbAutoconnect->setChecked(!cbAutoconnect->isChecked());
-            displayError(result.prepend(tr("errorPrefixAutoconnect")));
+            cbAutoconnect->blockSignals(false);
         }
-        else
-        {
-            displaySuccess();
-            setupData();
-        }
+
+        setupData();
+        displayStatus(result);
+        setEnabled(true);
     });
 
     cbIPv6 = new ToggleButton(8, 10);
     QObject::connect(cbIPv6, &ToggleButton::clicked, [this]() {
+        setEnabled(false);
         QString result = saveSettings(QStringList() << "set" << "ipv6" << ((cbIPv6->isChecked()) ? "enabled" : "disabled"));
         if (result.length() > 0)
         {
+            result = result.prepend(tr("errorPrefixIPv6"));
+            cbIPv6->blockSignals(true);
             cbIPv6->setChecked(!cbIPv6->isChecked());
-            displayError(result.prepend(tr("errorPrefixIPv6")));
+            cbIPv6->blockSignals(false);
         }
-        else
-        {
-            displaySuccess();
-            setupData();
-        }
+
+        setupData();
+        displayStatus(result);
+        setEnabled(true);
     });
 
     cbKillswitch = new ToggleButton(8, 10);
     QObject::connect(cbKillswitch, &ToggleButton::clicked, [this]() {
+        setEnabled(true);
         QString result = saveSettings(QStringList() << "set" << "killswitch" << ((cbKillswitch->isChecked()) ? "enabled" : "disabled"));
         if (result.length() > 0)
         {
+            result = result.prepend(tr("errorPrefixKillswitch"));
+            cbKillswitch->blockSignals(true);
             cbKillswitch->setChecked(!cbKillswitch->isChecked());
-            displayError(result.prepend(tr("errorPrefixKillswitch")));
+            cbKillswitch->blockSignals(false);
         }
-        else
-        {
-            displaySuccess();
-            setupData();
-        }
+
+        setupData();
+        displayStatus(result);
+        setEnabled(true);
     });
 
     /**
@@ -538,71 +550,83 @@ void Settings::setupData()
         }
         else if (line.trimmed().toLower().contains("firewall"))
         {
-            bool firewall = line.mid(line.indexOf(":") + 1).trimmed() == "enabled";
+            firewall = line.mid(line.indexOf(":") + 1).trimmed() == "enabled";
             cbFirewall->setChecked(firewall);
         }
         else if (line.trimmed().toLower().contains("kill"))
         {
-            bool killswitch = line.mid(line.indexOf(":") + 1).trimmed() == "enabled";
+            killswitch = line.mid(line.indexOf(":") + 1).trimmed() == "enabled";
             cbKillswitch->setChecked(killswitch);
         }
         else if (line.trimmed().toLower().contains("cybersec"))
         {
-            bool cybersec = line.mid(line.indexOf(":") + 1).trimmed() == "enabled";
+            cybersec = line.mid(line.indexOf(":") + 1).trimmed() == "enabled";
             cbCybersec->setChecked(cybersec);
         }
         else if (line.trimmed().toLower().contains("obfuscate"))
         {
-            bool obfuscate = line.mid(line.indexOf(":") + 1).trimmed() == "enabled";
+            obfuscate = line.mid(line.indexOf(":") + 1).trimmed() == "enabled";
             cbObfuscate->setChecked(obfuscate);
         }
         else if (line.trimmed().toLower().contains("auto"))
         {
-            bool autoconnect = line.mid(line.indexOf(":") + 1).trimmed() == "enabled";
+            autoconnect = line.mid(line.indexOf(":") + 1).trimmed() == "enabled";
             cbAutoconnect->setChecked(autoconnect);
         }
         else if (line.trimmed().toLower().contains("ipv6"))
         {
-            bool ipv6 = line.mid(line.indexOf(":") + 1).trimmed() == "enabled";
+            ipv6 = line.mid(line.indexOf(":") + 1).trimmed() == "enabled";
             cbIPv6->setChecked(ipv6);
+        }
+        else if (line.trimmed().toLower().contains("notify"))
+        {
+            notify = line.mid(line.indexOf(":") + 1).trimmed() == "enabled";
+            cbNotify->setChecked(notify);
         }
     }
 }
 
-void Settings::displaySuccess()
+void Settings::displayStatus(QString errorMessage)
 {
     QMessageBox *msg = new QMessageBox(this);
-    msg->setWindowTitle(tr("dlgSuccessTitle"));
     msg->setWindowModality(Qt::WindowModality::ApplicationModal);
     msg->setWindowIcon(QIcon(":/img/kompass.png"));
-    msg->setIcon(QMessageBox::Information);
     msg->setDefaultButton(QMessageBox::Ok);
     msg->setStandardButtons(QMessageBox::Ok);
-    msg->setText(tr("dlgSuccessMessage"));
     msg->setMinimumSize(600, 357);
     msg->setMaximumSize(600, 357);
+
+    if (errorMessage == nullptr || errorMessage.length() == 0)
+    {
+        msg->setWindowTitle(tr("dlgSuccessTitle"));
+        msg->setIcon(QMessageBox::Information);
+        msg->setText(tr("dlgSuccessMessage"));
+    }
+    else
+    {
+        QString html = errorMessage.trimmed().replace("\n", "<br>");
+        msg->setWindowTitle(tr("dlgErrorTitle"));
+        msg->setIcon(QMessageBox::Warning);
+        msg->setText(tr("dlgErrorMessage"));
+        msg->setInformativeText(html);
+    }
+
     msg->show();
     msg->activateWindow();
     msg->raise();
 }
 
-void Settings::displayError(QString message)
+void Settings::setEnabled(bool status)
 {
-    QString html = message.trimmed().replace("\n", "<br>");
-    QMessageBox *msg = new QMessageBox(this);
-    msg->setWindowTitle(tr("dlgErrorTitle"));
-    msg->setWindowModality(Qt::WindowModality::ApplicationModal);
-    msg->setWindowIcon(QIcon(":/img/kompass.png"));
-    msg->setIcon(QMessageBox::Warning);
-    msg->setDefaultButton(QMessageBox::Ok);
-    msg->setStandardButtons(QMessageBox::Ok);
-    msg->setText(tr("dlgErrorMessage"));
-    msg->setInformativeText(html);
-    msg->setMinimumSize(600, 357);
-    msg->setMaximumSize(600, 357);
-    msg->show();
-    msg->activateWindow();
-    msg->raise();
+    cmbTechnology->setEnabled(status);
+    cmbProtocol->setEnabled(status);
+    cbFirewall->setEnabled(status);
+    cbCybersec->setEnabled(status);
+    cbObfuscate->setEnabled(status);
+    cbNotify->setEnabled(status);
+    cbAutoconnect->setEnabled(status);
+    cbIPv6->setEnabled(status);
+    cbKillswitch->setEnabled(status);
 }
 
 QString Settings::saveSettings(QStringList commands)

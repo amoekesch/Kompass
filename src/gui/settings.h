@@ -37,10 +37,17 @@ class Settings : public QDialog
         ToggleButton *cbIPv6;
         QString technology;
         QString protocol;
+        bool firewall;
+        bool killswitch;
+        bool cybersec;
+        bool obfuscate;
+        bool autoconnect;
+        bool ipv6;
+        bool notify;
         void setupUi();
         void setupData();
-        void displaySuccess();
-        void displayError(QString message);
+        void displayStatus(QString errorMessage = nullptr);
+        void setEnabled(bool status);
         QString saveSettings(QStringList commands);
 };
 #endif // SETTINGS_H
