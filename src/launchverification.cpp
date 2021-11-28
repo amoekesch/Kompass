@@ -18,7 +18,7 @@ void LaunchVerification::verifyBinary()
 
     QMessageBox msg = QMessageBox();
     msg.setWindowIcon(QIcon(":/img/kompass.png"));
-    msg.setWindowTitle(tr("appTitle"));
+    msg.setWindowTitle(tr("dlgErrorTitle"));
     msg.setText(tr("msgErrorNoBinary"));
     msg.setIcon(QMessageBox::Information);
     msg.setDefaultButton(QMessageBox::Ok);
@@ -51,7 +51,7 @@ void LaunchVerification::verifyVersion()
 
     QMessageBox msg = QMessageBox();
     msg.setWindowIcon(QIcon(":/img/kompass.png"));
-    msg.setWindowTitle(tr("appTitle"));
+    msg.setWindowTitle(tr("dlgErrorTitle"));
     msg.setText(tr("msgErrorWrongBinaryVersion"));
     msg.setIcon(QMessageBox::Information);
     msg.setDefaultButton(QMessageBox::Ok);
@@ -80,7 +80,7 @@ void LaunchVerification::verifyAccount()
     {
         QMessageBox msg = QMessageBox();
         msg.setWindowIcon(QIcon(":/img/kompass.png"));
-        msg.setWindowTitle(tr("appTitle"));
+        msg.setWindowTitle(tr("dlgErrorTitle"));
         msg.setText(tr("msgErrorExpiredAccount"));
         msg.setIcon(QMessageBox::Information);
         msg.setDefaultButton(QMessageBox::Ok);
@@ -105,7 +105,7 @@ void LaunchVerification::verifyAccount()
 
             QMessageBox msg = QMessageBox();
             msg.setWindowIcon(QIcon(":/img/kompass.png"));
-            msg.setWindowTitle(tr("appTitle"));
+            msg.setWindowTitle(tr("dlgErrorTitle"));
             msg.setText(tr("msgErrorNotLoggedIn").arg(url));
             msg.setIcon(QMessageBox::Information);
             msg.setDefaultButton(QMessageBox::Ok);
@@ -122,7 +122,7 @@ void LaunchVerification::verifyAccount()
     // should never happen
     QMessageBox msg = QMessageBox();
     msg.setWindowIcon(QIcon(":/img/kompass.png"));
-    msg.setWindowTitle(tr("appTitle"));
+    msg.setWindowTitle(tr("dlgErrorTitle"));
     msg.setText(tr("msgErrorInvalidAccount"));
     msg.setIcon(QMessageBox::Critical);
     msg.setDefaultButton(QMessageBox::Ok);

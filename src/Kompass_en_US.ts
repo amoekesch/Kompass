@@ -8,6 +8,10 @@
             <translation>Kompass</translation>
         </message>
         <message>
+            <source>dlgErrorTitle</source>
+            <translation>Error</translation>
+        </message>
+        <message>
             <source>msgErrorMultipleInstances</source>
             <translation>Another instance of Kompass is already running.&lt;br&gt;This instance will shut down.</translation>
         </message>
@@ -21,6 +25,10 @@
         <message>
             <source>appVersion</source>
             <translation>v1.4.x</translation>
+        </message>
+        <message>
+            <source>dlgErrorTitle</source>
+            <translation>Error</translation>
         </message>
         <message>
             <source>mnStatus</source>
@@ -223,6 +231,10 @@
         <message>
             <source>appTitle</source>
             <translation>Kompass</translation>
+        </message>
+        <message>
+            <source>dlgErrorTitle</source>
+            <translation>Error</translation>
         </message>
         <message>
             <source>msgErrorNoBinary</source>

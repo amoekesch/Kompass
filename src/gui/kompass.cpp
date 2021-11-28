@@ -873,7 +873,7 @@ void Kompass::toggleVpn(QStringList commands, bool connect, int trigger)
 
                 QMessageBox msg = QMessageBox();
                 msg.setWindowIcon(QIcon(":/img/kompass.png"));
-                msg.setWindowTitle(tr("appTitle"));
+                msg.setWindowTitle(tr("dlgErrorTitle"));
                 msg.setText(err);
                 msg.setIcon(QMessageBox::Warning);
                 msg.setDefaultButton(QMessageBox::Ok);
@@ -910,7 +910,7 @@ void Kompass::toggleVpn(QStringList commands, bool connect, int trigger)
 
                 QMessageBox msg = QMessageBox();
                 msg.setWindowIcon(QIcon(":/img/kompass.png"));
-                msg.setWindowTitle(tr("appTitle"));
+                msg.setWindowTitle(tr("dlgErrorTitle"));
                 msg.setText(tr("msgErrorDisconnecting") + cnResult->getResult().trimmed());
                 msg.setIcon(QMessageBox::Warning);
                 msg.setDefaultButton(QMessageBox::Ok);

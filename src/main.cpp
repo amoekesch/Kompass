@@ -39,7 +39,7 @@ int main(int argc, char *argv[])
         translator.tr("");
         QMessageBox msg = QMessageBox();
         msg.setWindowIcon(QIcon(":/img/kompass.png"));
-        msg.setWindowTitle(QObject::tr("appTitle"));
+        msg.setWindowTitle(QObject::tr("dlgErrorTitle"));
         msg.setText(QObject::tr("msgErrorMultipleInstances"));
         msg.setIcon(QMessageBox::Information);
         msg.setDefaultButton(QMessageBox::Ok);
