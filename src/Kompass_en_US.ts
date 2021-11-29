@@ -24,7 +24,7 @@
         </message>
         <message>
             <source>appVersion</source>
-            <translation>v1.4.x</translation>
+            <translation>v1.5</translation>
         </message>
         <message>
             <source>dlgErrorTitle</source>
