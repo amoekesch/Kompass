@@ -6,7 +6,7 @@ Kompass - Open-source graphical NordVPN client for Linux.
 * [Installation](#installation)
 * [Usage](#Usage)
 * [Gallery](#Gallery)
-* [Dependencies](#dependencies)
+* [Dependencies / Attribution](#dependencies)
 
 ## General Info
 **What is Kompass?** Kompass is an easy-to-use graphical user interface (GUI) wrapping the functionality provided by NordVPN Linux command-line interface (CLI).
