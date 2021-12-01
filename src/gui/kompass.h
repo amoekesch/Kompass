@@ -64,7 +64,6 @@ class Kompass : public QObject
         // ui components
         KompassWindow *ui;
         KompassMenu *menu;
-        Settings *dlgSettings;
         QSvgWidget *svgSpinner;
         QSvgWidget *svgSpinnerServerRefresh;
         QStackedWidget *stackMain;

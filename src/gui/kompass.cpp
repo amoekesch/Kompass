@@ -525,7 +525,7 @@ void Kompass::setupUi()
             // wait
         }
         updatingStatus = true;
-        dlgSettings = new Settings(ui);
+        Settings *dlgSettings = new Settings(ui);
         dlgSettings->setAttribute(Qt::WA_DeleteOnClose);
         dlgSettings->setModal(true);
         dlgSettings->show();
@@ -1296,16 +1296,14 @@ void Kompass::updateUi(int status, int trigger, QString vpnDetails)
  */
 void Kompass::showUi()
 {
-    if (dlgSettings->isVisible())
+    if (ui->isVisible())
     {
-        dlgSettings->close();
+        ui->setVisible(false);
     }
 
-    ui->setVisible(false);
     ui->setVisible(true);
     ui->show();
-    //ui->setWindowState(Qt::WindowState::WindowActive);
-    ui->setWindowState((ui->windowState() & ~Qt::WindowMinimized) | Qt::WindowActive);
+    ui->setWindowState(Qt::WindowActive);
     ui->raise();
     ui->activateWindow();
 }
