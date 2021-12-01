@@ -21,7 +21,7 @@ class Settings : public QDialog
     Q_OBJECT
 
     public:
-        Settings();
+        explicit Settings (QWidget *parent = nullptr);
 
     private:
         QStackedWidget *stackSettings;

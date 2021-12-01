@@ -1,6 +1,6 @@
 #include "settings.h"
 
-Settings::Settings()
+Settings::Settings(QWidget *parent) : QDialog(parent)
 {
     setupUi();
     setupData();
@@ -612,8 +612,8 @@ void Settings::displayStatus(QString errorMessage)
     }
 
     msg->show();
-    msg->activateWindow();
     msg->raise();
+    msg->activateWindow();
 }
 
 void Settings::setEnabled(bool status)

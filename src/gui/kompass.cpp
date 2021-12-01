@@ -525,12 +525,13 @@ void Kompass::setupUi()
             // wait
         }
         updatingStatus = true;
-        Settings *dlgSettings = new Settings();
-
+        dlgSettings = new Settings(ui);
         dlgSettings->setAttribute(Qt::WA_DeleteOnClose);
-        dlgSettings->activateWindow();
+        dlgSettings->setModal(true);
+        dlgSettings->show();
         dlgSettings->raise();
-        dlgSettings->exec();
+        dlgSettings->activateWindow();
+
         ui->activateWindow();
         ui->raise();
 
@@ -617,8 +618,8 @@ void Kompass::setupUi()
 
     ui->setCentralWidget(wxCentral);
     ui->show();
-    ui->activateWindow();
     ui->raise();
+    ui->activateWindow();
 }
 
 /**
@@ -871,7 +872,7 @@ void Kompass::toggleVpn(QStringList commands, bool connect, int trigger)
                     err = err.prepend(tr("msgErrorConnecting"));
                 }
 
-                QMessageBox msg = QMessageBox();
+                QMessageBox msg = QMessageBox(ui);
                 msg.setWindowIcon(QIcon(":/img/kompass.png"));
                 msg.setWindowTitle(tr("dlgErrorTitle"));
                 msg.setText(err);
@@ -908,7 +909,7 @@ void Kompass::toggleVpn(QStringList commands, bool connect, int trigger)
             {
                 updateUi(Kompass::STATUS_CONNECTED, trigger);
 
-                QMessageBox msg = QMessageBox();
+                QMessageBox msg = QMessageBox(ui);
                 msg.setWindowIcon(QIcon(":/img/kompass.png"));
                 msg.setWindowTitle(tr("dlgErrorTitle"));
                 msg.setText(tr("msgErrorDisconnecting") + cnResult->getResult().trimmed());
@@ -1295,12 +1296,18 @@ void Kompass::updateUi(int status, int trigger, QString vpnDetails)
  */
 void Kompass::showUi()
 {
-    if (!ui->isVisible()) {
-        ui->setVisible(true);
+    if (dlgSettings->isVisible())
+    {
+        dlgSettings->close();
     }
+
+    ui->setVisible(false);
+    ui->setVisible(true);
     ui->show();
-    ui->activateWindow();
+    //ui->setWindowState(Qt::WindowState::WindowActive);
+    ui->setWindowState((ui->windowState() & ~Qt::WindowMinimized) | Qt::WindowActive);
     ui->raise();
+    ui->activateWindow();
 }
 
 /**
