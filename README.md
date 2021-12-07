@@ -1,6 +1,8 @@
 # Kompass
 Kompass - Open-source graphical NordVPN client for Linux.
 
+![Kompass Connected](https://github.com/amoekesch/Kompass/raw/main/doc/kompass_connected.png)
+
 ## Table of Contents
 * [About](#About)
 * [Features](#Features)
