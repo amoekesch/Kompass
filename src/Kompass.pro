@@ -21,6 +21,7 @@ SOURCES += \
     gui/togglebutton.cpp \
     launchverification.cpp \
     main.cpp \
+    releasemonitor.cpp \
     singleapplication.cpp
 
 HEADERS += \
@@ -35,6 +36,7 @@ HEADERS += \
     gui/settings.h \
     gui/togglebutton.h \
     launchverification.h \
+    releasemonitor.h \
     singleapplication.h
 
 FORMS +=

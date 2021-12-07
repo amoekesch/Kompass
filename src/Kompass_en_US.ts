@@ -13,7 +13,7 @@
         </message>
         <message>
             <source>msgErrorMultipleInstances</source>
-            <translation>Another instance of Kompass is already running.&lt;br&gt;This instance will shut down.</translation>
+            <translation>Another instance of Kompass is already running.&lt;br&gt;The current instance will shut down.</translation>
         </message>
     </context>
     <context>
@@ -25,6 +25,10 @@
         <message>
             <source>appVersion</source>
             <translation>v1.5</translation>
+        </message>
+        <message>
+            <source>appVersionUpgrade</source>
+            <translation>Version %0 has been released. Click here to &lt;a href="%1"&gt;download&lt;/a&gt; the latest version.</translation>
         </message>
         <message>
             <source>dlgErrorTitle</source>

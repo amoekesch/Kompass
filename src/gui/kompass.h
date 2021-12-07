@@ -27,6 +27,7 @@
 #include "sectiontitle.h"
 #include "settings.h"
 #include "togglebutton.h"
+#include "../releasemonitor.h"
 #include "../data/connectionresult.h"
 #include "../data/vpnserver.h"
 #include "../data/vpnservermodel.h"
@@ -86,6 +87,7 @@ class Kompass : public QObject
         QLineEdit *txtFilterServer;
         QLineEdit *txtUsername;
         QLineEdit *txtLicense;
+        QLabel *lblVersionUpdate;
         QPushButton *pbQuit;
         QPushButton *pbMinimize;
         QPushButton *pbSettings;
@@ -118,6 +120,7 @@ class Kompass : public QObject
         void setupDataTypes();
         void setupDataCountries();
         void setupStatusMonitor();
+        void setupReleaseMonitor();
         void toggleVpn(QStringList commands, bool connect, int trigger);
         ConnectionResult* connectVpn(QStringList commands);
         ConnectionResult* disconnectVpn();

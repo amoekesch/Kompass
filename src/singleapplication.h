@@ -10,7 +10,7 @@ class SingleApplication
 {
 
 public:
-    SingleApplication( const QString& key );
+    SingleApplication(const QString& key);
     ~SingleApplication();
 
     bool isRunning();

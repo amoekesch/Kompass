@@ -14,6 +14,7 @@ Kompass::Kompass()
     this->setupTray();
     this->setupData();
     this->setupStatusMonitor();
+    this->setupReleaseMonitor();
 }
 
 /**
@@ -117,7 +118,13 @@ void Kompass::setupUi()
     QLabel *lblVersion = new QLabel(tr("appTitle") + " " + tr("appVersion"));
     lblVersion->setEnabled(false);
     lblVersion->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
-    lblVersion->setAlignment(Qt::AlignRight);
+    lblVersion->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
+
+    lblVersionUpdate = new QLabel("");
+    lblVersionUpdate->setOpenExternalLinks(true);
+    lblVersionUpdate->setTextInteractionFlags(Qt::TextBrowserInteraction);
+    lblVersionUpdate->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+    lblVersionUpdate->setAlignment(Qt::AlignCenter);
 
     QGridLayout *layoutStatus = new QGridLayout();
     layoutStatus->setContentsMargins(0, 0, 0, 0);
@@ -143,7 +150,8 @@ void Kompass::setupUi()
     layoutStatus->addWidget(txtUsername, 11, 1, 1, 2);
     layoutStatus->addWidget(lblLicense, 12, 0);
     layoutStatus->addWidget(txtLicense, 12, 1, 1, 2);
-    layoutStatus->addWidget(lblVersion, 14, 0, 1, 3);
+    layoutStatus->addWidget(lblVersionUpdate, 14, 0, 1, 2);
+    layoutStatus->addWidget(lblVersion, 14, 2, 1, 1);
     layoutStatus->setColumnStretch(1, 1);
     layoutStatus->setRowStretch(13, 1);
     layoutStatus->setColumnMinimumWidth(0, 130);
@@ -832,6 +840,23 @@ void Kompass::setupStatusMonitor()
             updateUi(STATUS_CONNECTED, -1, output);
         }
     });
+}
+
+/**
+ * Monitors Github for new Kompass Releases
+ * @brief Kompass::setupReleaseMonitor
+ */
+void Kompass::setupReleaseMonitor()
+{
+    ReleaseMonitor *monitor = new ReleaseMonitor();
+    connect(monitor, &ReleaseMonitor::updateAvailable, [this, monitor] {
+        lblVersionUpdate->setStyleSheet("font-size: 15px; color: rgb(58, 206, 58); background: rgb(235, 250, 235); padding: 10px;");
+        lblVersionUpdate->setText(tr("appVersionUpgrade").arg(monitor->getUpdatedReleaseVersion()).arg(monitor->getUpdatedReleaseUrl()));
+    });
+
+    // start timer and trigger once
+    monitor->start(tr("appVersion"));
+    monitor->evaluate();
 }
 
 /**
