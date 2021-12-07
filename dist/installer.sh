@@ -131,7 +131,7 @@ echo -e "";
 echo -e "${CLR_GREEN}Kompass was installed successfully.${CLR_NONE}";
 echo -e "The installer folder can now be deleted.";
 echo -e "";
-echo -e "Lauch compass in a terminal using command: Kompass";
+echo -e "Lauch Kompass in a terminal using command: Kompass";
 echo -e "Or browse through your launcher menu to launch Kompass from there.";
 echo -e "";
 exit;
