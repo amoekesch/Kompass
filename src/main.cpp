@@ -6,7 +6,7 @@
 #include <QMessageBox>
 #include <QTranslator>
 #include "launchverification.h"
-#include "singleapplication.h"
+#include "singleinstance.h"
 
 /**
  * THe main method to launch Kompass
@@ -20,7 +20,6 @@ int main(int argc, char *argv[])
     // create the application
     QApplication a(argc, argv);
 
-
     // add translation support
     QTranslator translator;
     const QStringList uiLanguages = QLocale::system().uiLanguages();
@@ -31,26 +30,6 @@ int main(int argc, char *argv[])
             break;
         }
     }
-
-    // check for running instance
-    SingleApplication single("KOMPASS-APPLICATION" );
-    if (!single.test())
-    {
-        translator.tr("");
-        QMessageBox msg = QMessageBox();
-        msg.setWindowIcon(QIcon(":/img/kompass.png"));
-        msg.setWindowTitle(QObject::tr("dlgErrorTitle"));
-        msg.setText(QObject::tr("msgErrorMultipleInstances"));
-        msg.setIcon(QMessageBox::Information);
-        msg.setDefaultButton(QMessageBox::Ok);
-        msg.setStandardButtons(QMessageBox::Ok);
-        msg.setWindowModality(Qt::WindowModality::ApplicationModal);
-        msg.activateWindow();
-        msg.show();
-        msg.exec();
-        return 0;
-    }
-
 
     // add icon fonts
     QFontDatabase::addApplicationFont(":/font/FontAwesome.otf");
@@ -88,7 +67,20 @@ int main(int argc, char *argv[])
     // launch the UI
     if (launcher->validBinary && launcher->validVersion && launcher->validAccount)
     {
-        new Kompass();
+        QString applicationId = "de.moekesch.Kompass";
+        Kompass *kompass = new Kompass();
+
+        // maintain single instance
+        SingleInstance *instance = new SingleInstance(kompass);
+        if (instance->hasInstance(applicationId, QApplication::arguments()))
+        {
+            // close if instance is already running
+            return 0;
+        }
+        instance->listen(applicationId);
+
+        // show the UI
+        kompass->showUi();
         return a.exec();
     }
     return -1;

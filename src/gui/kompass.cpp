@@ -537,8 +537,8 @@ void Kompass::setupUi()
         dlgSettings->setAttribute(Qt::WA_DeleteOnClose);
         dlgSettings->setModal(true);
         dlgSettings->show();
-        dlgSettings->raise();
         dlgSettings->activateWindow();
+        dlgSettings->raise();
 
         ui->activateWindow();
         ui->raise();
@@ -621,13 +621,11 @@ void Kompass::setupUi()
 
     /**
      * -------------------------------------------
-     *  show apllication window
+     *  set central window
+     *  main class takes care of showing the application
      */
 
     ui->setCentralWidget(wxCentral);
-    ui->show();
-    ui->raise();
-    ui->activateWindow();
 }
 
 /**
@@ -1329,8 +1327,8 @@ void Kompass::showUi()
     ui->setVisible(true);
     ui->show();
     ui->setWindowState(Qt::WindowActive);
-    ui->raise();
     ui->activateWindow();
+    ui->raise();
 }
 
 /**

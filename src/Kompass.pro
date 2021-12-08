@@ -22,7 +22,7 @@ SOURCES += \
     launchverification.cpp \
     main.cpp \
     releasemonitor.cpp \
-    singleapplication.cpp
+    singleinstance.cpp
 
 HEADERS += \
     data/connectionresult.h \
@@ -37,7 +37,7 @@ HEADERS += \
     gui/togglebutton.h \
     launchverification.h \
     releasemonitor.h \
-    singleapplication.h
+    singleinstance.h
 
 FORMS +=
 

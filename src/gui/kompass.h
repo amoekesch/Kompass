@@ -38,6 +38,8 @@ class Kompass : public QObject
 
     public:
         Kompass();
+        void showUi();
+        void hideUi();
 
     private:
         // application status constants
@@ -125,8 +127,6 @@ class Kompass : public QObject
         ConnectionResult* connectVpn(QStringList commands);
         ConnectionResult* disconnectVpn();
         void updateUi(int status, int trigger, QString vpnStatus = nullptr);
-        void showUi();
-        void hideUi();
         void quit(int exitCode);
 };
 #endif // KOMPASS_H

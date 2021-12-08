@@ -612,8 +612,8 @@ void Settings::displayStatus(QString errorMessage)
     }
 
     msg->show();
-    msg->raise();
     msg->activateWindow();
+    msg->raise();
 }
 
 void Settings::setEnabled(bool status)
