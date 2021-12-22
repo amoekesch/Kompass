@@ -262,6 +262,84 @@
         </message>
     </context>
     <context>
+        <name>ReleaseMonitor</name>
+        <message>
+            <source>msgErrorDownloading</source>
+            <translation>The download of version %0 failed. Please try again later&lt;br&gt;or consider downloading the update manually.&lt;br&gt;&lt;br&gt;%1</translation>
+        </message>
+        <message>
+            <source>msgErrorReadOnlyDirectory</source>
+            <translation>The downloaded update could not be stored. Directory %0 is not writable.&lt;br&gt;Please consider downloading the update manually.</translation>
+        </message>
+        <message>
+            <source>msgErrorDeletePrevious</source>
+            <translation>Kompass %0 installation failed! The previous version could not be removed.&lt;br&gt;Please consider downloading the update manually.</translation>
+        </message>
+        <message>
+            <source>msgErrorOverwrite</source>
+            <translation>Kompass %0 installation failed! The new executable could not be written.&lt;br&gt;Please consider downloading the update manually.</translation>
+        </message>
+        <message>
+            <source>msgErrorDeletePreviousSudo</source>
+            <translation>Kompass %0 installation failed! The previous version could not be removed.&lt;br&gt;Please make sure you entered the correct password.</translation>
+        </message>
+        <message>
+            <source>msgErrorOverwriteSudo</source>
+            <translation>Kompass %0 installation failed! The new executable could not be written.&lt;br&gt;Please make sure you entered the correct password.</translation>
+        </message>
+    </context>
+    <context>
+        <name>Installer</name>
+        <message>
+            <source>dialogTitle</source>
+            <translation>Release Upgrade</translation>
+        </message>
+        <message>
+            <source>dlgErrorTitle</source>
+            <translation>Upgrade Error</translation>
+        </message>
+        <message>
+            <source>lblTitle</source>
+            <translation>Upgrade to Kompass v%0</translation>
+        </message>
+        <message>
+            <source>lblSudo</source>
+            <translation>To install the upgrade, &quot;sudo&quot; is required. Please provide your password.</translation>
+        </message>
+        <message>
+            <source>mnInstall</source>
+            <translation>New Release</translation>
+        </message>
+        <message>
+            <source>pbCancel</source>
+            <translation>Cancel</translation>
+        </message>
+        <message>
+            <source>pbDownload</source>
+            <translation> Next: Download</translation>
+        </message>
+        <message>
+            <source>pbInstall</source>
+            <translation> Next: Install</translation>
+        </message>
+        <message>
+            <source>pbRestart</source>
+            <translation> Next: Restart</translation>
+        </message>
+        <message>
+            <source>lblInstructionsDownload</source>
+            <translation>&lt;b&gt;Version v%0 of Kompass is now available.&lt;/b&gt;&lt;br&gt;&lt;br&gt;You can &lt;a href=&quot;%1&quot;&gt;download&lt;/a&gt; the release manually or simply use this auto-updater. To start the auto-update click the &quot;Next&quot; button below. Please be patient, the download might take a while.</translation>
+        </message>
+        <message>
+            <source>lblInstructionsInstall</source>
+            <translation>&lt;b&gt;Version v%0 of Kompass has been downloaded successfully.&lt;/b&gt;&lt;br&gt;&lt;br&gt;Click the &quot;Next&quot; button below to start the installation.&lt;br&gt;You will be notified when the installation is complete.</translation>
+        </message>
+        <message>
+            <source>lblInstructionsRestart</source>
+            <translation>&lt;b&gt;Congratulations! Version v%0 of Kompass has been installed successfully.&lt;/b&gt;&lt;br&gt;&lt;br&gt;Click the &quot;Next&quot; button below to start the latest version of Kompass.</translation>
+        </message>
+    </context>
+    <context>
         <name>Settings</name>
         <message>
             <source>dialogTitle</source>

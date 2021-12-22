@@ -13,6 +13,7 @@ SOURCES += \
     data/vpnserver.cpp \
     data/vpnservermodel.cpp \
     gui/clickablewidget.cpp \
+    gui/installer.cpp \
     gui/kompass.cpp \
     gui/kompassmenu.cpp \
     gui/kompasswindow.cpp \
@@ -29,6 +30,7 @@ HEADERS += \
     data/vpnserver.h \
     data/vpnservermodel.h \
     gui/clickablewidget.h \
+    gui/installer.h \
     gui/kompass.h \
     gui/kompassmenu.h \
     gui/kompasswindow.h \

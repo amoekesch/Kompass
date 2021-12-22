@@ -22,6 +22,7 @@
 #include <QSvgRenderer>
 #include <QSvgWidget>
 #include <QTableView>
+#include "installer.h"
 #include "kompassmenu.h"
 #include "kompasswindow.h"
 #include "sectiontitle.h"

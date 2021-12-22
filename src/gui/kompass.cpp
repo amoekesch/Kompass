@@ -847,9 +847,24 @@ void Kompass::setupStatusMonitor()
 void Kompass::setupReleaseMonitor()
 {
     ReleaseMonitor *monitor = new ReleaseMonitor();
+
+    // handle update available
     connect(monitor, &ReleaseMonitor::updateAvailable, [this, monitor] {
         lblVersionUpdate->setStyleSheet("font-size: 15px; color: rgb(58, 206, 58); background: rgb(235, 250, 235); padding: 10px;");
-        lblVersionUpdate->setText(tr("appVersionUpgrade").arg(monitor->getUpdatedReleaseVersion()).arg(monitor->getUpdatedReleaseUrl()));
+        lblVersionUpdate->setText(tr("appVersionUpgrade").arg(monitor->getUpdatedReleaseVersion(), monitor->getUpdatedReleaseUrl()));
+
+        if (!monitor->needsSudo() || (monitor->needsSudo() && monitor->isSudoer()))
+        {
+            Installer *dlgInstaller = new Installer(monitor, ui);
+            dlgInstaller->setAttribute(Qt::WA_DeleteOnClose);
+            dlgInstaller->setModal(true);
+            dlgInstaller->show();
+            dlgInstaller->activateWindow();
+            dlgInstaller->raise();
+
+            ui->activateWindow();
+            ui->raise();
+        }
     });
 
     // start timer and trigger once
