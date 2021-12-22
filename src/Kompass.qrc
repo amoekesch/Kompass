@@ -9,5 +9,7 @@
         <file>img/arrow-up.png</file>
         <file>img/kompass.png</file>
         <file>img/close.png</file>
+        <file>img/restart.png</file>
+        <file>img/cogs.png</file>
     </qresource>
 </RCC>
