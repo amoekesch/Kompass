@@ -24,7 +24,7 @@
         </message>
         <message>
             <source>appVersion</source>
-            <translation>v1.7</translation>
+            <translation>v2.0</translation>
         </message>
         <message>
             <source>appVersionUpgrade</source>
