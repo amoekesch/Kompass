@@ -1,5 +1,5 @@
 [Desktop Entry]
-Version=2.0
+Version=2.1
 Type=Application
 Terminal=false
 Name=Kompass
@@ -7,7 +7,7 @@ GenericName=NordVPN Client
 Comment=A graphical NordVPN client for Linux
 Path=/opt/Kompass/
 Exec=/opt/Kompass/Kompass
-Icon=/opt/Kompass/nordvpn.svgz
+Icon=/opt/Kompass/kompass.png
 Categories=Internet;System;Utilities;
 StartupNotify=true
 Keywords=VPN;NordVPN
