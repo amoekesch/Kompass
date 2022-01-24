@@ -28,6 +28,7 @@
 #include "sectiontitle.h"
 #include "settings.h"
 #include "togglebutton.h"
+#include "trayicon.h"
 #include "../releasemonitor.h"
 #include "../data/connectionresult.h"
 #include "../data/vpnserver.h"
@@ -57,9 +58,6 @@ class Kompass : public QObject
         static const int CONNECTION_TRIGGER_TYPE = 1;
         static const int CONNECTION_TRIGGER_COUNTRY = 2;
         static const int CONNECTION_TRIGGER_SERVER = 3;
-
-        QIcon iconDisconnected = QIcon(":/img/vpn-disconnected.png");
-        QIcon iconConnected = QIcon(":/img/vpn-connected.png");
 
         // status variables
         int currentStatus = -1;
@@ -98,7 +96,8 @@ class Kompass : public QObject
         SectionTitle *titleConnnectionServerList;
 
         // tray menu
-        QSystemTrayIcon *trayIcon;
+        TrayIcon *trayIcon;
+        QSystemTrayIcon *systemTrayIcon;
         QMenu *trayIconMenu;
         QAction *actionConnect;
         QAction *actionDisconnect;

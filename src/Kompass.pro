@@ -20,6 +20,7 @@ SOURCES += \
     gui/sectiontitle.cpp \
     gui/settings.cpp \
     gui/togglebutton.cpp \
+    gui/trayicon.cpp \
     launchverification.cpp \
     main.cpp \
     releasemonitor.cpp \
@@ -37,6 +38,7 @@ HEADERS += \
     gui/sectiontitle.h \
     gui/settings.h \
     gui/togglebutton.h \
+    gui/trayicon.h \
     launchverification.h \
     releasemonitor.h \
     singleinstance.h

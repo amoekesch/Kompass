@@ -636,38 +636,39 @@ void Kompass::setupUi()
 void Kompass::setupTray()
 {
     // create tray icon and register listeners
-    trayIcon = new QSystemTrayIcon(iconDisconnected, this);
-    QObject::connect(trayIcon, &QSystemTrayIcon::activated, [this]() {
+    trayIcon = new TrayIcon(this->ui);
+    systemTrayIcon = new QSystemTrayIcon(trayIcon->getIcon(false), this);
+    QObject::connect(systemTrayIcon, &QSystemTrayIcon::activated, [this]() {
         showUi();
     });
 
     // create connect menu item
-    actionConnect = new QAction(tr("trayActionConnect"), trayIcon);
+    actionConnect = new QAction(tr("trayActionConnect"), systemTrayIcon);
     QObject::connect(actionConnect, &QAction::triggered, [this]() {
         toggleVpn(QStringList() << "connect", true, CONNECTION_TRIGGER_FASTEST);
     });
 
     // create connect menu item
-    actionDisconnect = new QAction(tr("trayActionDisconnect"), trayIcon);
+    actionDisconnect = new QAction(tr("trayActionDisconnect"), systemTrayIcon);
     QObject::connect(actionDisconnect, &QAction::triggered, [this]() {
         toggleVpn(QStringList(), false, CONNECTION_TRIGGER_FASTEST);
     });
 
     // create show menu item
-    QAction *actionShow = new QAction(tr("trayActionShow"), trayIcon);
+    QAction *actionShow = new QAction(tr("trayActionShow"), systemTrayIcon);
     QObject::connect(actionShow, &QAction::triggered, [this]() {
         showUi();
     });
 
     // create quit menu item
-    QAction *actionQuit = new QAction(tr("trayActionQuit"), trayIcon);
+    QAction *actionQuit = new QAction(tr("trayActionQuit"), systemTrayIcon);
     QObject::connect(actionQuit, &QAction::triggered, [this]() {
         quit(EXIT_CODE_NORMAL);
     });
 
     mnStatusConnection = new QWidgetAction(this);
     mnStatusConnection->setText(tr("statusDisconnected"));
-    mnStatusConnection->setIcon(iconDisconnected);
+    mnStatusConnection->setIcon(trayIcon->getIcon(false));
     mnStatusConnection->setEnabled(false);
     mnStatusConnection->setVisible(true);
 
@@ -702,10 +703,10 @@ void Kompass::setupTray()
     trayIconMenu->addAction(actionShow);
     trayIconMenu->addSeparator();
     trayIconMenu->addAction(actionQuit);
-    trayIcon->setContextMenu(trayIconMenu);
+    systemTrayIcon->setContextMenu(trayIconMenu);
 
     // show the menu icon
-    trayIcon->show();
+    systemTrayIcon->show();
 }
 
 /**
@@ -1187,11 +1188,11 @@ void Kompass::updateUi(int status, int trigger, QString vpnDetails)
         case STATUS_CONNECTING:
         case STATUS_DISCONNECTING:
             svgSpinner->setVisible(true);
-            trayIcon->setIcon(iconDisconnected);
+            systemTrayIcon->setIcon(trayIcon->getIcon(false));
             mnStatusUploaded->setVisible(false);
             mnStatusDownloaded->setVisible(false);
             mnStatusUptime->setVisible(false);
-            mnStatusConnection->setIcon(iconDisconnected);
+            mnStatusConnection->setIcon(trayIcon->getIcon(false));
             mnStatusConnection->setText(tr("statusConnecting"));
             mnStatusUploaded->setText("--");
             mnStatusDownloaded->setText("--");
@@ -1221,11 +1222,11 @@ void Kompass::updateUi(int status, int trigger, QString vpnDetails)
             pbSettings->setEnabled(false);
             break;
         case STATUS_DISCONNECTED:
-            trayIcon->setIcon(iconDisconnected);
+            systemTrayIcon->setIcon(trayIcon->getIcon(false));
             mnStatusUploaded->setVisible(false);
             mnStatusDownloaded->setVisible(false);
             mnStatusUptime->setVisible(false);
-            mnStatusConnection->setIcon(iconDisconnected);
+            mnStatusConnection->setIcon(trayIcon->getIcon(false));
             mnStatusConnection->setText(tr("statusDisconnected"));
             mnStatusUploaded->setText("--");
             mnStatusDownloaded->setText("--");
@@ -1256,8 +1257,8 @@ void Kompass::updateUi(int status, int trigger, QString vpnDetails)
             svgSpinner->setVisible(false);
             break;
         case STATUS_CONNECTED:
-            trayIcon->setIcon(iconConnected);
-            mnStatusConnection->setIcon(iconConnected);
+            systemTrayIcon->setIcon(trayIcon->getIcon(true));
+            mnStatusConnection->setIcon(trayIcon->getIcon(true));
             mnStatusConnection->setText(tr("statusConnected"));
             tbStatus->setChecked(true);
             tbStatus->setEnabled(true);

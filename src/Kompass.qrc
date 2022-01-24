@@ -2,8 +2,6 @@
     <qresource prefix="/">
         <file>img/spinner.svg</file>
         <file>font/FontAwesome.otf</file>
-        <file>img/vpn-connected.png</file>
-        <file>img/vpn-disconnected.png</file>
         <file>img/clock.png</file>
         <file>img/arrow-down.png</file>
         <file>img/arrow-up.png</file>
@@ -11,5 +9,13 @@
         <file>img/close.png</file>
         <file>img/restart.png</file>
         <file>img/cogs.png</file>
+        <file>img/vpn-status-black.png</file>
+        <file>img/vpn-status-blue.png</file>
+        <file>img/vpn-status-green.png</file>
+        <file>img/vpn-status-grey25.png</file>
+        <file>img/vpn-status-grey50.png</file>
+        <file>img/vpn-status-grey75.png</file>
+        <file>img/vpn-status-red.png</file>
+        <file>img/vpn-status-white.png</file>
     </qresource>
 </RCC>
