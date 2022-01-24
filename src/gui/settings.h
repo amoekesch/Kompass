@@ -15,19 +15,23 @@
 #include <QVBoxLayout>
 #include "kompassmenu.h"
 #include "togglebutton.h"
+#include "trayicon.h"
 
 class Settings : public QDialog
 {
     Q_OBJECT
 
     public:
-        explicit Settings (QWidget *parent = nullptr);
+        explicit Settings (TrayIcon *trayIcon, QWidget *parent = nullptr);
 
     private:
         QStackedWidget *stackSettings;
+        TrayIcon *trayIcon;
         KompassMenu *menu;
         QComboBox *cmbTechnology;
         QComboBox *cmbProtocol;
+        QComboBox *cmbIconConnected;
+        QComboBox *cmbIconDisconnected;
         ToggleButton *cbFirewall;
         ToggleButton *cbKillswitch;
         ToggleButton *cbCybersec;

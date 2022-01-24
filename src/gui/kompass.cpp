@@ -533,7 +533,7 @@ void Kompass::setupUi()
             // wait
         }
         updatingStatus = true;
-        Settings *dlgSettings = new Settings(ui);
+        Settings *dlgSettings = new Settings(trayIcon, ui);
         dlgSettings->setAttribute(Qt::WA_DeleteOnClose);
         dlgSettings->setModal(true);
         dlgSettings->show();

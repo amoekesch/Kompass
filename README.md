@@ -17,7 +17,7 @@ Kompass - Open-source graphical NordVPN client for Linux.
 **What is Kompass?** Kompass is an easy-to-use graphical user interface (GUI) wrapping the functionality provided by NordVPN Linux command-line interface (CLI).
 It relies directly on the NordVPN CLI and provides the most commonly used features in a user-friendly interface.
 
-**What Kompass is not!** Kompass was never meant to implement all available NordVPN features. It's intention is to provide a quick and easy way to connect to a VPN, disconnect a VPN and show the current VPN status. All of this in a graphical user interface for the KDE Plasma desktop environment.
+**What Kompass is not!** Kompass was never meant to implement all available NordVPN features. It's intention is to provide a quick and easy way to connect to a VPN, disconnect a VPN and show the current VPN status. All of this in an easy-to-use graphical user interface.
 
 ## Features
 * Connect to NordVPN
@@ -81,11 +81,10 @@ If your user is neither part of the "sudo" group nor has access to the installat
 <a target="_blank" href="https://github.com/amoekesch/Kompass/raw/main/doc/kompass_disconnected.png"><img src="https://github.com/amoekesch/Kompass/raw/main/doc/kompass_disconnected.png" width="22%"></img></a> <a target="_blank" href="https://github.com/amoekesch/Kompass/raw/main/doc/kompass_connected.png"><img src="https://github.com/amoekesch/Kompass/raw/main/doc/kompass_connected.png" width="22%"></img></a> <a target="_blank" href="https://github.com/amoekesch/Kompass/raw/main/doc/kompass_servers_by_group.png"><img src="https://github.com/amoekesch/Kompass/raw/main/doc/kompass_servers_by_group.png" width="22%"></img></a> <a target="_blank" href="https://github.com/amoekesch/Kompass/raw/main/doc/kompass_servers_by_country.png"><img src="https://github.com/amoekesch/Kompass/raw/main/doc/kompass_servers_by_country.png" width="22%"></img></a> <a target="_blank" href="https://github.com/amoekesch/Kompass/raw/main/doc/kompass_servers_list.png"><img src="https://github.com/amoekesch/Kompass/raw/main/doc/kompass_servers_list.png" width="22%"></img></a> <a target="_blank" href="https://github.com/amoekesch/Kompass/raw/main/doc/kompass_upgrade.png"><img src="https://github.com/amoekesch/Kompass/raw/main/doc/kompass_upgrade.png" width="22%"></img></a> <a target="_blank" href="https://github.com/amoekesch/Kompass/raw/main/doc/kompass_settings.png"><img src="https://github.com/amoekesch/Kompass/raw/main/doc/kompass_settings.png" width="22%"></img></a> <a target="_blank" href="https://github.com/amoekesch/Kompass/raw/main/doc/kompass_updater_download.png"><img src="https://github.com/amoekesch/Kompass/raw/main/doc/kompass_updater_download.png" width="22%"></img></a> <a target="_blank" href="https://github.com/amoekesch/Kompass/raw/main/doc/kompass_updater_install.png"><img src="https://github.com/amoekesch/Kompass/raw/main/doc/kompass_updater_install.png" width="22%"></img></a> <a target="_blank" href="https://github.com/amoekesch/Kompass/raw/main/doc/kompass_updater_install_sudo.png"><img src="https://github.com/amoekesch/Kompass/raw/main/doc/kompass_updater_install_sudo.png" width="22%"></img></a> <a target="_blank" href="https://github.com/amoekesch/Kompass/raw/main/doc/kompass_updater_complete.png"><img src="https://github.com/amoekesch/Kompass/raw/main/doc/kompass_updater_complete.png" width="22%"></img></a> <a target="_blank" href="https://github.com/amoekesch/Kompass/raw/main/doc/kompass_installer.png"><img src="https://github.com/amoekesch/Kompass/raw/main/doc/kompass_installer.png" width="22%"></img></a>
 
 ## Dependencies
-Kompass is written in C++/QT for the KDE Plasma desktop environment and relies heavily on the NordVPN CLI. Here is its full list of dependencies:
-* [KDE](https://kde.org/)
+Kompass is written in C++/QT and relies heavily on the NordVPN CLI. Here is its full list of dependencies:
 * [QT](https://www.qt.io/) (v5.0+)
 * [NordVPN CLI](https://nordvpn.com/download/linux/) (v3.12.0+)
 
 ## Attribution
 * [FontAwesome](https://fontawesome.com/v4.7/) (v4.7)
-* [Kompass Icon](https://www.flaticon.com/premium-icon/north_818708?term=compass&page=1&position=22&page=1&position=22&related_id=818708&origin=tag) by [Freepik](https://www.freepik.com) from [Flaticon](https://www.flaticon.com)
+* [Kompass Icon](<a href="https://www.flaticon.com/free-icons/compass" title="compass icons">Compass icon created by Creative Stall Premium - Flaticon</a>) by [Freepik](https://www.freepik.com) from [Flaticon](https://www.flaticon.com)

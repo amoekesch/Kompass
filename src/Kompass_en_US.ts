@@ -434,6 +434,58 @@
             <translation>Enable desktop notifications to receive popup messages whenever NordVPN connects or disconnects. &lt;br&gt;&lt;br&gt;&lt;u&gt;Note&lt;/u&gt;: Some Linux distributions and/or desktop environments ignore this setting.</translation>
         </message>
         <message>
+            <source>mnKompass</source>
+            <translation>Kompass</translation>
+        </message>
+        <message>
+            <source>lblIconConnected</source>
+            <translation>Icon - VPN Connected:</translation>
+        </message>
+        <message>
+            <source>lblIconDisconnected</source>
+            <translation>Icon - VPN Disconnected:</translation>
+        </message>
+        <message>
+            <source>lblIconConnectedDescription</source>
+            <translation>Define the icon you would like to see in your system tray when Kompass is conected.</translation>
+        </message>
+        <message>
+            <source>lblIconDisconnectedDescription</source>
+            <translation>Define the icon you would like to see in your system tray when Kompass is disconnected.</translation>
+        </message>
+        <message>
+            <source>iconBlue</source>
+            <translation>Blue</translation>
+        </message>
+        <message>
+            <source>iconGreen</source>
+            <translation>Green</translation>
+        </message>
+        <message>
+            <source>iconRed</source>
+            <translation>Red</translation>
+        </message>
+        <message>
+            <source>iconWhite</source>
+            <translation>White</translation>
+        </message>
+        <message>
+            <source>iconBlack</source>
+            <translation>Black</translation>
+        </message>
+        <message>
+            <source>iconGrey25</source>
+            <translation>25% Grey</translation>
+        </message>
+        <message>
+            <source>iconGrey50</source>
+            <translation>50% Grey</translation>
+        </message>
+        <message>
+            <source>iconGrey75</source>
+            <translation>75% Grey</translation>
+        </message>
+        <message>
             <source>dlgSuccessTitle</source>
             <translation>Settings Updated</translation>
         </message>

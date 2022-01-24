@@ -1,7 +1,9 @@
 #include "settings.h"
 
-Settings::Settings(QWidget *parent) : QDialog(parent)
+Settings::Settings(TrayIcon *trayIcon, QWidget *parent) : QDialog(parent)
 {
+    this->trayIcon = trayIcon;
+
     setupUi();
     setupData();
 }
@@ -29,6 +31,69 @@ void Settings::setupUi()
      * -------------------------------------------
      *  checkbox and dropdown controls
      */
+
+    cmbIconConnected = new QComboBox();
+    cmbIconDisconnected = new QComboBox();
+
+    cmbIconConnected->insertItem(trayIcon->indexBlue, tr("iconBlue"));
+    cmbIconConnected->insertItem(trayIcon->indexGreen, tr("iconGreen"));
+    cmbIconConnected->insertItem(trayIcon->indexRed, tr("iconRed"));
+    cmbIconConnected->insertItem(trayIcon->indexWhite, tr("iconWhite"));
+    cmbIconConnected->insertItem(trayIcon->indexBlack, tr("iconBlack"));
+    cmbIconConnected->insertItem(trayIcon->indexGrey25, tr("iconGrey25"));
+    cmbIconConnected->insertItem(trayIcon->indexGrey50, tr("iconGrey50"));
+    cmbIconConnected->insertItem(trayIcon->indexGrey75, tr("iconGrey75"));
+
+    cmbIconConnected->setItemIcon(trayIcon->indexBlue, trayIcon->iconBlue);
+    cmbIconConnected->setItemIcon(trayIcon->indexGreen, trayIcon->iconGreen);
+    cmbIconConnected->setItemIcon(trayIcon->indexRed, trayIcon->iconRed);
+    cmbIconConnected->setItemIcon(trayIcon->indexWhite, trayIcon->iconWhite);
+    cmbIconConnected->setItemIcon(trayIcon->indexBlack, trayIcon->iconBlack);
+    cmbIconConnected->setItemIcon(trayIcon->indexGrey25, trayIcon->iconGrey25);
+    cmbIconConnected->setItemIcon(trayIcon->indexGrey50, trayIcon->iconGrey50);
+    cmbIconConnected->setItemIcon(trayIcon->indexGrey75, trayIcon->iconGrey75);
+
+    cmbIconDisconnected->insertItem(trayIcon->indexBlue, tr("iconBlue"));
+    cmbIconDisconnected->insertItem(trayIcon->indexGreen, tr("iconGreen"));
+    cmbIconDisconnected->insertItem(trayIcon->indexRed, tr("iconRed"));
+    cmbIconDisconnected->insertItem(trayIcon->indexWhite, tr("iconWhite"));
+    cmbIconDisconnected->insertItem(trayIcon->indexBlack, tr("iconBlack"));
+    cmbIconDisconnected->insertItem(trayIcon->indexGrey25, tr("iconGrey25"));
+    cmbIconDisconnected->insertItem(trayIcon->indexGrey50, tr("iconGrey50"));
+    cmbIconDisconnected->insertItem(trayIcon->indexGrey75, tr("iconGrey75"));
+
+    cmbIconDisconnected->setItemIcon(trayIcon->indexBlue, trayIcon->iconBlue);
+    cmbIconDisconnected->setItemIcon(trayIcon->indexGreen, trayIcon->iconGreen);
+    cmbIconDisconnected->setItemIcon(trayIcon->indexRed, trayIcon->iconRed);
+    cmbIconDisconnected->setItemIcon(trayIcon->indexWhite, trayIcon->iconWhite);
+    cmbIconDisconnected->setItemIcon(trayIcon->indexBlack, trayIcon->iconBlack);
+    cmbIconDisconnected->setItemIcon(trayIcon->indexGrey25, trayIcon->iconGrey25);
+    cmbIconDisconnected->setItemIcon(trayIcon->indexGrey50, trayIcon->iconGrey50);
+    cmbIconDisconnected->setItemIcon(trayIcon->indexGrey75, trayIcon->iconGrey75);
+
+    cmbIconConnected->blockSignals(true);
+    cmbIconDisconnected->blockSignals(true);
+    cmbIconConnected->setCurrentIndex(trayIcon->getCurrentIndexConnected());
+    cmbIconDisconnected->setCurrentIndex(trayIcon->getCurrentIndexDisconnected());
+    cmbIconConnected->blockSignals(false);
+    cmbIconDisconnected->blockSignals(false);
+
+    QObject::connect(cmbIconConnected, &QComboBox::currentTextChanged, [this]() {
+        setEnabled(false);
+        cmbIconConnected->blockSignals(true);
+        trayIcon->setCurrentIndexConnected(cmbIconConnected->currentIndex());
+        cmbIconConnected->blockSignals(false);
+        displayStatus(QString());
+        setEnabled(true);
+    });
+    QObject::connect(cmbIconDisconnected, &QComboBox::currentTextChanged, [this]() {
+        setEnabled(false);
+        cmbIconDisconnected->blockSignals(true);
+        trayIcon->setCurrentIndexDisconnected(cmbIconDisconnected->currentIndex());
+        cmbIconDisconnected->blockSignals(false);
+        displayStatus(QString());
+        setEnabled(true);
+    });
 
     cmbTechnology = new QComboBox();
     QObject::connect(cmbTechnology, &QComboBox::currentTextChanged, [this]() {
@@ -360,6 +425,49 @@ void Settings::setupUi()
 
     /**
      * -------------------------------------------
+     *  Settings: Kompass
+     */
+
+    QLabel *lblIconConnected = new QLabel(tr("lblIconConnected"));
+    lblIconConnected->setStyleSheet("font-weight: bold;");
+    lblIconConnected->setMinimumWidth(240);
+
+    QLabel *lblIconConnectedDescription = new QLabel(tr("lblIconConnectedDescription"));
+    lblIconConnectedDescription->setWordWrap(true);
+
+    QLabel *lblIconDisconnected = new QLabel(tr("lblIconDisconnected"));
+    lblIconDisconnected->setStyleSheet("font-weight: bold;");
+    lblIconDisconnected->setMinimumWidth(240);
+
+    QLabel *lblIconDisconnectedDescription = new QLabel(tr("lblIconDisconnectedDescription"));
+    lblIconDisconnectedDescription->setWordWrap(true);
+
+    QHBoxLayout *layoutIconConnected = new QHBoxLayout();
+    layoutIconConnected->addWidget(lblIconConnected);
+    layoutIconConnected->addWidget(cmbIconConnected);
+    layoutIconConnected->setStretch(1, 1);
+
+    QHBoxLayout *layoutIconDisconnected = new QHBoxLayout();
+    layoutIconDisconnected->addWidget(lblIconDisconnected);
+    layoutIconDisconnected->addWidget(cmbIconDisconnected);
+    layoutIconDisconnected->setStretch(1, 1);
+
+    QVBoxLayout *layoutKompass = new QVBoxLayout();
+    layoutKompass->addItem(layoutIconConnected);
+    layoutKompass->addSpacing(10);
+    layoutKompass->addWidget(lblIconConnectedDescription);
+    layoutKompass->addSpacing(20);
+    layoutKompass->addItem(layoutIconDisconnected);
+    layoutKompass->addSpacing(10);
+    layoutKompass->addWidget(lblIconDisconnectedDescription);
+    layoutKompass->addSpacing(20);
+    layoutKompass->addStretch(1);
+
+    QWidget *wKompass = new QWidget();
+    wKompass->setLayout(layoutKompass);
+
+    /**
+     * -------------------------------------------
      *  add setting detal panels into stack
      */
 
@@ -370,6 +478,7 @@ void Settings::setupUi()
     stackSettings->addWidget(wCybersec);
     stackSettings->addWidget(wFirewall);
     stackSettings->addWidget(wNotify);
+    stackSettings->addWidget(wKompass);
 
     /**
      * -------------------------------------------
@@ -381,6 +490,7 @@ void Settings::setupUi()
     menu->appendMenuItem("\uf132", tr("mnCybersec"), 2);
     menu->appendMenuItem("\uf06d", tr("mnFirewall"), 3);
     menu->appendMenuItem("\uf0a1", tr("mnNotify"), 4);
+    menu->appendMenuItem("\uf14e", tr("mnKompass"), 5);
     menu->select(0);
 
     QVBoxLayout *layoutMenu = new QVBoxLayout();
@@ -435,10 +545,10 @@ void Settings::setupUi()
  * @brief Settings::setupData
  */
 void Settings::setupData()
-{
+{   
     /**
      * -------------------------------------------
-     *  available protocols
+     *  available technologies
      */
 
     QProcess *commandTechnologies = new QProcess();

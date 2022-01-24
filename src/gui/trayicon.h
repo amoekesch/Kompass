@@ -11,21 +11,6 @@ class TrayIcon : public QObject
     Q_OBJECT
 
     public:
-
-        explicit TrayIcon(QObject *parent = nullptr);
-        QIcon getIcon(bool connected);
-        QMap<int, QIcon> getIcons();
-        int getCurrentIndexConnected();
-        int getCurrentIndexDisconnected();
-        void setCurrentIndexConnected(int index);
-        void setCurrentIndexDisconnected(int index);
-
-    private:
-        const QString CFG_FOLDER = "de.moekesch.Kompass";
-        const QString CFG_FILE = "Kompass";
-        const QString KEY_CONNECTED = "iconConnected";
-        const QString KEY_DISCONNECTED = "iconDisconnected";
-
         const QIcon iconBlue = QIcon(":/img/vpn-status-blue.png");
         const QIcon iconGreen = QIcon(":/img/vpn-status-green.png");
         const QIcon iconRed = QIcon(":/img/vpn-status-red.png");
@@ -43,6 +28,21 @@ class TrayIcon : public QObject
         const int indexGrey25 = 5;
         const int indexGrey50 = 6;
         const int indexGrey75 = 7;
+
+        explicit TrayIcon(QObject *parent = nullptr);
+        QIcon getIcon(bool connected);
+        QMap<int, QIcon> getIcons();
+        int getCurrentIndexConnected();
+        int getCurrentIndexDisconnected();
+        void setCurrentIndexConnected(int index);
+        void setCurrentIndexDisconnected(int index);
+
+    private:
+        const QString CFG_FOLDER = "de.moekesch.Kompass";
+        const QString CFG_FILE = "Kompass";
+        const QString KEY_CONNECTED = "iconConnected";
+        const QString KEY_DISCONNECTED = "iconDisconnected";
+
         int defaultIndexConnected = indexBlue;
         int defaultIndexDisconnected = indexGrey50;
         int currentIndexConnected;

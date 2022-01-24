@@ -46,11 +46,18 @@ int TrayIcon::getCurrentIndexConnected()
 void TrayIcon::setCurrentIndexConnected(int index)
 {
     this->currentIndexConnected = index;
+    storeConfiguration();
 }
 
 int TrayIcon::getCurrentIndexDisconnected()
 {
     return this->currentIndexDisconnected;
+}
+
+void TrayIcon::setCurrentIndexDisconnected(int index)
+{
+    this->currentIndexDisconnected = index;
+    storeConfiguration();
 }
 
 void TrayIcon::readConfiguration()
