@@ -123,7 +123,7 @@ cp -f "./kompass.desktop" "${KOMPASS_LINK}"
 mkdir "${KOMPASS_DIR}"
 cp "./Kompass" "${KOMPASS_DIR}"
 chmod +x "${KOMPASS_DIR}/Kompass"
-cp "./nordvpn.svgz" "${KOMPASS_DIR}"
+cp "./kompass.png" "${KOMPASS_DIR}"
 chmod 644 "${KOMPASS_LINK}/kompass.desktop"
 
 # Inform user
