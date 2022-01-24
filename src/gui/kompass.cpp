@@ -22,7 +22,7 @@ Kompass::Kompass()
  * @brief Kompass::setup
  */
 void Kompass::setupUi()
-{
+{   
     /**
      * -------------------------------------------
      * create status widget
@@ -625,6 +625,7 @@ void Kompass::setupUi()
      *  main class takes care of showing the application
      */
 
+    ui->setWindowTitle(tr("appTitle"));
     ui->setCentralWidget(wxCentral);
 }
 
