@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="en_US">
+<TS version="2.3" language="en_US">
     <context>
         <name>QObject</name>
         <message>
@@ -24,7 +24,7 @@
         </message>
         <message>
             <source>appVersion</source>
-            <translation>v2.2</translation>
+            <translation>v2.3</translation>
         </message>
         <message>
             <source>appVersionUpgrade</source>
@@ -399,15 +399,27 @@
         </message>
         <message>
             <source>mnCybersec</source>
-            <translation>Cyber Security</translation>
+            <translation>Threat Protection</translation>
         </message>
         <message>
             <source>lblCybersecToggle</source>
-            <translation>NordVPN CyberSec</translation>
+            <translation>NordVPN Threat Protection Lite</translation>
         </message>
         <message>
             <source>lblCybersecDetails</source>
-            <translation>NordVPN CyberSec is an advanced technology solution that takes your security and privacy to the next level. It blocks websites known for hosting malware or phishing scams, making you safer from online threats. &lt;br&gt;Besides, NordVPN CyberSec – ad blocker feature takes care of annoying flashy ads, which speeds up your browsing experience.</translation>
+            <translation>When enabled, the Threat Protection Lite feature will automatically block suspicious websites so that no malware or other cyber threats can infect your device. Additionally, no flashy ads will come into your sight.</translation>
+        </message>
+        <message>
+            <source>mnMesh</source>
+            <translation>Mesh Network</translation>
+        </message>
+        <message>
+            <source>lblMeshToggle</source>
+            <translation>NordVPN Meshnet</translation>
+        </message>
+        <message>
+            <source>lblMeshDetails</source>
+            <translation>Meshnet allows connecting your devices to one encrypted network or connecting your device with people around the world. While using Meshnet you will be able to create your own virtual private networks, where you can add your devices or devices of others, and communicate with them as if they all would be on a physically connected LAN.</translation>
         </message>
         <message>
             <source>mnFirewall</source>

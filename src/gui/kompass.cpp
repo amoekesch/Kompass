@@ -760,6 +760,12 @@ void Kompass::setupDataTypes()
     QString outputGroups = commandTypes->readAllStandardOutput();
     if (outputGroups != nullptr && outputGroups.length())
     {
+        if (outputGroups.contains("new feature", Qt::CaseInsensitive))
+        {
+            outputGroups = outputGroups.mid(outputGroups.indexOf("feature"));
+            outputGroups = outputGroups.mid(outputGroups.indexOf("\r"));
+        }
+
         outputGroups = outputGroups.replace(QRegularExpression("\\s+"), QString());
         outputGroups = outputGroups.replace(QRegularExpression("[\\]|[\|]|[/]|[-]"), QString());
         outputGroups = outputGroups.replace("_", " ");
@@ -790,6 +796,12 @@ void Kompass::setupDataCountries()
     QString outputCountries = commandCountries->readAllStandardOutput();
     if (outputCountries != nullptr && outputCountries.length())
     {
+        if (outputCountries.contains("new feature", Qt::CaseInsensitive))
+        {
+            outputCountries = outputCountries.mid(outputCountries.indexOf("feature"));
+            outputCountries = outputCountries.mid(outputCountries.indexOf("\r"));
+        }
+
         outputCountries = outputCountries.replace(QRegularExpression("\\s+"), QString());
         outputCountries = outputCountries.replace(QRegularExpression("[\\]|[\|]|[/]|[-]"), QString());
         outputCountries = outputCountries.replace("_", " ");
@@ -1010,6 +1022,11 @@ ConnectionResult* Kompass::connectVpn(QStringList commands)
     {
         if (output != nullptr && !output.toLower().contains("connected"))
         {
+            if (output.contains("new feature", Qt::CaseInsensitive))
+            {
+                output = output.mid(output.indexOf("feature"));
+                output = output.mid(output.indexOf("\r")).trimmed();
+            }
             connectionResult->setSuccessful(false);
             connectionResult->setResult(output.trimmed());
         }
@@ -1020,6 +1037,12 @@ ConnectionResult* Kompass::connectVpn(QStringList commands)
     }
     else
     {
+        if (error.contains("new feature", Qt::CaseInsensitive))
+        {
+            error = error.mid(error.indexOf("feature"));
+            error = error.mid(error.indexOf("\r")).trimmed();
+        }
+
         connectionResult->setSuccessful(false);
         connectionResult->setResult(error);
     }

@@ -36,6 +36,7 @@ class Settings : public QDialog
         ToggleButton *cbKillswitch;
         ToggleButton *cbCybersec;
         ToggleButton *cbObfuscate;
+        ToggleButton *cbMesh;
         ToggleButton *cbNotify;
         ToggleButton *cbAutoconnect;
         ToggleButton *cbIPv6;
@@ -44,6 +45,7 @@ class Settings : public QDialog
         bool firewall;
         bool killswitch;
         bool cybersec;
+        bool mesh;
         bool obfuscate;
         bool autoconnect;
         bool ipv6;

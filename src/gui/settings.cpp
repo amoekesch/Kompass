@@ -148,7 +148,7 @@ void Settings::setupUi()
     cbCybersec = new ToggleButton(8, 10);
     QObject::connect(cbCybersec, &ToggleButton::clicked, [this]() {
         setEnabled(false);
-        QString result = saveSettings(QStringList() << "set" << "cybersec" << ((cbCybersec->isChecked()) ? "enabled" : "disabled"));
+        QString result = saveSettings(QStringList() << "set" << "threatprotectionlite" << ((cbCybersec->isChecked()) ? "enabled" : "disabled"));
         if (result.length() > 0)
         {
             result = result.prepend(tr("errorPrefixCybersec"));
@@ -172,6 +172,23 @@ void Settings::setupUi()
             cbObfuscate->blockSignals(true);
             cbObfuscate->setChecked(!cbObfuscate->isChecked());
             cbObfuscate->blockSignals(false);
+        }
+
+        setupData();
+        displayStatus(result);
+        setEnabled(true);
+    });
+
+    cbMesh = new ToggleButton(8, 10);
+    QObject::connect(cbMesh, &ToggleButton::clicked, [this]() {
+        setEnabled(false);
+        QString result = saveSettings(QStringList() << "set" << "meshnet" << ((cbMesh->isChecked()) ? "enabled" : "disabled"));
+        if (result.length() > 0)
+        {
+            result = result.prepend(tr("errorPrefixMesh"));
+            cbMesh->blockSignals(true);
+            cbMesh->setChecked(!cbMesh->isChecked());
+            cbMesh->blockSignals(false);
         }
 
         setupData();
@@ -400,6 +417,31 @@ void Settings::setupUi()
 
     /**
      * -------------------------------------------
+     *  Settings: Mesh Network
+     */
+
+    QLabel *lblMeshToggle = new QLabel(tr("lblMeshToggle"));
+    lblMeshToggle->setStyleSheet("font-weight: bold;");
+    QLabel *lblMeshDetails = new QLabel(tr("lblMeshDetails"));
+    lblMeshDetails->setWordWrap(true);
+
+    QHBoxLayout *layoutMeshToggle = new QHBoxLayout();
+    layoutMeshToggle->addWidget(cbMesh);
+    layoutMeshToggle->addSpacing(20);
+    layoutMeshToggle->addWidget(lblMeshToggle);
+    layoutMeshToggle->setStretch(2, 1);
+
+    QVBoxLayout *layoutMesh = new QVBoxLayout();
+    layoutMesh->addItem(layoutMeshToggle);
+    layoutMesh->addSpacing(10);
+    layoutMesh->addWidget(lblMeshDetails);
+    layoutMesh->addStretch(1);
+
+    QWidget *wMesh = new QWidget();
+    wMesh->setLayout(layoutMesh);
+
+    /**
+     * -------------------------------------------
      *  Settings: Notifications
      */
 
@@ -477,6 +519,7 @@ void Settings::setupUi()
     stackSettings->addWidget(wKillswitch);
     stackSettings->addWidget(wCybersec);
     stackSettings->addWidget(wFirewall);
+    stackSettings->addWidget(wMesh);
     stackSettings->addWidget(wNotify);
     stackSettings->addWidget(wKompass);
 
@@ -489,8 +532,9 @@ void Settings::setupUi()
     menu->appendMenuItem("\uf1e2", tr("mnKillswitch"), 1);
     menu->appendMenuItem("\uf132", tr("mnCybersec"), 2);
     menu->appendMenuItem("\uf06d", tr("mnFirewall"), 3);
-    menu->appendMenuItem("\uf0a1", tr("mnNotify"), 4);
-    menu->appendMenuItem("\uf14e", tr("mnKompass"), 5);
+    menu->appendMenuItem("\uf1e0", tr("mnMesh"), 4);
+    menu->appendMenuItem("\uf0a1", tr("mnNotify"), 5);
+    menu->appendMenuItem("\uf14e", tr("mnKompass"), 6);
     menu->select(0);
 
     QVBoxLayout *layoutMenu = new QVBoxLayout();
@@ -673,6 +717,11 @@ void Settings::setupData()
             cybersec = line.mid(line.indexOf(":") + 1).trimmed() == "enabled";
             cbCybersec->setChecked(cybersec);
         }
+        else if (line.trimmed().toLower().contains("meshnet"))
+        {
+            mesh = line.mid(line.indexOf(":") + 1).trimmed() == "enabled";
+            cbMesh->setChecked(mesh);
+        }
         else if (line.trimmed().toLower().contains("obfuscate"))
         {
             obfuscate = line.mid(line.indexOf(":") + 1).trimmed() == "enabled";
@@ -733,6 +782,7 @@ void Settings::setEnabled(bool status)
     cbFirewall->setEnabled(status);
     cbCybersec->setEnabled(status);
     cbObfuscate->setEnabled(status);
+    cbMesh->setEnabled(status);
     cbNotify->setEnabled(status);
     cbAutoconnect->setEnabled(status);
     cbIPv6->setEnabled(status);
