@@ -28,7 +28,8 @@ It relies directly on the NordVPN CLI and provides the most commonly used featur
 * Supports all <a target="_blank" href="https://github.com/amoekesch/Kompass/raw/main/doc/kompass_settings.png">NordVPN settings</a> available on Linux
   * KillSwitch
   * Obfuscate
-  * CyberSec
+  * THreatProtect
+  * Meshnet
   * etc.
 * <a target="_blank" href="https://github.com/amoekesch/Kompass/raw/main/doc/kompass_tray.png">Tray icon</a> to quickly
   * Connect
@@ -83,7 +84,7 @@ If your user is neither part of the "sudo" group nor has access to the installat
 ## Dependencies
 Kompass is written in C++/QT and relies heavily on the NordVPN CLI. Here is its full list of dependencies:
 * [QT](https://www.qt.io/) (v5.0+)
-* [NordVPN CLI](https://nordvpn.com/download/linux/) (v3.12.0+)
+* [NordVPN CLI](https://nordvpn.com/download/linux/) (v3.14.0+)
 
 ## Attribution
 * [FontAwesome](https://fontawesome.com/v4.7/) (v4.7)
