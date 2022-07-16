@@ -41,7 +41,7 @@ void LaunchVerification::verifyVersion()
     {
         QString version = output.mid(output.lastIndexOf(" ") + 1);
         version = version.left(version.lastIndexOf(".")).trimmed();
-        if (version.toDouble() >= 3.12)
+        if (version.toDouble() >= 3.14)
         {
             this->validVersion = true;
             this->retry = false;
