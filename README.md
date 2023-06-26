@@ -1,17 +1,25 @@
+> **Note**
+> This application was developed specifically for the KDE desktop environment. A version suited for GNOME built in Python/GTK/ADW can be found here: [GNordVPN](https://github.com/amoekesch/gnordvpn).
+
+> **Warning**
+> This application is not actively maintained!
+
 # Kompass
 Kompass - Open-source graphical NordVPN client for Linux.
 
 ![Kompass Connected](https://github.com/amoekesch/Kompass/raw/main/doc/kompass_connected.png)
 
 ## Table of Contents
-* [About](#About)
-* [Features](#Features)
-* [Usage](#Usage)
-* [Installation](#Installation)
-* [Upgrade](#Upgrade)
-* [Gallery](#Gallery)
-* [Dependencies](#Dependencies)
-* [Attribution](#Attribution)
+- [Kompass](#kompass)
+  - [Table of Contents](#table-of-contents)
+  - [About](#about)
+  - [Features](#features)
+  - [Usage](#usage)
+  - [Installation](#installation)
+  - [Upgrade](#upgrade)
+  - [Gallery](#gallery)
+  - [Dependencies](#dependencies)
+  - [Attribution](#attribution)
 
 ## About
 **What is Kompass?** Kompass is an easy-to-use graphical user interface (GUI) wrapping the functionality provided by NordVPN Linux command-line interface (CLI).
